@@ -62,6 +62,7 @@ int main()
     }
     else
     {
+        cout << "Enter the array members: ";
         read(array, number);
         cout << "Entered Array: " << endl;
         print(array, number);
