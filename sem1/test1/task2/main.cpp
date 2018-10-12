@@ -7,7 +7,7 @@ void randomMembers(int a[], int n)
 {
     for (int i = 0; i < n; ++i)
     {
-        a[i] = rand() % 42 + 11;
+        a[i] = rand() % 33 + 11;
     }
 }
 
