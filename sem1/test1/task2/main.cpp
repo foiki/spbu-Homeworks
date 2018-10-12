@@ -30,16 +30,16 @@ void print(int a[], int n)
 
 void insertionSort(int a[], int size)
 {
-    for (int i = 1; i < size; ++i)
+    for (int i = 3; i < size; i += 2)
     {
         int key = a[i];
-        int j = i - 1;
+        int j = i - 2;
         while (j >= 0 && a[j] > key)
         {
-            a[j + 1] = a[j];
-            --j;
+            a[j + 2] = a[j];
+            j -= 2;
         }
-        a[j + 1] = key;
+        a[j + 2] = key;
     }
 }
 
