@@ -1,5 +1,5 @@
 #include <iostream>
-#include "list.h"
+#include "warriors.h"
 
 using namespace std;
 
@@ -12,24 +12,17 @@ int main()
     List *list = createList();
     for (int i = 1; i <= number; ++i)
     {
-        add(list, i);
+        addCircled(list, i, number);
     }
-    connect(list, number);
     int killedInThisCircle = 0;
     int j = 1;
     ListElement *current = list->first;
-    while(number - killedInThisCircle > 1)
+    while (number - killedInThisCircle > 1)
     {
-        if (j % spot == 0 && !current->killed)
+        if (j % spot == 0)
         {
-            current->killed = true;
+            killNext(list, current);
             ++killedInThisCircle;
-        }
-        current = current->next;
-        ++j;
-        if (j % spot == 0 && current->killed)
-        {
-            --j;
         }
         if (j >= number && killedInThisCircle > 0)
         {
@@ -38,7 +31,11 @@ int main()
             killedInThisCircle = 0;
             current = list->first;
         }
+        current = current->next;
+        ++j;
     }
-    cout << "Last alive: " << findLastAlive(list) << endl;
-    deleteCircledList(list);
+    cout << "Last Alive: " << current->position << endl;
+    delete current;
+    delete list;
+    return 0;
 }
