@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string.h>
 
 using namespace std;
 
@@ -13,14 +14,19 @@ int main()
     {
         fin.getline(newLine, maxSize, '\n');
         long length = strlen(newLine);
-        for (int i = 0; i <= length; ++i)
+        int i = 0;
+        bool isEmpty = true;
+        while (i < length && isEmpty)
         {
-            if (newLine[i] != ' ' && newLine[i] != '\t' && int(newLine[i]) != 0)
+            if (newLine[i] != ' ' && newLine[i] != '\t')
             {
                 ++notEmptyLines;
+                isEmpty = false;
             }
+            ++i;
         }
     }
+    delete[] newLine;
     cout << "Count of not empty lines: " << notEmptyLines << endl;
     return 0;
 }
