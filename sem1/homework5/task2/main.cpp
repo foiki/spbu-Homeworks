@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string.h>
 
 using namespace std;
 
@@ -17,6 +18,7 @@ void printingTheFirstOccurrences(char *newWord)
             isMet[(int)newWord[i]] = true;
         }
     }
+    delete[] isMet;
     cout << " ";
 }
 
@@ -24,12 +26,18 @@ int main()
 {
     const int maxLength = 100000;
     ifstream fin("Text.txt");
-    while (!fin.eof())
-    {
-        char *newWord = new char[maxLength];
-        fin >> newWord;
-        printingTheFirstOccurrences(newWord);
+    if (fin.is_open()){
+        while (!fin.eof())
+        {
+            char *newWord = new char[maxLength];
+            fin >> newWord;
+            printingTheFirstOccurrences(newWord);
+        }
+        cout << endl;
     }
-    cout << endl;
+    else
+    {
+        cout << "File not found!" << endl;
+    }
     return 0;
 }
