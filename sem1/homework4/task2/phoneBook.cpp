@@ -133,6 +133,7 @@ void findPhoneNumber(List *list, char a[])
         if (areArraysEqual(current->name, a))
         {
             cout << a << "  " << current->number << endl;
+            return;
         }
         current = current->next;
     }

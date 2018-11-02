@@ -14,36 +14,32 @@ int main()
     {
         cout << "Enter new request: " << endl;
         cin >> newRequest;
-        if (newRequest == 0)
+        switch(newRequest)
         {
-            deleteList(list);
-            cout << "ololo, bye)";
-            return 0;
-        }
-        else if (newRequest == 1)
-        {
-            addNewContact(list);
-        }
-        else if (newRequest == 2)
-        {
-            findPhoneNumber(list);
-        }
-        else if (newRequest == 3)
-        {
-            findName(list);
-        }
-        else if (newRequest == 4)
-        {
-            saveChangesInFile(list);
-        }
-        else if (newRequest == 5)
-        {
-            cout << "Enter '0' to exit" << endl;
-            cout << "Enter '1' to add new note to phonebook" << endl;
-            cout << "Enter '2' to find the phone number if you know the name of it's owner" << endl;
-            cout << "Enter '3' if you know the number and want to find the name of it's owner" << endl;
-            cout << "Enter '4' to to save changes in 'phoneBook.txt'" << endl;
-            cout << "Enter '5' to see help menu" << endl;
+            case 0:
+                deleteList(list);
+                cout << "ololo, bye)";
+                return 0;
+            case 1:
+                addNewContact(list);
+                break;
+            case 2:
+                findPhoneNumber(list);
+                break;
+            case 3:
+                findName(list);
+                break;
+            case 4:
+                saveChangesInFile(list);
+                break;
+            case 5:
+                cout << "Enter '0' to exit" << endl;
+                cout << "Enter '1' to add new note to phonebook" << endl;
+                cout << "Enter '2' to find the phone number if you know the name of it's owner" << endl;
+                cout << "Enter '3' if you know the number and want to find the name of it's owner" << endl;
+                cout << "Enter '4' to to save changes in 'phoneBook.txt'" << endl;
+                cout << "Enter '5' to see help menu" << endl;
+                break;
         }
     }
     return 0;
