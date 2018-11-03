@@ -14,22 +14,14 @@ int main()
     {
         addCircled(list, i, number);
     }
-    int killedInThisCircle = 0;
     int j = 1;
     ListElement *current = list->first;
-    while (number - killedInThisCircle > 1)
+    while (number > 1)
     {
         if (j % spot == 0)
         {
             killNext(list, current);
-            ++killedInThisCircle;
-        }
-        if (j >= number && killedInThisCircle > 0)
-        {
-            j = 1;
-            number -= killedInThisCircle;
-            killedInThisCircle = 0;
-            current = list->first;
+            --number;
         }
         current = current->next;
         ++j;
