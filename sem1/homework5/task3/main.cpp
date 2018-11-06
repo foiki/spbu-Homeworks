@@ -1,13 +1,14 @@
 #include <iostream>
 #include <string.h>
 #include "postfix.h"
+#include "stack.h"
 
 using namespace std;
 
 int main()
 {
     const long maxLength = 100000000;
-    Stack *Stack = CreateStack();
+    Stack *Stack = createStack();
     char *string = new char[maxLength];
     cout << "Enter the new expression: " << endl;
     cin.get(string, maxLength);
@@ -16,16 +17,16 @@ int main()
     {
         if (string[i] == '(')
         {
-            StackPush(Stack, string[i]);
+            stackPush(Stack, string[i]);
         }
         else if (string[i] == '+' || string[i] == '-' || string[i] == '*' || string[i] == '/')
         {
             while (!isStackEmpty(Stack) && (priority(Stack->top->token) >= priority(string[i])))
             {
                 cout << Stack->top->token << " ";
-                StackPop(Stack);
+                stackPop(Stack);
             }
-            StackPush(Stack, string[i]);
+            stackPush(Stack, string[i]);
 
         }
         else if (string[i] == ')')
@@ -33,20 +34,22 @@ int main()
             while (!isStackEmpty(Stack) && Stack->top->token != '(')
             {
                 cout << Stack->top->token << " ";
-                StackPop(Stack);
+                stackPop(Stack);
             }
-            StackPop(Stack);
+            stackPop(Stack);
         }
-        else if (int(string[i]) >= 48 && int(string[i]) <= 57)
+        else if (string[i] >= '0' && string[i] <= '9')
         {
             cout << string[i] << " ";
         }
     }
+    delete[] string;
     while (!isStackEmpty(Stack))
     {
         cout << Stack->top->token << " ";
-        StackPop(Stack);
+        stackPop(Stack);
     }
-    StackDelete(Stack);
+    cout << endl;
+    stackDelete(Stack);
     return 0;
 }
