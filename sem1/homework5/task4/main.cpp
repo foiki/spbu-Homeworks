@@ -1,22 +1,23 @@
 #include <iostream>
 #include <string.h>
 #include "postfixCalculate.h"
+#include "stack.h"
 
 using namespace std;
 
 int main()
 {
     const long maxLength = 100000000;
-    Stack *Stack = CreateStack();
+    Stack *Stack = createStack();
     char *string = new char[maxLength];
     cout << "Enter the new expression: " << endl;
     cin.get(string, maxLength);
     long length = strlen(string);
     for (long i = 0; i <= length; ++i)
     {
-        if (int(string[i]) >= 48 && int(string[i]) <= 57)
+        if (string[i] >= '0' && string[i] <= '9')
         {
-            StackPush(Stack, int(string[i]) - 48);
+            stackPush(Stack, string[i] - '0');
         }
         
         else if (string[i] == '+' || string[i] == '-' || string[i] == '*' || string[i] == '/')
@@ -24,11 +25,11 @@ int main()
             if (Stack->top && Stack->top->next)
             {
                 int operandFirst = int(Stack->top->token);
-                StackPop(Stack);
+                stackPop(Stack);
                 int operandSecond = int(Stack->top->token);
-                StackPop(Stack);
+                stackPop(Stack);
                 
-                StackPush(Stack, ArithmeticOperation(operandSecond, operandFirst, string[i]));
+                stackPush(Stack, arithmeticOperation(operandSecond, operandFirst, string[i]));
             }
             else
             {
