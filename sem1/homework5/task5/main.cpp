@@ -1,13 +1,14 @@
 #include <iostream>
 #include <string.h>
 #include "calculator.h"
+#include "stack.h"
 
 using namespace std;
 
 int main()
 {
     const long maxLength = 100000000;
-    Stack *Stack = CreateStack();
+    Stack *Stack = createStack();
     char *string = new char[maxLength] {};
     cout << "Enter the new expression: " << endl;
     cin.get(string, maxLength);
@@ -18,18 +19,11 @@ int main()
     {
         if (string[i] == '(')
         {
-            StackPush(Stack, int(string[i]));
+            stackPush(Stack, int(string[i]));
         }
         else if (string[i] == '+' || string[i] == '-' || string[i] == '*' || string[i] == '/')
         {
-            while (Stack->top && (priority(char(Stack->top->token)) > char(priority(string[i]))))
-            {
-                postfixForm[j] = char(Stack->top->token);
-                ++j;
-                StackPop(Stack);
-            }
-            StackPush(Stack, int(string[i]));
-            
+            handlingTheSign(Stack, j, string[i], postfixForm);
         }
         else if (string[i] == ')')
         {
@@ -37,11 +31,11 @@ int main()
             {
                 postfixForm[j] = char(Stack->top->token);
                 ++j;
-                StackPop(Stack);
+                stackPop(Stack);
             }
-            StackPop(Stack);
+            stackPop(Stack);
         }
-        else if (int(string[i]) >= 48 && int(string[i]) <= 57)
+        else if (string[i] >= '0' && string[i] <= '9')
         {
             postfixForm[j] = string[i];
             ++j;
@@ -51,13 +45,13 @@ int main()
     {
         postfixForm[j] = char(Stack->top->token);
         ++j;
-        StackPop(Stack);
+        stackPop(Stack);
     }
     for (long i = 0; i < length; ++i)
     {
-        if (postfixForm[i] >= 48 && postfixForm[i] <= 57)
+        if (postfixForm[i] >= '0' && postfixForm[i] <= '9')
         {
-            StackPush(Stack, int(postfixForm[i]) - 48);
+            stackPush(Stack, int(postfixForm[i]) - '0');
         }
         
         else if (char(postfixForm[i]) == '+' || char(postfixForm[i]) == '-' || char(postfixForm[i]) == '*' || char(postfixForm[i]) == '/')
@@ -65,11 +59,10 @@ int main()
             if (Stack->top && Stack->top->next)
             {
                 int operandFirst = Stack->top->token;
-                StackPop(Stack);
+                stackPop(Stack);
                 int operandSecond = Stack->top->token;
-                StackPop(Stack);
-                
-                StackPush(Stack, ArithmeticOperation(operandSecond, operandFirst, postfixForm[i]));
+                stackPop(Stack);
+                stackPush(Stack, arithmeticOperation(operandSecond, operandFirst, postfixForm[i]));
             }
             else
             {
@@ -79,7 +72,8 @@ int main()
             
         }
     }
+    delete[] postfixForm;
     cout << "Result: " << Stack->top->token << endl;
-    StackDelete(Stack);
+    stackDelete(Stack);
     return 0;
     }

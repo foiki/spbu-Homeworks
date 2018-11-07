@@ -1,55 +1,4 @@
 #include "calculator.h"
-#include <iostream>
-
-using namespace std;
-
-Stack *CreateStack()
-{
-    return new Stack {nullptr};
-}
-
-void StackPush(Stack *&Stack, char x)
-{
-    StackElement *newElement = new StackElement{x, Stack->top};
-    Stack->top = newElement;
-}
-
-void StackPop(Stack *&Stack)
-{
-    if (!Stack->top)
-    {
-        cout << "Stack is empty!" << endl;
-    }
-    else
-    {
-        StackElement *afterDeleted = Stack->top->next;
-        delete Stack->top;
-        Stack->top = afterDeleted;
-    }
-}
-
-void StackPrint(Stack *Stack)
-{
-    StackElement *current = Stack->top;
-    while (current)
-    {
-        cout << current->token << " ";
-        current = current->next;
-    }
-    cout << endl;
-}
-
-void StackDelete(Stack *Stack)
-{
-    StackElement *current = Stack->top;
-    while(current)
-    {
-        StackElement *nextElement = current->next;
-        delete current;
-        current = nextElement;
-    }
-    delete Stack;
-}
 
 int priority(char a)
 {
@@ -67,7 +16,7 @@ int priority(char a)
     }
 }
 
-int ArithmeticOperation(int a, int b, char x)
+int arithmeticOperation(int a, int b, char x)
 {
     if (x == '+')
     {
@@ -85,4 +34,15 @@ int ArithmeticOperation(int a, int b, char x)
     {
         return a / b;
     }
+}
+
+void handlingTheSign(Stack *Stack, int &j, char a, char postfixForm[])
+{
+    while (Stack->top && (priority(char(Stack->top->token)) > priority(a)))
+    {
+        postfixForm[j] = char(Stack->top->token);
+        ++j;
+        stackPop(Stack);
+    }
+    stackPush(Stack, a);
 }
