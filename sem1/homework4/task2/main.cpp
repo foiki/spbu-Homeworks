@@ -6,10 +6,13 @@ using namespace std;
 
 int main()
 {
-    List *list = createList();
-    fileRead(list);
+    PhoneBook *phoneBook = createPhoneBook();
+    ifstream fin("phoneBook.txt");
+    fileRead(phoneBook, fin);
+    fin.close();
     cout << "Enter the command if you now how it works or type '5' to see help menu" << endl;
     int newRequest = -1;
+    ofstream fout("phoneBook.txt");
     while (newRequest != 0)
     {
         cout << "Enter new request: " << endl;
@@ -17,20 +20,21 @@ int main()
         switch(newRequest)
         {
             case 0:
-                deleteList(list);
-                cout << "ololo, bye)";
+                deleteList(phoneBook);
+                cout << "ololo, bye)" << endl;
                 return 0;
             case 1:
-                addNewContact(list);
+                addNewContact(phoneBook);
                 break;
             case 2:
-                findPhoneNumber(list);
+                findPhoneNumber(phoneBook);
                 break;
             case 3:
-                findName(list);
+                findName(phoneBook);
                 break;
             case 4:
-                saveChangesInFile(list);
+                saveChangesInFile(phoneBook, fout);
+                fout.close();
                 break;
             case 5:
                 cout << "Enter '0' to exit" << endl;

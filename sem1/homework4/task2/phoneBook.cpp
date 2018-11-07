@@ -1,29 +1,29 @@
 #include <iostream>
 #include <fstream>
+#include <string.h>
 #include "phoneBook.h"
 
 using namespace std;
 
-List *createList()
+PhoneBook *createPhoneBook()
 {
-    return new List {nullptr};
+    return new PhoneBook {nullptr};
 }
 
-void deleteList(List *list)
+void deleteList(PhoneBook *phoneBook)
 {
-    ListElement *current = list->first;
+    PhoneBookElement *current = phoneBook->first;
     while (current)
     {
-        ListElement *nextElement = current->next;
+        PhoneBookElement *nextElement = current->next;
         delete current;
         current = nextElement;
     }
-    delete list;
+    delete phoneBook;
 }
 
-void fileRead(List *list)
+void fileRead(PhoneBook *phoneBook, ifstream &fin)
 {
-    ifstream fin("phoneBook.txt");
     char newName[maxSize] {0};
     long long newNumber = 0;
     while (!fin.eof())
@@ -31,22 +31,19 @@ void fileRead(List *list)
         fin >> newName >> newNumber;
         if (!fin.eof())
         {
-            add(list, newName, newNumber);
+            add(phoneBook, newName, newNumber);
         }
     }
-    fin.close();
 }
 
-void filePrint(List *list)
+void filePrint(PhoneBook *phoneBook, ofstream &fout)
 {
-    ofstream fout("phoneBook.txt");
-    ListElement *current = list->first;
+    PhoneBookElement *current = phoneBook->first;
     while (current)
     {
         fout << current->name << " " << current->number << endl;
         current = current->next;
     }
-    fout.close();
 }
 
 int min(int a, int b)
@@ -81,23 +78,23 @@ void approriateSecondInFirst(char a[], char b[])
     }
 }
 
-void add(List *list, char newName[], long long newNumber)
+void add(PhoneBook *phoneBook, char newName[], long long newNumber)
 {
-    ListElement *current = list->first;
-    if ((list->first == nullptr) || !isFirstAlphabeticalAbove(current->name, newName))
+    PhoneBookElement *current = phoneBook->first;
+    if ((phoneBook->first == nullptr) || !isFirstAlphabeticalAbove(current->name, newName))
     {
-        ListElement *oldListFirst = list->first;
-        list->first = new ListElement;
-        approriateSecondInFirst(list->first->name, newName);
-        list->first->number = newNumber;
-        list->first->next = oldListFirst;
+        PhoneBookElement *oldListFirst = phoneBook->first;
+        phoneBook->first = new PhoneBookElement;
+        approriateSecondInFirst(phoneBook->first->name, newName);
+        phoneBook->first->number = newNumber;
+        phoneBook->first->next = oldListFirst;
         return;
     }
     while ((current->next) && (isFirstAlphabeticalAbove(current->next->name, newName)))
     {
         current = current->next;
     }
-    ListElement *newElement = new ListElement;
+    PhoneBookElement *newElement = new PhoneBookElement;
     approriateSecondInFirst(newElement->name, newName);
     newElement->number = newNumber;
     newElement->next = current->next;
@@ -125,9 +122,9 @@ bool areArraysEqual(char a[], char b[])
     return true;
 }
 
-void findPhoneNumber(List *list, char a[])
+void findPhoneNumber(PhoneBook *phoneBook, char a[])
 {
-    ListElement *current = list->first;
+    PhoneBookElement *current = phoneBook->first;
     while (current)
     {
         if (areArraysEqual(current->name, a))
@@ -143,9 +140,9 @@ void findPhoneNumber(List *list, char a[])
     }
 }
 
-void findName(List *list, long long x)
+void findName(PhoneBook *phoneBook, long long x)
 {
-    ListElement *current = list->first;
+    PhoneBookElement *current = phoneBook->first;
     while (current)
     {
         if (current->number == x)
@@ -161,33 +158,33 @@ void findName(List *list, long long x)
     }
 }
 
-void addNewContact(List *list)
+void addNewContact(PhoneBook *phoneBook)
 {
     cout << "Enter the name and phone number to add to phonebook: " << endl;
     char newName[maxSize] {0};
     long long newNumber = 0;
     cin >> newName >> newNumber;
-    add(list, newName, newNumber);
+    add(phoneBook, newName, newNumber);
 }
 
-void findPhoneNumber(List *list)
+void findPhoneNumber(PhoneBook *phoneBook)
 {
     cout << "Enter the name: " << endl;
     char newName[maxSize] {0};
     cin >> newName;
-    findPhoneNumber(list, newName);
+    findPhoneNumber(phoneBook, newName);
 }
 
-void findName(List *list)
+void findName(PhoneBook *phoneBook)
 {
     cout << "Enter the phone number: " << endl;
     long long newNumber = 0;
     cin >> newNumber;
-    findName(list, newNumber);
+    findName(phoneBook, newNumber);
 }
 
-void saveChangesInFile(List *list)
+void saveChangesInFile(PhoneBook *phoneBook, ofstream &fout)
 {
-    filePrint(list);
+    filePrint(phoneBook, fout);
     cout << "All changes has been saved" << endl;
 }
