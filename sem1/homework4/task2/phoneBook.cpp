@@ -5,24 +5,7 @@
 
 using namespace std;
 
-PhoneBook *createPhoneBook()
-{
-    return new PhoneBook {nullptr};
-}
-
-void deleteList(PhoneBook *phoneBook)
-{
-    PhoneBookElement *current = phoneBook->first;
-    while (current)
-    {
-        PhoneBookElement *nextElement = current->next;
-        delete current;
-        current = nextElement;
-    }
-    delete phoneBook;
-}
-
-void fileRead(PhoneBook *phoneBook, ifstream &fin)
+void fileRead(List *list, ifstream &fin)
 {
     char newName[maxSize] {0};
     long long newNumber = 0;
@@ -31,14 +14,14 @@ void fileRead(PhoneBook *phoneBook, ifstream &fin)
         fin >> newName >> newNumber;
         if (!fin.eof())
         {
-            add(phoneBook, newName, newNumber);
+            add(list, newName, newNumber);
         }
     }
 }
 
-void filePrint(PhoneBook *phoneBook, ofstream &fout)
+void filePrint(List *list, ofstream &fout)
 {
-    PhoneBookElement *current = phoneBook->first;
+    ListElement *current = list->first;
     while (current)
     {
         fout << current->name << " " << current->number << endl;
@@ -78,29 +61,6 @@ void approriateSecondInFirst(char a[], char b[])
     }
 }
 
-void add(PhoneBook *phoneBook, char newName[], long long newNumber)
-{
-    PhoneBookElement *current = phoneBook->first;
-    if ((phoneBook->first == nullptr) || !isFirstAlphabeticalAbove(current->name, newName))
-    {
-        PhoneBookElement *oldListFirst = phoneBook->first;
-        phoneBook->first = new PhoneBookElement;
-        approriateSecondInFirst(phoneBook->first->name, newName);
-        phoneBook->first->number = newNumber;
-        phoneBook->first->next = oldListFirst;
-        return;
-    }
-    while ((current->next) && (isFirstAlphabeticalAbove(current->next->name, newName)))
-    {
-        current = current->next;
-    }
-    PhoneBookElement *newElement = new PhoneBookElement;
-    approriateSecondInFirst(newElement->name, newName);
-    newElement->number = newNumber;
-    newElement->next = current->next;
-    current->next = newElement;
-}
-
 bool areArraysEqual(char a[], char b[])
 {
     long lengthFirst = strlen(a);
@@ -122,9 +82,9 @@ bool areArraysEqual(char a[], char b[])
     return true;
 }
 
-void findPhoneNumber(PhoneBook *phoneBook, char a[])
+void findPhoneNumber(List *list, char a[])
 {
-    PhoneBookElement *current = phoneBook->first;
+    ListElement *current = list->first;
     while (current)
     {
         if (areArraysEqual(current->name, a))
@@ -140,9 +100,9 @@ void findPhoneNumber(PhoneBook *phoneBook, char a[])
     }
 }
 
-void findName(PhoneBook *phoneBook, long long x)
+void findName(List *list, long long x)
 {
-    PhoneBookElement *current = phoneBook->first;
+    ListElement *current = list->first;
     while (current)
     {
         if (current->number == x)
@@ -158,33 +118,33 @@ void findName(PhoneBook *phoneBook, long long x)
     }
 }
 
-void addNewContact(PhoneBook *phoneBook)
+void addNewContact(List *list)
 {
     cout << "Enter the name and phone number to add to phonebook: " << endl;
     char newName[maxSize] {0};
     long long newNumber = 0;
     cin >> newName >> newNumber;
-    add(phoneBook, newName, newNumber);
+    add(list, newName, newNumber);
 }
 
-void findPhoneNumber(PhoneBook *phoneBook)
+void findPhoneNumber(List *list)
 {
     cout << "Enter the name: " << endl;
     char newName[maxSize] {0};
     cin >> newName;
-    findPhoneNumber(phoneBook, newName);
+    findPhoneNumber(list, newName);
 }
 
-void findName(PhoneBook *phoneBook)
+void findName(List *list)
 {
     cout << "Enter the phone number: " << endl;
     long long newNumber = 0;
     cin >> newNumber;
-    findName(phoneBook, newNumber);
+    findName(list, newNumber);
 }
 
-void saveChangesInFile(PhoneBook *phoneBook, ofstream &fout)
+void saveChangesInFile(List *list, ofstream &fout)
 {
-    filePrint(phoneBook, fout);
+    filePrint(list, fout);
     cout << "All changes has been saved" << endl;
 }

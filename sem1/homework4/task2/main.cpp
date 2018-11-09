@@ -1,12 +1,13 @@
 #include <fstream>
 #include <iostream>
+#include "list.h"
 #include "phoneBook.h"
 
 using namespace std;
 
 int main()
 {
-    PhoneBook *phoneBook = createPhoneBook();
+    List *phoneBook = createList();
     ifstream fin("phoneBook.txt");
     fileRead(phoneBook, fin);
     fin.close();
