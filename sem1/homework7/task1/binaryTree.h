@@ -14,11 +14,11 @@ struct BinaryTree
 
 BinaryTree *createTree();
 void add(BinaryTree *binaryTree, int number);
-void remove(BinaryTree *binaryTree, int number);
+void remove(BinaryTree *&binaryTree, int number);
+void remove(Node *&node, int number);
+void remove(Node *&node);
 void deleteTree(BinaryTree *binaryTree);
 void deleteNode(Node *node);
-void deleteNodeWithTwoChildren(Node *current);
-void deleteNodeWithOneChild(Node *previous, Node *current);
 bool isElementBelongs(BinaryTree *binaryTree, int number);
 void printInAscendingOrder(BinaryTree *binaryTree);
 void printInAscendingOrder(Node *node);

@@ -45,67 +45,77 @@ void add(BinaryTree *binaryTree, int number)
     }
 }
 
-void remove(BinaryTree *binaryTree, int number)
+void remove(BinaryTree *&binaryTree, int number)
 {
-    Node *previous = nullptr;
-    Node *current = binaryTree->root;
-    while (current)
+    if (binaryTree->root)
     {
-        if (current->value > number)
-        {
-            previous = current;
-            current = current->left;
-        }
-        else if (current->value < number)
-        {
-            previous = current;
-            current = current->right;
-        }
-        else
-        {
-            if (current->left && current->right)
-            {
-                deleteNodeWithTwoChildren(current);
-                current = nullptr;
-                return;
-            }
-            else if (current->left || current->right)
-            {
-                deleteNodeWithOneChild(previous, current);
-                current = nullptr;
-                return;
-            }
-            else
-            {
-                if (previous->value > number)
-                {
-                    previous->left = nullptr;
-                }
-                else
-                {
-                    previous->right = nullptr;
-                }
-                delete current;
-            }
-        }
+        remove(binaryTree->root, number);
     }
-    cout << "Not Found!" << endl;
+    else
+    {
+        cout << "Nothing to remove!" << endl;
+    }
+}
+
+void remove(Node *&node, int number)
+{
+    if (!node)
+    {
+        cout << "Element not found!" << endl;
+        return;
+    }
+    if (node->value > number)
+    {
+        remove(node->left, number);
+    }
+    else if (node->value < number)
+    {
+        remove(node->right, number);
+    }
+    else
+    {
+        remove(node);
+    }
+}
+
+void remove(Node *&node)
+{
+    if (!node->left && !node->right)
+    {
+        Node *removing = node;
+        delete removing;
+        node = nullptr;
+    }
+    else if (!node->left && node->right)
+    {
+        Node *removing = node;
+        node = node->right;
+        delete removing;
+    }
+    else if(node->left && !node->right)
+    {
+        Node *removing = node;
+        node = node->left;
+        delete removing;
+    }
+    else
+    {
+        Node **minimalInRightSubtree = &node->right;
+        while ((*minimalInRightSubtree)->left)
+        {
+            *minimalInRightSubtree = (*minimalInRightSubtree)->left;
+        }
+        node->value = (*minimalInRightSubtree)->value;
+        remove(*minimalInRightSubtree);
+    }
 }
 
 void deleteTree(BinaryTree *binaryTree)
 {
     if (binaryTree->root)
     {
-        if (binaryTree->root->left)
-        {
-            deleteNode(binaryTree->root->left);
-        }
-        if (binaryTree->root->right)
-        {
-            deleteNode(binaryTree->root->right);
-        }
+        deleteNode(binaryTree->root);
     }
-    delete binaryTree->root;
     delete binaryTree;
 }
 
@@ -114,67 +124,12 @@ void deleteNode(Node *node)
     if (node->left)
     {
         deleteNode(node->left);
-        delete node->left;
     }
     if (node->right)
     {
         deleteNode(node->right);
-        delete node->right;
     }
-}
-
-void deleteNodeWithTwoChildren(Node *current)
-{
-    Node *previous = nullptr;
-    Node *minimalInRightSubtree = current;
-    minimalInRightSubtree = current->right;
-    while (minimalInRightSubtree->left)
-    {
-        previous = minimalInRightSubtree;
-        minimalInRightSubtree = minimalInRightSubtree->left;
-    }
-    current->value = minimalInRightSubtree->value;
-    if (minimalInRightSubtree->left)
-    {
-        deleteNodeWithOneChild(previous, minimalInRightSubtree);
-    }
-    else
-    {
-        if (!previous || previous->value > minimalInRightSubtree->value)
-        {
-            previous->left = nullptr;
-        }
-        else if (!previous)
-        {
-            previous->right = nullptr;
-        }
-        delete minimalInRightSubtree;
-        
-    }
-}
-
-void deleteNodeWithOneChild(Node *previous, Node *current)
-{
-    Node *child = nullptr;
-    if (current->left)
-    {
-        
-        child = current->left;
-    }
-    else
-    {
-        child = current->right;
-    }
-    if (previous->value > current->value)
-    {
-        previous->right = child;
-        delete current;
-    }
-    else
-    {
-        previous->left = child;
-        delete current;
-    }
+    delete node;
 }
 
 bool isElementBelongs(BinaryTree *binaryTree, int number)
@@ -206,8 +161,8 @@ void printInAscendingOrder(BinaryTree *binaryTree)
         if (current->left)
         {
             printInAscendingOrder(current->left);
-            cout << current->value << " ";
         }
+        cout << current->value << " ";
         if (current->right)
         {
             printInAscendingOrder(current->right);
@@ -252,8 +207,8 @@ void printInDescendingOrder(BinaryTree *binaryTree)
         if (current->right)
         {
             printInDescendingOrder(current->right);
-            cout << current->value << " ";
         }
+        cout << current->value << " ";
         if (current->left)
         {
             printInDescendingOrder(current->left);
