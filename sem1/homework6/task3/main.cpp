@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void outputDegrees (int array[], int number)
+void outputDegrees(int array[], int number)
 {
     for (int i = 0; i < number - 1; i++)
     {
@@ -56,18 +56,25 @@ void outputDegrees (int array[], int number)
 
 void outputBasis(int array[], int number)
 {
-    if (array[0] < 0)
+    if (number == 1)
     {
-        cout << "-";
-        array[0] = -1 * array[0];
-    }
-    if (array[0] != 1)
-    {
-        cout << array[0] << "x";
+        cout << array[0];
     }
     else
     {
-        cout << "x";
+        if (array[0] < 0)
+        {
+            cout << "-";
+            array[0] = -1 * array[0];
+        }
+        if (array[0] != 1)
+        {
+            cout << array[0] << "x";
+        }
+        else
+        {
+            cout << "x";
+        }
     }
     for (int i = 1; i < number; ++i)
     {
@@ -83,7 +90,8 @@ void outputBasis(int array[], int number)
             {
                 cout << "- ";
                 array[i] = -1 * array[i];
-            } else
+            }
+            else
             {
                 cout << "+ ";
             }
@@ -119,5 +127,6 @@ int main()
     cout << endl;
     outputDegrees(array, number);
     outputBasis(array, number);
+    delete[] array;
     return 0;
 }
