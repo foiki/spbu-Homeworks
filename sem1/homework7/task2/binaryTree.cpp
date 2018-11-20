@@ -115,7 +115,7 @@ void remove(Node *&node)
         Node **minimalInRightSubtree = &node->right;
         while ((*minimalInRightSubtree)->left)
         {
-            *minimalInRightSubtree = (*minimalInRightSubtree)->left;
+            minimalInRightSubtree = &(*minimalInRightSubtree)->left;
         }
         node->value = (*minimalInRightSubtree)->value;
         remove(*minimalInRightSubtree);
