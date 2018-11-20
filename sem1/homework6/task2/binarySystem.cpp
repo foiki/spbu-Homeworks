@@ -3,18 +3,18 @@
 
 using namespace std;
 
-const int countOfBitesForEachNumber = 16;
+const int countOfBitsForEachNumber = 16;
 
 void fromDecimalToBinary(int number, int *result)
 {
-    int *reversedNumber = new int[countOfBitesForEachNumber] {0};
+    int *reversedNumber = new int[countOfBitsForEachNumber] {0};
     if(number >= 0)
     {
-        reversedNumber[countOfBitesForEachNumber - 1] = 0;
+        reversedNumber[countOfBitsForEachNumber - 1] = 0;
     }
     else
     {
-        reversedNumber[countOfBitesForEachNumber - 1] = 1;
+        reversedNumber[countOfBitsForEachNumber - 1] = 1;
         number *= -1;
     }
     int i = 0;
@@ -25,15 +25,15 @@ void fromDecimalToBinary(int number, int *result)
         ++i;
     }
     reversedNumber[i] = number;
-    for (int i = countOfBitesForEachNumber - 1; i >= 0; --i)
+    for (int i = countOfBitsForEachNumber - 1; i >= 0; --i)
     {
-        result[countOfBitesForEachNumber - i - 1] = reversedNumber[i];
+        result[countOfBitsForEachNumber - i - 1] = reversedNumber[i];
     }
     if (result[0] == 1)
     {
-        for (int i = 1; i < countOfBitesForEachNumber; ++i)
+        for (int i = 1; i < countOfBitsForEachNumber; ++i)
         {
-            if (result[i] == 1)
+            if (result[i] == 1 - result[i])
             {
                 result[i] = 0;
             }
@@ -43,11 +43,12 @@ void fromDecimalToBinary(int number, int *result)
             }
         }
     }
+    delete[] reversedNumber;
 }
 
 void printBinaryNumber(int *number)
 {
-    for (int i = 0; i < countOfBitesForEachNumber; ++i)
+    for (int i = 0; i < countOfBitsForEachNumber; ++i)
     {
         cout << number[i];
     }
@@ -57,7 +58,7 @@ void printBinaryNumber(int *number)
 void additionInBinary(int *firstNumber, int *secondNumber, int *result)
 {
     int overflow = 0;
-    for (int i = countOfBitesForEachNumber - 1; i >= 0; --i)
+    for (int i = countOfBitsForEachNumber - 1; i >= 0; --i)
     {
         result[i] = firstNumber[i] + secondNumber[i] + overflow;
         overflow = 0;
@@ -74,7 +75,7 @@ void additionInBinary(int *firstNumber, int *secondNumber, int *result)
 
         if (i == 0 && overflow == 1)
         {
-            int j = countOfBitesForEachNumber - 1;
+            int j = countOfBitsForEachNumber - 1;
             while (overflow != 0)
             {
                 result[j] += overflow;
@@ -90,7 +91,7 @@ void additionInBinary(int *firstNumber, int *secondNumber, int *result)
     }
     if (result[0] == 1)
     {
-        for (int i = 1; i < countOfBitesForEachNumber; ++i)
+        for (int i = 1; i < countOfBitsForEachNumber; ++i)
         {
             if (result[i] == 1)
             {
@@ -108,7 +109,7 @@ int binaryToDecimal(int *sumInBinary)
 {
     int result = 0;
     int factor = 1;
-    for (int i = countOfBitesForEachNumber - 1; i > 0; --i)
+    for (int i = countOfBitsForEachNumber - 1; i > 0; --i)
     {
         result += sumInBinary[i] * factor;
         factor *= 2;
