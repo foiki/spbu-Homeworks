@@ -1,12 +1,11 @@
 #include <iostream>
-#include "ATDSet.h"
-#include "binaryTree.h"
+#include "ATD.h"
 
 using namespace std;
 
 int main()
 {
-    BinaryTree *binaryTree = createTree();
+    Tree *tree = createTree();
     cout << "Empty binary tree has been created." << endl;
     int newRequest = -1;
     cout << "Enter '7' to see help menu" << endl;
@@ -19,22 +18,22 @@ int main()
                 cout << "Bye:)))" << endl;
                 break;
             case 1:
-                addNewElement(binaryTree);
+                addNewElement(tree);
                 break;
             case 2:
-                removeElement(binaryTree);
+                removeElement(tree);
                 break;
             case 3:
-                elementExist(binaryTree);
+                elementExist(tree);
                 break;
             case 4:
-                printInAscendingOrder(binaryTree);
+                printInAscendingOrder(tree);
                 break;
             case 5:
-                printInDescendingOrder(binaryTree);
+                printInDescendingOrder(tree);
                 break;
             case 6:
-                printInABCFormat(binaryTree);
+                printInABCFormat(tree);
                 break;
             case 7:
                 cout << "Enter '1' to add new element" << endl;
@@ -45,6 +44,6 @@ int main()
                 cout << "Enter '6' to print tree in ABC format" << endl;
         }
     }
-    deleteTree(binaryTree);
+    deleteTree(tree);
     return 0;
 }
