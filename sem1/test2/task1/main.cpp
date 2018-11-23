@@ -16,6 +16,13 @@ int main()
         firstNumber = secondNumber;
         secondNumber = result;
     }
-    cout << "Result: " << result << endl;
+    if (index == 1 || index == 2)
+    {
+        cout << "Result: " << 1 << endl;
+    }
+    else
+    {
+        cout << "Result: " << result << endl;
+    }
     return 0;
 }
