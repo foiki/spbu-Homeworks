@@ -107,9 +107,12 @@ bool isDate(char *string)
             {
                 int newDay = (string[0] - '0') * 10 + (string[1] - '0');
                 int newMonth = (string[3] - '0') * 10 + (string[4] - '0');
-                if (isDateReal(newDay, newMonth))
+                if (newDay > 0)
                 {
-                    return 1;
+                    if (isDateReal(newDay, newMonth))
+                    {
+                        return 1;
+                    }
                 }
             }
         }
