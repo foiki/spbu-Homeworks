@@ -177,6 +177,7 @@ int main()
     {
         cout << "File not found!" << endl;
     }
+    fin.close();
     if (isSomethingAlreadyTested)
     {
         cout << "Minimum date is: ";
