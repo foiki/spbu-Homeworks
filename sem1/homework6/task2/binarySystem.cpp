@@ -33,14 +33,7 @@ void fromDecimalToBinary(int number, int *result)
     {
         for (int i = 1; i < countOfBitsForEachNumber; ++i)
         {
-            if (result[i] == 1 - result[i])
-            {
-                result[i] = 0;
-            }
-            else
-            {
-                result[i] = 1;
-            }
+            result[i] = 1 - result[i];
         }
     }
     delete[] reversedNumber;
