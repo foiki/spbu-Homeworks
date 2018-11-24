@@ -80,7 +80,16 @@ void outputBasis(int array[], int number)
     {
         if (array[i] != 0)
         {
-            int previousDegree = number - i + 1;
+            int previousDegree = 0;
+            int j = i - 1;
+            while (previousDegree == 0)
+            {
+                if (array[j] != 0)
+                {
+                    previousDegree = number - j;
+                }
+                --j;
+            }
             while (previousDegree > 0)
             {
                 cout << " ";
