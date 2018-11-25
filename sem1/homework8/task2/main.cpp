@@ -31,7 +31,7 @@ int main()
     }
     else
     {
-        cout << "String is not empty" << endl;
+        cout << "'string' is not empty" << endl;
     }
     String *newString = subString(string ,4 , 7);
     cout << "Сopied seven elements of the 'string' starting from the fourth:" << endl;

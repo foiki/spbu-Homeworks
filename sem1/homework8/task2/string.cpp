@@ -27,8 +27,8 @@ void deleteString(String *string)
     if (string->elements)
     {
         delete[] string->elements;
-        string->elements = nullptr;
     }
+    delete[] string;
 }
 
 String *clone(String *string)
@@ -37,7 +37,7 @@ String *clone(String *string)
     {
         return createString();
     }
-    return new String {string->elements, string->length};
+    return charToString(string->elements);
 }
 
 String *concatenation(String *firstString, String *secondString)
@@ -89,11 +89,7 @@ long length(String *string)
 
 bool isEmpty(String *string)
 {
-    if (string && string->elements && string->length > 0)
-    {
-        return 0;
-    }
-    return 1;
+    return !(string && string->elements && string->length > 0);
 }
 
 String *subString(String *string, long i, long lenght)
