@@ -92,6 +92,7 @@ void remove(Node *&node, int number)
 
 void remove(Node *&node)
 {
+    
     if (!node->left && !node->right)
     {
         Node *removing = node;
@@ -120,7 +121,7 @@ void remove(Node *&node)
         node->value = (*minimalInRightSubtree)->value;
         remove(*minimalInRightSubtree);
         updateHeight(node);
-        balance(node);
+        node = balance(node);
     }
 }
 
