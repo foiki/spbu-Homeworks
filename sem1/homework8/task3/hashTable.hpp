@@ -22,3 +22,4 @@ void newWordProcessing(hashTable *table, char *newWord);
 int maximumTestes(hashTable *table);
 void wordsWithMaxTests(hashTable *table, int maxTestes);
 double averageValueOfTests(hashTable *table);
+void printResults(hashTable *table);
