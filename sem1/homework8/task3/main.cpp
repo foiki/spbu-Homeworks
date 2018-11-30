@@ -31,7 +31,7 @@ int main()
     {
         if (table->bucket[i])
         {
-            cout << table->bucket[i]->countOfSameWords << " " << table->bucket[i]->countOfTests << " ";
+            cout << table->bucket[i]->countOfSameWords << " ";
             printString(table->bucket[i]->word);
         }
     }
