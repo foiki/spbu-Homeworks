@@ -1,17 +1,17 @@
 #include <iostream>
-#include "ATD.h"
+#include "binaryTree.h"
 
 using namespace std;
 
-Tree *createTree()
+BinaryTree *createTree()
 {
-    return new Tree {nullptr};
+    return new BinaryTree {nullptr};
 }
 
-void add(Tree *tree, int number)
+void add(BinaryTree *binaryTree, int number)
 {
     Node *previous = nullptr;
-    Node *current = tree->root;
+    Node *current = binaryTree->root;
     while (current)
     {
         if (current->value > number)
@@ -41,15 +41,15 @@ void add(Tree *tree, int number)
     }
     else
     {
-        tree->root = newElement;
+        binaryTree->root = newElement;
     }
 }
 
-void remove(Tree *&tree, int number)
+void remove(BinaryTree *&binaryTree, int number)
 {
-    if (tree->root)
+    if (binaryTree->root)
     {
-        remove(tree->root, number);
+        remove(binaryTree->root, number);
     }
     else
     {
@@ -110,13 +110,13 @@ void remove(Node *&node)
     }
 }
 
-void deleteTree(Tree *tree)
+void deleteTree(BinaryTree *binaryTree)
 {
-    if (tree->root)
+    if (binaryTree->root)
     {
-        deleteNode(tree->root);
+        deleteNode(binaryTree->root);
     }
-    delete tree;
+    delete binaryTree;
 }
 
 void deleteNode(Node *node)
@@ -132,9 +132,9 @@ void deleteNode(Node *node)
     delete node;
 }
 
-bool isElementBelongs(Tree *tree, int number)
+bool isElementBelongs(BinaryTree *binaryTree, int number)
 {
-    Node *current = tree->root;
+    Node *current = binaryTree->root;
     while (current)
     {
         if (current->value > number)
@@ -153,9 +153,9 @@ bool isElementBelongs(Tree *tree, int number)
     return false;
 }
 
-void printInAscendingOrder(Tree *tree)
+void printInAscendingOrder(BinaryTree *binaryTree)
 {
-    Node *current = tree->root;
+    Node *current = binaryTree->root;
     if (current)
     {
         if (current->left)
@@ -199,9 +199,9 @@ void printInAscendingOrder(Node *node)
     }
 }
 
-void printInDescendingOrder(Tree *tree)
+void printInDescendingOrder(BinaryTree *binaryTree)
 {
-    Node *current = tree->root;
+    Node *current = binaryTree->root;
     if (current)
     {
         if (current->right)
@@ -245,9 +245,9 @@ void printInDescendingOrder(Node *node)
     }
 }
 
-void printInABCFormat(Tree *tree)
+void printInABCFormat(BinaryTree *binaryTree)
 {
-    Node *current = tree->root;
+    Node *current = binaryTree->root;
     if (current)
     {
         printInABCFormat(current);
@@ -279,37 +279,4 @@ void printInABCFormat(Node *node)
         cout << "null";
     }
     cout << ")";
-}
-
-
-void addNewElement(Tree *tree)
-{
-    cout << "Enter new element to add: ";
-    int newElement = 0;
-    cin >> newElement;
-    add(tree, newElement);
-}
-
-void removeElement(Tree *tree)
-{
-    cout << "Enter the element to remove: ";
-    int toDelete = 0;
-    cin >> toDelete;
-    remove(tree, toDelete);
-}
-
-void elementExist(Tree *tree)
-{
-    cout << "Enter the element to search: ";
-    int toSearch = 0;
-    cin >> toSearch;
-    bool result = isElementBelongs(tree, toSearch);
-    if (result)
-    {
-        cout << "Element is in the tree" << endl;
-    }
-    else
-    {
-        cout << "Element is not in the tree" << endl;
-    }
 }
