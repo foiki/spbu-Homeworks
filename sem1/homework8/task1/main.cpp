@@ -2,17 +2,17 @@
 
 using namespace std;
 
-int findOriginal(int *array, int number)
+int findOriginal(int *studentsWorks, int number)
 {
     if (number == 1 || number == 2 || number == 3)
     {
         return number;
     }
-    else if (array[number] == -1)
+    else if (studentsWorks[number] == -1)
     {
         return -1;
     }
-    return findOriginal(array, array[number]);
+    return findOriginal(studentsWorks, studentsWorks[number]);
 }
 
 int main()
@@ -21,10 +21,10 @@ int main()
     int number = 0;
     cin >> number;
     cout << "Enter the pairs of students and numbers of their homeworks without first three:" << endl;
-    int *array = new int[number + 1] {0};
+    int *studentsWorks = new int[number + 1] {0};
     for (int i = 1; i <= 3; ++i)
     {
-        array[i] = i;
+        studentsWorks[i] = i;
     }
     for (int i = 0; i < number - 3; ++i)
     {
@@ -32,13 +32,14 @@ int main()
         cin >> numberOfStudent;
         int numberOfHomework = 0;
         cin >> numberOfHomework;
-        array[numberOfStudent] = numberOfHomework;
+        studentsWorks[numberOfStudent] = numberOfHomework;
     }
     cout << endl;
     for (int i = 1; i <= number; i++)
     {
-        array[i] = findOriginal(array, i);
-        cout << i << " " << array[i] << endl;
+        studentsWorks[i] = findOriginal(studentsWorks, i);
+        cout << i << " " << studentsWorks[i] << endl;
     }
+    delete[] studentsWorks;
     return 0;
 }
