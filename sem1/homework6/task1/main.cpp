@@ -2,12 +2,12 @@
 
 using namespace std;
 
-int degreeCalculating(unsigned char *numberInBinary)
+int calculateDegree(unsigned char *numberInBinary)
 {
     return ((numberInBinary[7] & 0b01111111) << 4) + (numberInBinary[6] >> 4) - 1023;
 }
 
-void mantisaCalculating(unsigned char *&numberInBinary)
+void calculateMantisa(unsigned char *&numberInBinary)
 {
     numberInBinary[6] &= 0b00001111;
     numberInBinary[6] += 0b11110000;
@@ -29,8 +29,8 @@ int main()
         unsigned char *numberInBinary = (unsigned char *)&number;
         unsigned char sign = 0b10000000;
         cout << ((numberInBinary[7] & sign) ? "-" : "+");
-        int degree = degreeCalculating(numberInBinary);
-        mantisaCalculating(numberInBinary);
+        int degree = calculateDegree(numberInBinary);
+        calculateMantisa(numberInBinary);
         cout << number << "*2^" << degree << endl;
     }
 }
