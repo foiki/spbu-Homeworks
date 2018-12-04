@@ -62,6 +62,7 @@ void remove(BinaryTree *&binaryTree, int number)
     if (binaryTree->root)
     {
         remove(binaryTree->root, number);
+        binaryTree->root = balance(binaryTree->root);
     }
     else
     {
@@ -120,8 +121,6 @@ void remove(Node *&node)
         }
         node->value = (*minimalInRightSubtree)->value;
         remove(*minimalInRightSubtree);
-        updateHeight(node);
-        node = balance(node);
     }
 }
 
