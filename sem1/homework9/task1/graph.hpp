@@ -19,5 +19,5 @@ void graphPrint(Graph *graph);
 int numberOfNearestFreeCity(int *roads, int size, bool *used);
 int lengthToNearestFreeCity(int *roads, int size, bool *used);
 int numberOfNearestFreeCity(Graph *graph, int current, bool *used);
-void findingNewCities(Graph *graph);
+void findNewCities(Graph *graph);
 void printStates(Graph *graph);

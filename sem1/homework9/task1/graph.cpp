@@ -173,7 +173,7 @@ void addNewCityToState(int *state, int size, int numberOfCity)
     }
 }
 
-void findingNewCities(Graph *graph)
+void findNewCities(Graph *graph)
 {
     int freeCities = graph->size - graph->numberOfStates;
     int current = 0;

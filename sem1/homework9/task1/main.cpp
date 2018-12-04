@@ -14,7 +14,7 @@ int main()
     }
     Graph *graph = graphRead(fin);
     fin.close();
-    findingNewCities(graph);
+    findNewCities(graph);
     printStates(graph);
     deleteGraph(graph);
     return 0;
