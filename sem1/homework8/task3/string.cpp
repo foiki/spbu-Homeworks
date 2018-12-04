@@ -68,14 +68,7 @@ void printString(String *string)
 
 bool compare(String *firstString, String *secondString)
 {
-    if (firstString->length == secondString->length)
-    {
-        if (strcmp(firstString->elements, secondString->elements) == 0)
-        {
-            return 0;
-        }
-    }
-    return 1;
+    return (strcmp(firstString->elements, secondString->elements) != 0);
 }
 
 long length(String *string)
