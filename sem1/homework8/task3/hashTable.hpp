@@ -18,6 +18,8 @@ hashTable *createHashTable();
 void deleteTable(hashTable *table);
 int hashFunction(char *string);
 void addNewWord(hashTable *table, String *newWord, int position, int countOfTests);
+hashTableArray *quadraticSample(hashTable *table, String *string, int position);
+bool exist(hashTable *table, String *string, int position);
 void newWordProcessing(hashTable *table, char *newWord);
 int maximumTestes(hashTable *table);
 void wordsWithMaxTests(hashTable *table, int maxTestes);

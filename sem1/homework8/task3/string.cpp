@@ -28,7 +28,7 @@ void deleteString(String *string)
     {
         delete[] string->elements;
     }
-    delete[] string;
+    delete string;
 }
 
 String *clone(String *string)

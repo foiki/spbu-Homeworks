@@ -49,46 +49,56 @@ void addNewWord(hashTable *table, String *newWord, int position, int countOfTest
     table->bucket[position] = newElement;
 }
 
+hashTableArray *quadraticSample(hashTable *table, String *string, int position)
+{
+    int attemtp = 0;
+    int shift = attemtp * attemtp;
+    int countOfTests = 2;
+    int newPosition = (position + shift) % size;
+    hashTableArray *current = table->bucket[newPosition];
+    while (current && compare(current->word, string))
+    {
+        ++attemtp;
+        ++countOfTests;
+        shift = attemtp * attemtp;
+        newPosition = (position + shift) % size;
+        current = table->bucket[newPosition];
+    }
+    return current;
+}
+
+bool exist(hashTable *table, String *string, int position)
+{
+    return quadraticSample(table, string, position);
+}
+
 void newWordProcessing(hashTable *table, char *newWord)
 {
     String *newString = charToString(newWord);
     int position = hashFunction(newString);
-    if (!table->bucket[position])
+    if (exist(table, newString, position))
     {
-        addNewWord(table, newString, position, 1);
-        ++table->countOfWords;
+        hashTableArray *current = quadraticSample(table, newString, position);
+        ++current->countOfSameWords;
+        deleteString(newString);
     }
     else
     {
-        if (!compare(table->bucket[position]->word, newString))
+        int attemtp = 0;
+        int shift = attemtp * attemtp;
+        int countOfTests = 2;
+        int newPosition = (position + shift) % size;
+        hashTableArray *current = table->bucket[newPosition];
+        while (current)
         {
-            ++table->bucket[position]->countOfSameWords;
-            deleteString(newString);
+            ++attemtp;
+            ++countOfTests;
+            shift = attemtp * attemtp;
+            newPosition = (position + shift) % size;
+            current = table->bucket[newPosition];
         }
-        else
-        {
-            int attemtp = 1;
-            int shift = attemtp * attemtp;
-            int countOfTests = 2;
-            int newPosition = (position + shift) % size;
-            hashTableArray *current = table->bucket[newPosition];
-            while (current && compare(current->word, newString))
-            {
-                ++attemtp;
-                ++countOfTests;
-                shift = attemtp * attemtp;
-                newPosition = (position + shift) % size;
-                current = table->bucket[newPosition];
-            }
-            if (!current)
-            {
-                addNewWord(table, newString, newPosition, countOfTests);
-            }
-            else
-            {
-                ++current->countOfSameWords;
-            }
-        }
+        addNewWord(table, newString, newPosition, countOfTests);
+        ++table->countOfWords;
     }
 }
 
