@@ -12,7 +12,7 @@ ATDSet *createSet()
 void deleteSet(ATDSet *set)
 {
     deleteTree(set->tree);
-    delete[] set;
+    delete set;
 }
 
 void addNewElement(ATDSet *set)
