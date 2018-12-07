@@ -13,7 +13,7 @@ void fileRead(List *list, ifstream &fin)
     while (!fin.eof())
     {
         char newSurname[maxSize]{0};
-        int newLoyalty = 0;
+        long newLoyalty = 0;
         char ch;
         fin >> newSurname >> ch >> newLoyalty;
         if (!fin.eof())
@@ -41,7 +41,7 @@ void exilePeople(List *list, int toExile)
     ListElement *current = list->first;
     while (current && toExile > 0)
     {
-        if (current->loyalty != 1)
+        if (current->whatToDo == 0)
         {
             current->whatToDo = 2;
             --toExile;

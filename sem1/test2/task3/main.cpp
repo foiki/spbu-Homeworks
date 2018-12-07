@@ -15,10 +15,10 @@ int main()
     ifstream fin("input.txt");
     List *list = createList();
     fileRead(list, fin);
-    //listPrint(list);
     killMostDangerous(list, toKill);
     exilePeople(list, toExile);
     cout << endl;
     listPrint(list);
+    deleteList(list);
     return 0;
 }
