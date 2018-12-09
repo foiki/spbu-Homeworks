@@ -8,11 +8,6 @@ HuffmanTree *createTree()
     return new HuffmanTree{nullptr};
 }
 
-Node *createNode(String *symbols, int countOfSame, Node *left, Node *right)
-{
-    return new Node{symbols, countOfSame, false, nullptr, left, right};
-}
-
 void deleteNode(Node *node)
 {
     if (node)

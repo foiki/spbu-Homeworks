@@ -41,7 +41,7 @@ void huffmanAlgorithm(HuffmanTree *tree, char *symbols, int *numberOfEachSymbol,
     {
         char *newElement = new char[1];
         newElement[0] = symbols[i];
-        Node *newNode = createNode(charToString(newElement), numberOfEachSymbol[i], nullptr, nullptr);
+        Node *newNode = new Node{charToString(newElement), numberOfEachSymbol[i], nullptr, nullptr};
         newNode->isLeaf = true;
         add(list, newNode);
     }

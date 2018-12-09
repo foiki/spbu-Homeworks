@@ -81,35 +81,3 @@ long length(String *string)
     }
     return 0;
 }
-
-bool isEmpty(String *string)
-{
-    return !(string && string->elements && string->length > 0);
-}
-
-String *subString(String *string, long i, long lenght)
-{
-    if (string && string->elements)
-    {
-        String *newString = createString();
-        newString->elements = new char[lenght];
-        for (int j = 0; j < lenght; ++j)
-        {
-            newString->elements[j] = string->elements[j + i];
-        }
-        newString->length = lenght;
-        return newString;
-    }
-    return createString();
-}
-
-char *stringToChar(String *string)
-{
-    if (string && string->elements)
-    {
-        char *newArray = new char[string->length];
-        strcpy(newArray, string->elements);
-        return newArray;
-    }
-    return nullptr;
-}

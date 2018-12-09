@@ -19,7 +19,6 @@ struct HuffmanTree
 };
 
 HuffmanTree *createTree();
-Node *createNode(String *symbols, int countOfSame, Node *left, Node *right);
 void deleteNode(Node *node);
 void deleteTree(HuffmanTree *tree);
 void printInABCFormat(HuffmanTree *tree);

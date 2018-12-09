@@ -29,8 +29,19 @@ void deleteList(List *list)
 
 void add(List *list, Node *node)
 {
-    ListElement *newElement = new ListElement{node, list->first};
-    list->first = newElement;
+    ListElement *current = list->first;
+    if ((list->first == nullptr) || current->node->countOfSame > node->countOfSame)
+    {
+        ListElement *oldListFirst = list->first;
+        list->first = new ListElement{node, oldListFirst};
+        return;
+    }
+    while (current->next && current->next->node->countOfSame < node->countOfSame)
+    {
+        current = current->next;
+    }
+    ListElement *newElement = new ListElement{node, current->next};
+    current->next = newElement;
 }
 
 void remove(List *list, ListElement *&current)
@@ -54,29 +65,9 @@ void printList(List *list)
 
 Node *findMinimum(List *list)
 {
-    ListElement *beforeMinimum = list->first;
-    ListElement *current = list->first;
-    while (current->next)
-    {
-        if (current->next->node->countOfSame < beforeMinimum->next->node->countOfSame)
-        {
-            beforeMinimum = current;
-        }
-        current = current->next;
-    }
-    Node *minimumNode = beforeMinimum->next->node;
-    ListElement *toRemove = beforeMinimum->next;
-    if (list->first->node->countOfSame <= beforeMinimum->next->node->countOfSame)
-    {
-        minimumNode = list->first->node;
-        toRemove = list->first;
-        list->first = list->first->next;
-    }
-    else
-    {
-        beforeMinimum->next = beforeMinimum->next->next;
-    }
+    Node *minimum = list->first->node;
+    ListElement *toRemove = list->first;
+    list->first = list->first->next;
     delete toRemove;
-    toRemove = nullptr;
-    return minimumNode;
+    return minimum;
 }
