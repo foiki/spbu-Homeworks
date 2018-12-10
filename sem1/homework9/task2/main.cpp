@@ -19,15 +19,6 @@ int main()
     huffmanAlgorithm(huffmanTree, symbols, numberOfEachSymbol, numberOfSymbols);
     printInABCFormat(huffmanTree);
     String **codes = getCodes(huffmanTree);
-    for (int i = 0; i < size; ++i)
-    {
-        if (codes[i])
-        {
-            cout << (char)i << " ";
-            printString(codes[i]);
-            cout << endl;
-        }
-    }
     printCode(codes, fin);
     deleteTree(huffmanTree);
     delete[] symbols;
