@@ -24,11 +24,17 @@ String *charToString(char *array)
 
 void deleteString(String *string)
 {
-    if (string && string->elements)
+    if (string != nullptr)
     {
-        delete[] string->elements;
+        if (string->elements)
+        {
+            delete[] string->elements;
+            string->elements = nullptr;
+        }
+        delete string;
+        string = nullptr;
     }
-    delete string;
+    
 }
 
 String *clone(String *string)
@@ -61,7 +67,7 @@ void printString(String *string)
 {
     if (string && string->elements)
     {
-        for (int i = 0; i <= string->length; ++i)
+        for (int i = 0; i < string->length; ++i)
         {
             cout << string->elements[i];
         }

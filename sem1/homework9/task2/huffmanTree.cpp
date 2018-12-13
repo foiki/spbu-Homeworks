@@ -14,10 +14,6 @@ void deleteNode(Node *node)
     {
         deleteNode(node->left);
         deleteNode(node->right);
-        if (node->code)
-        {
-            deleteString(node->code);
-        }
         if (node->symbols)
         {
             deleteString(node->symbols);

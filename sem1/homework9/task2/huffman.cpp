@@ -3,23 +3,15 @@
 
 using namespace std;
 
-int fileEnd()
-{
-    return 10;
-}
-
-void textRead(char *symbols, int *numberOfEachSymbol, ifstream &fin, int &numberOfSymbols)
+void textRead(char *symbols, int *numberOfEachSymbol, char *text, int &numberOfSymbols)
 {
     char *newSymbols = new char[size];
     int *newNumberOfEachSymbol = new int[size]{0};
-    while (!fin.eof())
+    long length = strlen(text);
+    for (int i = 0; i < length; ++i)
     {
-        char newSymbol = fin.get();
-        if (newSymbol != fileEnd())
-        {
-            ++newNumberOfEachSymbol[newSymbol];
-            newSymbols[newSymbol] = newSymbol;
-        }
+        ++newNumberOfEachSymbol[text[i]];
+        newSymbols[text[i]] = text[i];
     }
     for (int i = 0; i < size; ++i)
     {
@@ -45,7 +37,7 @@ void huffmanAlgorithm(HuffmanTree *tree, char *symbols, int *numberOfEachSymbol,
         newNode->isLeaf = true;
         add(list, newNode);
     }
-    cout << "Еhe frequency of occurrences of characters:" << endl;
+    cout << "The frequency of occurrences of characters:" << endl;
     printList(list);
     while (list->first->next->next)
     {
@@ -53,14 +45,14 @@ void huffmanAlgorithm(HuffmanTree *tree, char *symbols, int *numberOfEachSymbol,
         Node *secondMinimum = findMinimum(list);
         String *newSymbols = clone(concatenation(clone(firstMinimum->symbols), secondMinimum->symbols));
         int newCount = firstMinimum->countOfSame + secondMinimum->countOfSame;
-        Node *newNode = new Node{newSymbols, newCount, false, nullptr, firstMinimum, secondMinimum};
+        Node *newNode = new Node{newSymbols, newCount, false, firstMinimum, secondMinimum};
         add(list, newNode);
     }
     Node *firstMinimum = findMinimum(list);
     Node *secondMinimum = list->first->node;
     String *newSymbols = clone(concatenation(clone(firstMinimum->symbols), secondMinimum->symbols));
     int newCount = firstMinimum->countOfSame + secondMinimum->countOfSame;
-    Node *newNode = new Node{newSymbols, newCount, false, nullptr, firstMinimum, secondMinimum};
+    Node *newNode = new Node{newSymbols, newCount, false, firstMinimum, secondMinimum};
     delete list->first;
     delete list;
     tree->root = newNode;
@@ -70,11 +62,11 @@ void getCodes(Node *node, String **codes, String *currentCode)
 {
     if (node->isLeaf)
     {
-        if (length(node->code) == 0)
+        char currentSymbol = node->symbols->elements[0];
+        if (!codes[currentSymbol])
         {
-            node->code = currentCode;
+            codes[currentSymbol] = currentCode;
         }
-        codes[node->symbols->elements[0]] = currentCode;
     }
     char left[2] = {'0', '\0'};
     char right[2] = {'1', '\0'};
@@ -100,16 +92,27 @@ String **getCodes(HuffmanTree *huffmanTree)
     return codes;
 }
 
-void printCode(String **codes, ifstream &fin)
+void printCode(String **codes, char *text)
 {
-    fin.clear();
-    fin.seekg(0, ios::beg);
-    while (!fin.eof())
+    long length = strlen(text);
+    for (int i = 0; i < length; ++i)
     {
-        char newSymbol = fin.get();
-        if (newSymbol != fileEnd())
+        if (text[i] != '\t')
         {
-            printString(codes[(int)newSymbol]);
+            printString(codes[text[i]]);
         }
     }
+    cout << endl;
+}
+
+void deleteCodes(String **codes)
+{
+    for (int i = 0; i < size; ++i)
+    {
+        if (codes[i] != nullptr)
+        {
+            deleteString(codes[i]);
+        }
+    }
+    delete[] codes;
 }

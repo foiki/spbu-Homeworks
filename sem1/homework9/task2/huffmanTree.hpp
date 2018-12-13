@@ -8,7 +8,6 @@ struct Node
     String *symbols;
     int countOfSame;
     bool isLeaf;
-    String *code;
     Node *left;
     Node *right;
 };
