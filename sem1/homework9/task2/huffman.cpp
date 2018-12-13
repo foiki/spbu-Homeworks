@@ -43,16 +43,14 @@ void huffmanAlgorithm(HuffmanTree *tree, char *symbols, int *numberOfEachSymbol,
     {
         Node *firstMinimum = findMinimum(list);
         Node *secondMinimum = findMinimum(list);
-        String *newSymbols = clone(concatenation(clone(firstMinimum->symbols), secondMinimum->symbols));
         int newCount = firstMinimum->countOfSame + secondMinimum->countOfSame;
-        Node *newNode = new Node{newSymbols, newCount, false, firstMinimum, secondMinimum};
+        Node *newNode = new Node{nullptr, newCount, false, firstMinimum, secondMinimum};
         add(list, newNode);
     }
     Node *firstMinimum = findMinimum(list);
     Node *secondMinimum = list->first->node;
-    String *newSymbols = clone(concatenation(clone(firstMinimum->symbols), secondMinimum->symbols));
     int newCount = firstMinimum->countOfSame + secondMinimum->countOfSame;
-    Node *newNode = new Node{newSymbols, newCount, false, firstMinimum, secondMinimum};
+    Node *newNode = new Node{nullptr, newCount, false, firstMinimum, secondMinimum};
     delete list->first;
     delete list;
     tree->root = newNode;

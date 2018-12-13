@@ -46,27 +46,21 @@ void printInABCFormat(HuffmanTree *tree)
 
 void printInABCFormat(Node *node)
 {
-    cout << "('";
-    for (int i = 0; i <= node->symbols->length; ++i)
+    cout << "(";
+    if (node->isLeaf)
     {
-        cout << node->symbols->elements[i];
+        if (node->symbols)
+        {
+            cout << '{' << node->symbols->elements[0] << '}';
+        }
     }
-    cout << "'";
     if (node->left)
     {
         printInABCFormat(node->left);
     }
-    else
-    {
-        cout << "null ";
-    }
     if (node->right)
     {
         printInABCFormat(node->right);
-    }
-    else
-    {
-        cout << "null";
     }
     cout << ")";
 }
