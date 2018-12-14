@@ -8,6 +8,11 @@ int main()
     cout << "Enter the number of elements: ";
     int number = 0;
     cin >> number;
+    if (number == 0)
+    {
+        cout << "Nothing to sort!" << endl;
+        return 0;
+    }
     cout << "Enter the elements: " << endl;
     List *list = createList();
     for (int i = 0; i < number; ++i)
