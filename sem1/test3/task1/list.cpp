@@ -40,14 +40,14 @@ void add(List *list, int newNumber)
     ListElement *current = list->first;
     if ((list->first == nullptr) || current->number > newNumber)
     {
-        list->first = new ListElement{newNumber, 1, list->first};
+        list->first = new ListElement {newNumber, 1, list->first};
         return;
     }
     while ((current->next) && (current->next->number < newNumber))
     {
         current = current->next;
     }
-    ListElement *newElement = new ListElement{newNumber, 1, current->next};
+    ListElement *newElement = new ListElement {newNumber, 1, current->next};
     current->next = newElement;
 }
 
