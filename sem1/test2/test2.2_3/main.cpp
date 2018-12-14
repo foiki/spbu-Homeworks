@@ -17,6 +17,7 @@ int main()
         add(list, newElement);
     }
     selectionSort(list);
+    cout << "Result: " << endl;
     printList(list);
     deleteList(list);
 }

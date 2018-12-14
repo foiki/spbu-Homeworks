@@ -22,7 +22,7 @@ void deleteList(List *list)
 
 void add(List *list, int newNumber)
 {
-    list->first = new ListElement{newNumber, list->first};
+    list->first = new ListElement {newNumber, list->first};
 }
 
 void selectionSort(List *list)
