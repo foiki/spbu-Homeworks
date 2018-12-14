@@ -11,7 +11,7 @@ int main()
     while (newElement != 0)
     {
         cin >> newElement;
-        if (newElement != 0 && !exist(list, newElement))
+        if (newElement != 0)
         {
             add(list, newElement);
         }

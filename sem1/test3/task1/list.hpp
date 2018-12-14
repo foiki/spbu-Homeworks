@@ -17,6 +17,5 @@ struct List
 
 List *createList();
 void deleteList(List *list);
-bool exist(List *list, int number);
 void add(List *list, int newNumber);
 void printList(List *list);

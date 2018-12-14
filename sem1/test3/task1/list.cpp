@@ -20,25 +20,10 @@ void deleteList(List *list)
     delete list;
 }
 
-bool exist(List *list, int number)
-{
-    ListElement *current = list->first;
-    while (current && current->number < number)
-    {
-        current = current->next;
-    }
-    if (current && current->number == number)
-    {
-        ++current->count;
-        return true;
-    }
-    return false;
-}
-
 void add(List *list, int newNumber)
 {
     ListElement *current = list->first;
-    if ((list->first == nullptr) || current->number > newNumber)
+    if (list->first == nullptr || current->number > newNumber)
     {
         list->first = new ListElement {newNumber, 1, list->first};
         return;
@@ -47,8 +32,15 @@ void add(List *list, int newNumber)
     {
         current = current->next;
     }
-    ListElement *newElement = new ListElement {newNumber, 1, current->next};
-    current->next = newElement;
+    if (current->next && current->next->number == newNumber)
+    {
+        ++current->next->count;
+    }
+    else
+    {
+        ListElement *newElement = new ListElement {newNumber, 1, current->next};
+        current->next = newElement;
+    }
 }
 
 void printList(List *list)
