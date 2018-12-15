@@ -36,6 +36,10 @@ void add(List *list, int newNumber)
     {
         ++current->next->count;
     }
+    else if (current->number == newNumber)
+    {
+        ++current->count;
+    }
     else
     {
         ListElement *newElement = new ListElement {newNumber, 1, current->next};
