@@ -19,12 +19,12 @@ void deleteGraph(Graph *graph)
 {
     for (int i = 0; i < graph->size; ++i)
     {
-        delete graph->adjacencyMatrix[i];
+        delete[] graph->adjacencyMatrix[i];
     }
     delete[] graph->adjacencyMatrix;
     for (int i = 0; i < graph->numberOfStates; ++i)
     {
-        delete graph->states[i];
+        delete[] graph->states[i];
     }
     delete[] graph->states;
     delete graph;
