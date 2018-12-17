@@ -62,7 +62,10 @@ void remove(BinaryTree *&binaryTree, int number)
     if (binaryTree->root)
     {
         remove(binaryTree->root, number);
-        binaryTree->root = balance(binaryTree->root);
+        if (binaryTree->root)
+        {
+            binaryTree->root = balance(binaryTree->root);
+        }
     }
     else
     {
