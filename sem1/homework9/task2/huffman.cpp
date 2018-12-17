@@ -3,37 +3,37 @@
 
 using namespace std;
 
-void textRead(char *symbols, int *numberOfEachSymbol, char *text, int &numberOfSymbols)
+void findSymbolFrequencyInText(char *symbols, int *symbolFrequency, char *text, int &numberOfSymbols)
 {
     char *newSymbols = new char[size];
-    int *newNumberOfEachSymbol = new int[size]{0};
+    int *newSymbolFrequency = new int[size]{0};
     long length = strlen(text);
     for (int i = 0; i < length; ++i)
     {
-        ++newNumberOfEachSymbol[text[i]];
+        ++newSymbolFrequency[text[i]];
         newSymbols[text[i]] = text[i];
     }
     for (int i = 0; i < size; ++i)
     {
-        if (newNumberOfEachSymbol[i] > 0)
+        if (newSymbolFrequency[i] > 0)
         {
             symbols[numberOfSymbols] = newSymbols[i];
-            numberOfEachSymbol[numberOfSymbols] = newNumberOfEachSymbol[i];
+            symbolFrequency[numberOfSymbols] = newSymbolFrequency[i];
             ++numberOfSymbols;
         }
     }
     delete[] newSymbols;
-    delete[] newNumberOfEachSymbol;
+    delete[] newSymbolFrequency;
 }
 
-void huffmanAlgorithm(HuffmanTree *tree, char *symbols, int *numberOfEachSymbol, int numberOfSymbols)
+void buildAHuffmanTree(HuffmanTree *tree, char *symbols, int *symbolFrequency, int numberOfSymbols)
 {
     List *list = createList();
     for (int i = 0; i < numberOfSymbols; ++i)
     {
         char *newElement = new char[1];
         newElement[0] = symbols[i];
-        Node *newNode = new Node{charToString(newElement), numberOfEachSymbol[i], nullptr, nullptr};
+        Node *newNode = new Node{charToString(newElement), symbolFrequency[i], nullptr, nullptr};
         newNode->isLeaf = true;
         add(list, newNode);
     }

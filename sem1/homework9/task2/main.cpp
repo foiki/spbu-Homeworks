@@ -12,21 +12,21 @@ int main()
         return 0;
     }
     char *symbols = new char[size];
-    int *numberOfEachSymbol = new int[size]{0};
+    int *symbolFrequency = new int[size]{0};
     char *text = new char[maxSize];
     fin.getline(text, maxSize);
     fin.close();
     int numberOfSymbols = 0;
-    textRead(symbols, numberOfEachSymbol, text, numberOfSymbols);
+    findSymbolFrequencyInText(symbols, symbolFrequency, text, numberOfSymbols);
     HuffmanTree *huffmanTree = createTree();
-    huffmanAlgorithm(huffmanTree, symbols, numberOfEachSymbol, numberOfSymbols);
+    buildAHuffmanTree(huffmanTree, symbols, symbolFrequency, numberOfSymbols);
     printInABCFormat(huffmanTree);
     String **codes = getCodes(huffmanTree);
     printCode(codes, text);
     deleteCodes(codes);
     deleteTree(huffmanTree);
     delete[] symbols;
-    delete[] numberOfEachSymbol;
+    delete[] symbolFrequency;
     delete[] text;
     return 0;
 }
