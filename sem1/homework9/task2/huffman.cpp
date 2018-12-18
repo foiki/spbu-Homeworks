@@ -33,8 +33,7 @@ void buildAHuffmanTree(HuffmanTree *tree, char *symbols, int *symbolFrequency, i
     {
         char *newElement = new char[1];
         newElement[0] = symbols[i];
-        Node *newNode = new Node{charToString(newElement), symbolFrequency[i], nullptr, nullptr};
-        newNode->isLeaf = true;
+        Node *newNode = new Node {charToString(newElement), symbolFrequency[i], true, nullptr, nullptr};
         add(list, newNode);
     }
     cout << "The frequency of occurrences of characters:" << endl;
@@ -44,13 +43,13 @@ void buildAHuffmanTree(HuffmanTree *tree, char *symbols, int *symbolFrequency, i
         Node *firstMinimum = findMinimum(list);
         Node *secondMinimum = findMinimum(list);
         int newCount = firstMinimum->countOfSame + secondMinimum->countOfSame;
-        Node *newNode = new Node{nullptr, newCount, false, firstMinimum, secondMinimum};
+        Node *newNode = new Node {nullptr, newCount, false, firstMinimum, secondMinimum};
         add(list, newNode);
     }
     Node *firstMinimum = findMinimum(list);
     Node *secondMinimum = list->first->node;
     int newCount = firstMinimum->countOfSame + secondMinimum->countOfSame;
-    Node *newNode = new Node{nullptr, newCount, false, firstMinimum, secondMinimum};
+    Node *newNode = new Node {nullptr, newCount, false, firstMinimum, secondMinimum};
     delete list->first;
     delete list;
     tree->root = newNode;
