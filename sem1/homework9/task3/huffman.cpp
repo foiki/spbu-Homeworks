@@ -14,14 +14,14 @@ Node *decode(ifstream &fin)
     {
         newSymbol = fin.get();
         char newString[1] = {newSymbol};
-        Node *newNode = new Node{charToString(newString), 0, true};
+        Node *newNode = new Node {charToString(newString), 0, true};
         return newNode;
     }
     Node *nodeLeft = decode(fin);
     fin.get();
     Node *nodeRight = decode(fin);
     fin.get();
-    return new Node{nullptr, 0, false, nullptr, nodeLeft, nodeRight};
+    return new Node {nullptr, 0, false, nullptr, nodeLeft, nodeRight};
 }
 
 char printDecode(Node *node, ifstream &fin)
