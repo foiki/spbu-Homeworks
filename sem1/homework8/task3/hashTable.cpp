@@ -6,14 +6,15 @@ using namespace std;
 
 const int size = 512;
 
-hashTable *createHashTable()
+HashTable *createHashTable()
 {
-    hashTable *newTable = new hashTable{nullptr, 0};
-    newTable->bucket = new hashTableArray*[size]{nullptr};
+    HashTable *newTable = new HashTable;
+    newTable->bucket = new HashTableArray*[size] {nullptr};
+    newTable->countOfWords = 0;
     return newTable;
 }
 
-void deleteTable(hashTable *table)
+void deleteTable(HashTable *table)
 {
     if (table)
     {
@@ -24,6 +25,7 @@ void deleteTable(hashTable *table)
                 if (table->bucket[i])
                 {
                     deleteString(table->bucket[i]->word);
+                    delete table->bucket[i];
                 }
             }
             delete[] table->bucket;
@@ -43,19 +45,19 @@ int hashFunction(String *string)
     return result;
 }
 
-void addNewWord(hashTable *table, String *newWord, int position, int countOfTests)
+void addNewWord(HashTable *table, String *newWord, int position, int countOfTests)
 {
-    hashTableArray *newElement = new hashTableArray{clone(newWord), 1, countOfTests};
+    HashTableArray *newElement = new HashTableArray{newWord, 1, countOfTests};
     table->bucket[position] = newElement;
 }
 
-hashTableArray *quadraticSample(hashTable *table, String *string, int position)
+HashTableArray *quadraticSample(HashTable *table, String *string, int position)
 {
     int attemtp = 0;
     int shift = attemtp * attemtp;
     int countOfTests = 2;
     int newPosition = (position + shift) % size;
-    hashTableArray *current = table->bucket[newPosition];
+    HashTableArray *current = table->bucket[newPosition];
     while (current && compare(current->word, string))
     {
         ++attemtp;
@@ -67,18 +69,18 @@ hashTableArray *quadraticSample(hashTable *table, String *string, int position)
     return current;
 }
 
-bool exist(hashTable *table, String *string, int position)
+bool exist(HashTable *table, String *string, int position)
 {
     return quadraticSample(table, string, position);
 }
 
-void newWordProcessing(hashTable *table, char *newWord)
+void newWordProcessing(HashTable *table, char *newWord)
 {
     String *newString = charToString(newWord);
     int position = hashFunction(newString);
     if (exist(table, newString, position))
     {
-        hashTableArray *current = quadraticSample(table, newString, position);
+        HashTableArray *current = quadraticSample(table, newString, position);
         ++current->countOfSameWords;
         deleteString(newString);
     }
@@ -88,7 +90,7 @@ void newWordProcessing(hashTable *table, char *newWord)
         int shift = attemtp * attemtp;
         int countOfTests = 2;
         int newPosition = (position + shift) % size;
-        hashTableArray *current = table->bucket[newPosition];
+        HashTableArray *current = table->bucket[newPosition];
         while (current)
         {
             ++attemtp;
@@ -102,7 +104,7 @@ void newWordProcessing(hashTable *table, char *newWord)
     }
 }
 
-int maximumTestes(hashTable *table)
+int maximumTestes(HashTable *table)
 {
     int result = 0;
     if (table && table->bucket)
@@ -119,7 +121,7 @@ int maximumTestes(hashTable *table)
     return 0;
 }
 
-void wordsWithMaxTests(hashTable *table, int maxTestes)
+void wordsWithMaxTests(HashTable *table, int maxTestes)
 {
     for (int i = 0; i < size; ++i)
     {
@@ -130,7 +132,7 @@ void wordsWithMaxTests(hashTable *table, int maxTestes)
     }
 }
 
-double averageValueOfTests(hashTable *table)
+double averageValueOfTests(HashTable *table)
 {
     int sum = 0;
     if (table && table->bucket)
@@ -147,7 +149,7 @@ double averageValueOfTests(hashTable *table)
     return 0.0;
 }
 
-void printResults(hashTable *table)
+void printResults(HashTable *table)
 {
     for (int i = 0; i < size; ++i)
     {

@@ -1,27 +1,27 @@
 #pragma once
 #include "string.hpp"
 
-struct hashTableArray
+struct HashTableArray
 {
     String *word;
     int countOfSameWords;
     int countOfTests;
 };
 
-struct hashTable
+struct HashTable
 {
-    hashTableArray **bucket;
+    HashTableArray **bucket;
     int countOfWords = 0;
 };
 
-hashTable *createHashTable();
-void deleteTable(hashTable *table);
+HashTable *createHashTable();
+void deleteTable(HashTable *table);
 int hashFunction(char *string);
-void addNewWord(hashTable *table, String *newWord, int position, int countOfTests);
-hashTableArray *quadraticSample(hashTable *table, String *string, int position);
-bool exist(hashTable *table, String *string, int position);
-void newWordProcessing(hashTable *table, char *newWord);
-int maximumTestes(hashTable *table);
-void wordsWithMaxTests(hashTable *table, int maxTestes);
-double averageValueOfTests(hashTable *table);
-void printResults(hashTable *table);
+void addNewWord(HashTable *table, String *newWord, int position, int countOfTests);
+HashTableArray *quadraticSample(HashTable *table, String *string, int position);
+bool exist(HashTable *table, String *string, int position);
+void newWordProcessing(HashTable *table, char *newWord);
+int maximumTestes(HashTable *table);
+void wordsWithMaxTests(HashTable *table, int maxTestes);
+double averageValueOfTests(HashTable *table);
+void printResults(HashTable *table);

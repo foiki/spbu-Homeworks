@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     const int maxLength = 100000;
-    hashTable *table = createHashTable();
+    HashTable *table = createHashTable();
     ifstream fin("File.txt");
     char *newWord = new char[maxLength];
     if (fin.is_open())
