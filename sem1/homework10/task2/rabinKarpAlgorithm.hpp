@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 using namespace std;
 
 int hashFunction(string line);
-int rabinKarpAlgorithm(string line, string subLine);
+bool rabinKarpAlgorithm(string line, string subLine);

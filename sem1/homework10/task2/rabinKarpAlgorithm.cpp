@@ -1,5 +1,7 @@
 #include "rabinKarpAlgorithm.hpp"
 
+const int intMax = 2147483647;
+
 int hashFunction(string line)
 {
     int const prime = 13;
@@ -7,27 +9,31 @@ int hashFunction(string line)
     long length = line.length();
     for (int i = 0; i < length; ++i)
     {
-        result = ((result + line.c_str()[i]) * prime);
+        result = ((result + line[i]) * prime) % intMax;
     }
     return result;
 }
 
-int rabinKarpAlgorithm(string line, string subLine)
+bool rabinKarpAlgorithm(string line, string subLine)
 {
     int subLineHash = hashFunction(subLine);
     long firstLength = line.length();
     long secondLength = subLine.length();
-    for (int i = 0; i < firstLength - secondLength + 1; ++i)
+    cout << "First indices of all occurrences of a subline in a line:" << endl;
+    bool isOccurrenceFound = false;
+    for (long i = 0; i < firstLength - secondLength + 1; ++i)
     {
-        string newSubLine = line.substr(i, i + secondLength - 1);
+        string newSubLine = line.substr(i, secondLength);
         long newSubLineHash = hashFunction(newSubLine);
         if (subLineHash == newSubLineHash)
         {
             if (newSubLine == subLine)
             {
-                return i;
+                cout << i << " ";
+                isOccurrenceFound = true;
             }
         }
     }
-    return -1;
+    cout << endl;
+    return isOccurrenceFound;
 }
