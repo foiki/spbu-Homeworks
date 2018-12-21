@@ -51,12 +51,12 @@ void addNewWord(HashTable *table, String *newWord, int position, int countOfTest
     table->bucket[position] = newElement;
 }
 
-HashTableArray *quadraticSample(HashTable *table, String *string, int position)
+HashTableArray *quadraticSample(HashTable *table, String *string, int position, int &countOfTests, int &newPosition)
 {
     int attemtp = 0;
     int shift = attemtp * attemtp;
-    int countOfTests = 2;
-    int newPosition = (position + shift) % size;
+    countOfTests = 2;
+    newPosition = (position + shift) % size;
     HashTableArray *current = table->bucket[newPosition];
     while (current && compare(current->word, string))
     {
@@ -71,34 +71,26 @@ HashTableArray *quadraticSample(HashTable *table, String *string, int position)
 
 bool exist(HashTable *table, String *string, int position)
 {
-    return quadraticSample(table, string, position);
+    int newPosition = 0;
+    int countOfTests = 0;
+    return quadraticSample(table, string, position, countOfTests, newPosition);
 }
 
 void newWordProcessing(HashTable *table, char *newWord)
 {
     String *newString = charToString(newWord);
     int position = hashFunction(newString);
+    int countOfTests = 0;
+    int newPosition = 0;
     if (exist(table, newString, position))
     {
-        HashTableArray *current = quadraticSample(table, newString, position);
+        HashTableArray *current = quadraticSample(table, newString, position, countOfTests, newPosition);
         ++current->countOfSameWords;
         deleteString(newString);
     }
     else
     {
-        int attemtp = 0;
-        int shift = attemtp * attemtp;
-        int countOfTests = 2;
-        int newPosition = (position + shift) % size;
-        HashTableArray *current = table->bucket[newPosition];
-        while (current)
-        {
-            ++attemtp;
-            ++countOfTests;
-            shift = attemtp * attemtp;
-            newPosition = (position + shift) % size;
-            current = table->bucket[newPosition];
-        }
+        HashTableArray *current = quadraticSample(table, newString, position, countOfTests, newPosition);
         addNewWord(table, newString, newPosition, countOfTests);
         ++table->countOfWords;
     }
