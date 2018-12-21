@@ -2,15 +2,17 @@
 
 int main()
 {
-    string line = "";
-    string subLine = "";
+    char *string = new char[maxLength];
+    char *subString = new char[maxLength];
     cout << "Enter line and subLine: " << endl;
-    cin >> line;
-    cin >> subLine;
-    bool result = rabinKarpAlgorithm(line, subLine);
+    cin >> string;
+    cin >> subString;
+    bool result = rabinKarpAlgorithm(string, subString);
     if (result == false)
     {
         cout << "Not found!" << endl;
     }
+    delete[] string;
+    delete[] subString;
     return 0;
 }

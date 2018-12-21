@@ -1,18 +1,15 @@
 #include "rabinKarpAlgorithm.hpp"
 
-const int intMax = 2147483647;
-const int prime = 13;
-
-void countNewHashOfString(string line, long length, long &hash)
+void countNewHashOfString(char *line, long length, long &hash)
 {
     hash -= (line[0] * prime) % intMax;
     hash += (line[length - 1] * prime) % intMax;
 }
 
-int hashFunction(string line)
+int hashFunction(char *line)
 {
     int result = 0;
-    long length = line.length();
+    long length = strlen(line);
     for (int i = 0; i < length; ++i)
     {
         result = (result + line[i] * prime) % intMax;
@@ -20,30 +17,57 @@ int hashFunction(string line)
     return result;
 }
 
-bool rabinKarpAlgorithm(string line, string subLine)
+char *subLineCopy(char *to, char *from, long begin, long number)
 {
-    int subLineHash = hashFunction(subLine);
-    long firstLength = line.length();
-    long secondLength = subLine.length();
+    long j = 0;
+    for (long i = begin; i < begin + number; ++i)
+    {
+        to[j] = from[i];
+        ++j;
+    }
+    return to;
+}
+
+bool isEqual(char *string, char *subString)
+{
+    long length = strlen(subString);
+    for (int i = 0; i < length; ++i)
+    {
+        if (string[i] != subString[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool rabinKarpAlgorithm(char *string, char *subString)
+{
+    int subLineHash = hashFunction(subString);
+    long firstLength = strlen(string);
+    long secondLength = strlen(subString);
     cout << "First indices of all occurrences of a subline in a line:" << endl;
     bool isOccurrenceFound = false;
-    string newSubLine = line.substr(0, secondLength);
-    long newSubLineHash = hashFunction(newSubLine);
+    long newSubLineHash = 0;
     for (long i = 0; i < firstLength - secondLength + 1; ++i)
     {
-        if (i != 0)
+        char *newSubLine = new char[maxLength];
+        if (i == 0)
         {
-            countNewHashOfString(line.substr(i - 1, secondLength + 1), secondLength + 1, newSubLineHash);
+            newSubLine = subLineCopy(newSubLine, string, 0, secondLength);
+            newSubLineHash = hashFunction(newSubLine);
         }
-        newSubLine = line.substr(i, secondLength);
-        if (subLineHash == newSubLineHash)
+        else
         {
-            if (newSubLine == subLine)
-            {
-                cout << i << " ";
-                isOccurrenceFound = true;
-            }
+            countNewHashOfString(subLineCopy(newSubLine, string, i - 1, secondLength + 1), secondLength + 1, newSubLineHash);
         }
+        newSubLine = subLineCopy(newSubLine, string, i, secondLength);
+        if (subLineHash == newSubLineHash && isEqual(newSubLine, subString))
+        {
+            isOccurrenceFound = true;
+            cout << i << " ";
+        }
+        delete[] newSubLine;
     }
     cout << endl;
     return isOccurrenceFound;
