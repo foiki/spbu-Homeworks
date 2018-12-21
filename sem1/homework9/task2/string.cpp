@@ -23,7 +23,7 @@ String *charToString(char *array)
 
 void deleteString(String *string)
 {
-    if (string != nullptr)
+    if (string)
     {
         if (string->elements)
         {
@@ -33,7 +33,6 @@ void deleteString(String *string)
         delete string;
         string = nullptr;
     }
-    
 }
 
 String *clone(String *string)

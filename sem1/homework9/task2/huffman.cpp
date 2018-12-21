@@ -34,6 +34,7 @@ void buildAHuffmanTree(HuffmanTree *tree, char *symbols, int *symbolFrequency, i
         char *newElement = new char[1];
         newElement[0] = symbols[i];
         Node *newNode = new Node {charToString(newElement), symbolFrequency[i], true, nullptr, nullptr};
+        delete[] newElement;
         add(list, newNode);
     }
     cout << "The frequency of occurrences of characters:" << endl;
@@ -64,6 +65,10 @@ void getCodes(Node *node, String **codes, String *currentCode)
         {
             codes[currentSymbol] = currentCode;
         }
+        else
+        {
+            deleteString(currentCode);
+        }
     }
     char left[2] = {'0', '\0'};
     char right[2] = {'1', '\0'};
@@ -72,13 +77,13 @@ void getCodes(Node *node, String **codes, String *currentCode)
     if (node->right)
     {
         getCodes(node->right, codes, concatenation(clone(currentCode), toRight));
+        deleteString(toRight);
     }
     if (node->left)
     {
         getCodes(node->left, codes, concatenation(currentCode, toLeft));
+        deleteString(toLeft);
     }
-    deleteString(toLeft);
-    deleteString(toRight);
 }
 
 String **getCodes(HuffmanTree *huffmanTree)
@@ -106,7 +111,7 @@ void deleteCodes(String **codes)
 {
     for (int i = 0; i < size; ++i)
     {
-        if (codes[i] != nullptr)
+        if (codes[i])
         {
             deleteString(codes[i]);
         }
