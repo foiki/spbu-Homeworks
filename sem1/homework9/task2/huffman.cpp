@@ -3,15 +3,19 @@
 
 using namespace std;
 
-void findSymbolFrequencyInText(char *symbols, int *symbolFrequency, char *text, int &numberOfSymbols)
+void findSymbolFrequencyInFile(char *symbols, int *symbolFrequency, ifstream &fin, int &numberOfSymbols)
 {
     char *newSymbols = new char[size];
     int *newSymbolFrequency = new int[size]{0};
-    long length = strlen(text);
-    for (int i = 0; i < length; ++i)
+    char newSymbol = 'a';
+    while (!fin.eof())
     {
-        ++newSymbolFrequency[text[i]];
-        newSymbols[text[i]] = text[i];
+        newSymbol = fin.get();
+        if (!fin.eof())
+        {
+            ++newSymbolFrequency[newSymbol];
+            newSymbols[newSymbol] = newSymbol;
+        }
     }
     for (int i = 0; i < size; ++i)
     {
@@ -94,14 +98,15 @@ String **getCodes(HuffmanTree *huffmanTree)
     return codes;
 }
 
-void printCode(String **codes, char *text)
+void printCode(String **codes, ifstream &fin)
 {
-    long length = strlen(text);
-    for (int i = 0; i < length; ++i)
+    char newSymbol = 'a';
+    while (!fin.eof())
     {
-        if (text[i] != '\t')
+        newSymbol = fin.get();
+        if (!fin.eof())
         {
-            printString(codes[text[i]]);
+            printString(codes[newSymbol]);
         }
     }
     cout << endl;
