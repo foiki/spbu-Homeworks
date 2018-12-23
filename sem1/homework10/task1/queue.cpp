@@ -11,6 +11,7 @@ void deleteQueue(Queue *queue)
     while (current)
     {
         QueueElement *nextElement = current->next;
+        delete current->node;
         delete current;
         current = nextElement;
     }
@@ -20,11 +21,6 @@ void deleteQueue(Queue *queue)
 void add(Queue *queue, Node *newNode)
 {
     queue->first = new QueueElement {newNode, queue->first};
-}
-
-bool isSamePoint(Node *first, Node *second)
-{
-    return (first->x == second->x && first->y == second->y);
 }
 
 void remove(Queue *queue, Node *node)

@@ -1,13 +1,8 @@
 #pragma once
 #include <iostream>
+#include "graph.hpp"
 
 using namespace std;
-
-struct Node
-{
-    int x;
-    int y;
-};
 
 struct QueueElement
 {
@@ -23,7 +18,6 @@ struct Queue
 Queue *createQueue();
 void deleteQueue(Queue *queue);
 void add(Queue *queue, Node *newNode);
-bool isSamePoint(Node *first, Node *second);
 void remove(Queue *queue, Node *node);
 void printQueue(Queue *queue);
 bool isQueueEmpty(Queue *queue);
