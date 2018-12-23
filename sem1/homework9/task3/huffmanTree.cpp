@@ -19,6 +19,7 @@ void deleteNode(Node *node)
             deleteString(node->symbols);
         }
     }
+    delete node;
 }
 
 void deleteTree(HuffmanTree *tree)
