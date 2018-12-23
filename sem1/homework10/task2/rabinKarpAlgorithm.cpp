@@ -27,12 +27,11 @@ char *subLineCopy(char *to, char *from, long begin, long number)
     return to;
 }
 
-bool isEqual(char *string, char *subString)
+bool isEqual(char *subString, char *string, long begin, long length)
 {
-    long length = strlen(subString);
     for (int i = 0; i < length; ++i)
     {
-        if (string[i] != subString[i])
+        if (string[i + begin] != subString[i])
         {
             return false;
         }
@@ -50,7 +49,6 @@ bool rabinKarpAlgorithm(char *string, char *subString)
     long newSubLineHash = 0;
     for (long i = 0; i < firstLength - secondLength + 1; ++i)
     {
-        char *newSubLine = new char[maxLength];
         if (i == 0)
         {
             newSubLineHash = hashFunction(string, 0, secondLength);
@@ -61,14 +59,12 @@ bool rabinKarpAlgorithm(char *string, char *subString)
         }
         if (subLineHash == newSubLineHash)
         {
-            newSubLine = subLineCopy(newSubLine, string, i, secondLength);
-            if (isEqual(newSubLine, subString))
+            if (isEqual(subString, string, i, secondLength))
             {
                 isOccurrenceFound = true;
                 cout << i << " ";
             }
         }
-        delete[] newSubLine;
     }
     cout << endl;
     return isOccurrenceFound;
