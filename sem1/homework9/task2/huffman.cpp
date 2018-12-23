@@ -69,32 +69,27 @@ void getCodes(Node *node, String **codes, String *currentCode)
         {
             codes[currentSymbol] = currentCode;
         }
-        else
-        {
-            deleteString(currentCode);
-        }
+        return;
     }
+    String *rightCode = currentCode;
+    String *leftCode = clone(currentCode);
     char left[2] = {'0', '\0'};
     char right[2] = {'1', '\0'};
     String *toLeft = charToString(left);
     String *toRight = charToString(right);
-    if (node->right)
-    {
-        getCodes(node->right, codes, concatenation(clone(currentCode), toRight));
-        deleteString(toRight);
-    }
-    if (node->left)
-    {
-        getCodes(node->left, codes, concatenation(currentCode, toLeft));
-        deleteString(toLeft);
-    }
+    concatenation(rightCode, toRight);
+    concatenation(leftCode, toLeft);
+    deleteString(toRight);
+    deleteString(toLeft);
+    getCodes(node->right, codes, rightCode);
+    getCodes(node->left, codes, leftCode);
 }
 
 String **getCodes(HuffmanTree *huffmanTree)
 {
     String **codes = new String*[size]{nullptr};
-    String *currentCode = nullptr;
-    getCodes(huffmanTree->root, codes, currentCode);
+    char emptyLine[1] = {'\0'};
+    getCodes(huffmanTree->root, codes, charToString(emptyLine));
     return codes;
 }
 
