@@ -41,9 +41,6 @@ void buildAHuffmanTree(HuffmanTree *tree, char *symbols, int *symbolFrequency, i
         delete[] newElement;
         add(list, newNode);
     }
-    cout << "Number of symbols: " << endl << numberOfSymbols << endl;
-    cout << "The frequency of occurrences of characters:" << endl;
-    printList(list);
     while (list->first->next->next)
     {
         Node *firstMinimum = findMinimum(list);
