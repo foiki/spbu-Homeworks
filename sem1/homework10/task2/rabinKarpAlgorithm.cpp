@@ -16,17 +16,6 @@ int hashFunction(char *line, long begin, long length)
     return result;
 }
 
-char *subLineCopy(char *to, char *from, long begin, long number)
-{
-    long j = 0;
-    for (long i = begin; i < begin + number; ++i)
-    {
-        to[j] = from[i];
-        ++j;
-    }
-    return to;
-}
-
 bool isEqual(char *subString, char *string, long begin, long length)
 {
     for (int i = 0; i < length; ++i)

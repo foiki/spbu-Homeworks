@@ -10,6 +10,5 @@ using namespace std;
 
 void countNewHashOfString(char *line, long begin, long length, long &hash);
 int hashFunction(char *line, long begin, long length);
-char *subLineCopy(char *to, char *from, long begin, long number);
 bool isEqual(char *string, char *subString);
 bool rabinKarpAlgorithm(char *string, char *subString);
