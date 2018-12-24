@@ -10,5 +10,6 @@ int main()
     }
     HuffmanTree *huffmanTree = decodeText(fin);
     printDecode(huffmanTree, fin);
+    fin.close();
     deleteTree(huffmanTree);
 }

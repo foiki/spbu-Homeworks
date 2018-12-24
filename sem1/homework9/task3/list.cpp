@@ -69,4 +69,4 @@ Node *findMinimum(List *list)
     list->first = list->first->next;
     delete toRemove;
     return minimum;
-    }
+}

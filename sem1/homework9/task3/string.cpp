@@ -44,21 +44,20 @@ String *clone(String *string)
     return charToString(string->elements);
 }
 
-String *concatenation(String *firstString, String *secondString)
+void concatenation(String *&string, String *secondString)
 {
-    if (!firstString && !secondString)
-    {
-        return createString();
-    }
-    if (!firstString || !firstString->elements)
-    {
-        return charToString(secondString->elements);
-    }
-    if (!secondString || !secondString->elements)
-    {
-        return charToString(firstString->elements);
-    }
-    return charToString(strcat(firstString->elements, secondString->elements));
+    String *newString = new String;
+    newString->length = string->length + secondString->length;
+    newString->elements = new char[newString->length];
+    
+    for (int i = 0; i < string->length; i++)
+        newString->elements[i] = string->elements[i];
+    
+    for (int j = 0; j < secondString->length; j++)
+        newString->elements[string->length + j] = secondString->elements[j];
+    
+    deleteString(string);
+    string = newString;
 }
 
 void printString(String *string)
