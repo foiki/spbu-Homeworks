@@ -20,7 +20,7 @@ Node *findClosestPoint(Queue *queue, int **distances, Node *end)
         }
         current = current->next;
     }
-    return minimumPoint;
+    return new Node {minimumPoint->x, minimumPoint->y};
 }
 
 bool isNewDistanceLess(int **distances, Node *point, int newX, int newY)
@@ -103,6 +103,7 @@ void aStar(Graph *graph, Node *start, Node *end)
         }
         delete current;
     }
+    deleteQueue(open);
     if (!isWayExist)
     {
         cout << "There is no way between 'start' and 'end'!" << endl;
@@ -118,10 +119,10 @@ void aStar(Graph *graph, Node *start, Node *end)
         current->x = previousPoints[current->x][current->y]->x;
         current->y = previousPoints[lastX][current->y]->y;
     }
+    delete current;
     graph->matrix[start->x][start->y] = 'S';
     graph->matrix[end->x][end->y] = 'E';
     graphPrint(graph);
-    deleteQueue(open);
     deleteIntMatrix(distances, graph->size);
     deleteBoolMatrix(used, graph->size);
     deleteNodeMatrix(previousPoints, graph->size);

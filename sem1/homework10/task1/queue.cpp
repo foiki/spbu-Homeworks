@@ -11,7 +11,10 @@ void deleteQueue(Queue *queue)
     while (current)
     {
         QueueElement *nextElement = current->next;
-        delete current->node;
+        if (current->node)
+        {
+            delete current->node;
+        }
         delete current;
         current = nextElement;
     }
@@ -30,6 +33,7 @@ void remove(Queue *queue, Node *node)
     {
         QueueElement *toRemove = current;
         queue->first = current->next;
+        delete toRemove->node;
         delete toRemove;
         return;
     }
@@ -41,6 +45,7 @@ void remove(Queue *queue, Node *node)
     {
         QueueElement *toRemove = current->next;
         current->next = current->next->next;
+        delete toRemove->node;
         delete toRemove;
     }
 }
