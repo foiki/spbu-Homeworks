@@ -80,7 +80,7 @@ void aStar(Graph *graph, Node *start, Node *end)
     }
     Queue *open = createQueue();
     bool **used = createBoolMatrix(graph->size);
-    add(open, start);
+    add(open, new Node {start->x, start->y});
     Node ***previousPoints = createNodeMatrix(graph->size);
     previousPoints[start->x][start->y]->x = start->x;
     previousPoints[start->x][start->y]->y = start->y;

@@ -21,6 +21,7 @@ int main()
     graphRead(graph, fin);
     aStar(graph, start, end);
     deleteGraph(graph);
+    delete start;
     delete end;
     return 0;
 }
