@@ -1,6 +1,10 @@
 package group144.kireev;
 import java.util.Scanner;
 
+/**
+ *A class that realizes ordinary stack
+ */
+
 public class Stack {
     private class StackElement {
         private int value;
@@ -24,15 +28,27 @@ public class Stack {
 
     private StackElement top;
 
+    /**
+     *A method that adds element to the stack
+     */
+
     public void add(int value) {
 
         top = new StackElement(value, top);
     }
 
+    /**
+     *A method that deletes top element from the stack
+     */
+
     public void pop() {
 
         top = top.getNext();
     }
+
+    /**
+     *A method that returns the size of stack
+     */
 
     public int getSize() {
         StackElement current = top;
@@ -43,6 +59,10 @@ public class Stack {
         }
         return result;
     }
+
+    /**
+     *A method that prints the stack
+     */
 
     public void printStack() {
         StackElement current = top;
