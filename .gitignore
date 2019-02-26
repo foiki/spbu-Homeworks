@@ -7,3 +7,7 @@
 workspace.xml
 *.kotlin_module
 *.class
+*.bin
+*.properties
+*.lock
+*.bat
