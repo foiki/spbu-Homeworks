@@ -11,3 +11,6 @@ workspace.xml
 *.properties
 *.lock
 *.bat
+build/
+/settings.gradle
+*.MF
