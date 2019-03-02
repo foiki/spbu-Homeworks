@@ -5,6 +5,7 @@
 
 *.xcodeproj
 workspace.xml
+uiDesigner.xml
 *.kotlin_module
 *.class
 *.bin
