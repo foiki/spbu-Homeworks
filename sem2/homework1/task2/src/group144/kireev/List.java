@@ -1,128 +1,79 @@
 package group144.kireev;
 
-/**
- *A class that realizes single-linked list
- */
-
+/** A class that realizes single-linked list */
 public class List {
-    private class ListElement {
-        private int value;
-        private ListElement next;
-
-        private ListElement(int value, ListElement next) {
-            this.value = value;
-            this.next = next;
-        }
-
-        private ListElement(int value) {
-            this.value = value;
-            this.next = null;
-        }
-
-        private int getValue() {
-
-            return value;
-        }
-
-        private ListElement getNext() {
-
-            return next;
-        }
-
-        private void setNext(ListElement next) {
-            this.next = next;
-        }
-    }
-
     private ListElement head;
 
     private boolean isEmpty() {
+
         return head != null;
     }
 
-    /**
-     * A method adding a new element to the list
-     */
-
+    /** A method adding a new element to the list */
     public void add(int value) {
         if (!isEmpty()) {
             head = new ListElement(value);
+            return;
         }
-        else {
-            if (head.getValue() > value) {
-                head = new ListElement(value, head);
-            }
-            else {
-                ListElement current = head;
-                while (current.getNext() != null && current.next.getValue() < value) {
-                    current = current.getNext();
-                }
-                ListElement newElement = new ListElement(value, current.getNext());
-                current.setNext(newElement);
-            }
+        if (head.value > value) {
+            head = new ListElement(value, head);
+            return;
         }
+        ListElement current = head;
+        while (current.next != null && current.next.value < value) {
+            current = current.next;
+        }
+        ListElement newElement = new ListElement(value, current.next);
+        current.setNext(newElement);
     }
 
-    /**
-     * A method printing the list
-     */
-
+    /** A method printing the list */
     public void printList() {
         ListElement current = head;
         while (current != null) {
-            System.out.println(current.getValue() + " ");
-            current = current.getNext();
+            System.out.println(current.value + " ");
+            current = current.next;
         }
     }
 
-    /**
-     * A method deleting element from the list
-     */
-
+    /** A method deleting element from the list */
     public void deleteElement(int value) {
         if (head == null) {
             System.out.println("List is empty!");
+            return;
         }
-        else {
-            if (head.getValue() == value) {
-                head = head.getNext();
-            }
-            else {
-                ListElement current = head;
-                while (current.getNext() != null && current.next.getValue() != value) {
-                    current = current.getNext();
-                }
-                if (current.getNext() != null) {
-                    current.setNext(current.getNext().getNext());
-                }
-                else {
-                    System.out.println("Not found!");
-                }
-            }
+        if (head.value == value) {
+            head = head.next;
+            System.out.println("Element " + value + " has been deleted");
+            return;
         }
-
+        ListElement current = head;
+        while (current.next != null && current.next.value != value) {
+            current = current.next;
+        }
+        if (current.next != null) {
+            current.setNext(current.next.next);
+            System.out.println("Element " + value + " has been deleted");
+            return;
+        }
+        System.out.println("Not found!");
     }
 
-    /**
-     * A method checking whether an item belongs to a list
-     */
-
+    /** A method checking whether an item belongs to a list */
     public void exist(int value) {
         if (head == null) {
             System.out.println("List is empty!");
+            return;
         }
-        else {
-            ListElement current = head;
-            while (current != null && current.getValue() != value) {
-                current = current.getNext();
-            }
-            if (current != null) {
-                System.out.println("This element belongs to the list");
-            }
-            else {
-                System.out.println("This element does not belong to the list");
-            }
+        ListElement current = head;
+        while (current != null && current.value != value) {
+            current = current.next;
         }
+        if (current == null) {
+            System.out.println("This element does not belong to the list");
+            return;
+        }
+        System.out.println("This element belongs to the list");
     }
 
     public static void main(String[] args) {
@@ -142,4 +93,23 @@ public class List {
         list.exist(4);
     }
 
+    private class ListElement {
+        private int value;
+        private ListElement next;
+
+        private ListElement(int value, ListElement next) {
+            this.value = value;
+            this.next = next;
+        }
+
+        private ListElement(int value) {
+            this.value = value;
+            this.next = null;
+        }
+
+        private void setNext(ListElement next) {
+
+            this.next = next;
+        }
+    }
 }
