@@ -12,30 +12,24 @@ public class QuickSort implements Sorter {
         int left = begin;
         int right = end;
         int mid = array[(left + right) / 2];
-        while (left <= right)
-        {
-            while (array[left] < mid)
-            {
+        while (left <= right) {
+            while (array[left] < mid) {
                 ++left;
             }
-            while (array[right] > mid)
-            {
+            while (array[right] > mid) {
                 --right;
             }
-            if (left <= right)
-            {
+            if (left <= right) {
                 int c = array[left];
                 array[left] = array[right];
                 array[right] = c;
                 ++left;
                 --right;
             }
-            if (left < end)
-            {
+            if (left < end) {
                 sort(array, left, end);
             }
-            if (right > begin)
-            {
+            if (right > begin) {
                 sort(array, begin, right);
             }
         }
