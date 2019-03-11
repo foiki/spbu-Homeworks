@@ -1,16 +1,18 @@
 package group144.kireev;
 
-
+/** Implements LinkedStack**/
 public class LinkedStack implements Stack {
     private StackElement top;
     private int length;
 
+    /** Override a method that adds element to stack*/
     @Override
     public void push(int value) {
         top = new StackElement(value, top);
         ++length;
     }
 
+    /** Override a method that removes element from top of stack*/
     @Override
     public int pop() throws NullPointerException {
         if (isEmpty()) {
@@ -22,6 +24,7 @@ public class LinkedStack implements Stack {
         return removed;
     }
 
+    /** Override a method that prints stack*/
     @Override
     public void printStack() throws NullPointerException {
         if (top == null) {
@@ -35,16 +38,19 @@ public class LinkedStack implements Stack {
         System.out.println();
     }
 
+    /** Override a method that checks for stack emptiness*/
     @Override
     public boolean isEmpty() {
         return length == 0;
     }
 
+    /** Override a method that returns stack size*/
     @Override
     public int getSize() {
         return length;
     }
 
+    /** Implements StackElement**/
     private class StackElement {
         private int value;
         private StackElement next;

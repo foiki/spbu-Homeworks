@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CalculatorTest {
+class CalculatorTest {
 
     @Test
-    public void normalExpressionTest() {
+    void normalExpressionTest() {
         String expression = "3 2 5 6 - * + 4 *";
         try {
             assertEquals(4, (new Calculator()).calculate(expression));
@@ -15,7 +15,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void wrongExpressionTest() {
+    void wrongExpressionTest() {
         String expression = "3 2 - * + 4 *";
         try {
             assertEquals(4, (new Calculator()).calculate(expression));
@@ -25,7 +25,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void bigNumbersTest() {
+    void bigNumbersTest() {
         String expression = "100 30 * 15 6 - 12 * 3 / + -100 * 5 /";
         try {
             assertEquals(-60720, (new Calculator()).calculate(expression));
