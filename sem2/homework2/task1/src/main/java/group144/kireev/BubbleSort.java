@@ -1,5 +1,6 @@
 package group144.kireev;
 
+/** Implements simple BubbleSort**/
 public class BubbleSort implements Sorter {
     @Override
     public void sort(int[] array) {

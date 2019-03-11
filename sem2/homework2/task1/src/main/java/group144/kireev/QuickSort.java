@@ -1,5 +1,6 @@
 package group144.kireev;
 
+/** Implements simple QuickSort**/
 public class QuickSort implements Sorter {
     @Override
     public void sort(int[] array) {

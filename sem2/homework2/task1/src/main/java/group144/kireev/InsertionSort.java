@@ -1,5 +1,6 @@
 package group144.kireev;
 
+/** Implements simple InsertionSort**/
 public class InsertionSort implements Sorter {
     @Override
     public void sort(int[] array) {
