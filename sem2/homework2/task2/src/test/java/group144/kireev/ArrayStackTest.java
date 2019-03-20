@@ -11,11 +11,11 @@ class ArrayStackTest {
         Stack stack = new ArrayStack();
         stack.push(10);
         stack.push(20);
-        assertEquals(stack.pop(), 20);
-        assertEquals(stack.pop(), 10);
         try {
+            assertEquals(stack.pop(), 20);
+            assertEquals(stack.pop(), 10);
             stack.pop();
-        } catch (NullPointerException e) {
+        } catch (EmptyStackException e) {
             assertEquals("Nothing to delete!", e.getMessage());
         }
     }

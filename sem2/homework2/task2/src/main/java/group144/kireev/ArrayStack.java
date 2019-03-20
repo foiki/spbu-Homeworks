@@ -1,6 +1,6 @@
 package group144.kireev;
 
-/** Implements ArrayStack**/
+/** Implements ArrayStack*/
 public class ArrayStack implements Stack {
     private int length = 0;
     private int maxLength = 100;
@@ -15,18 +15,18 @@ public class ArrayStack implements Stack {
 
     /** Override a method that removes element from top of stack*/
     @Override
-    public int pop() throws NullPointerException {
+    public int pop() throws EmptyStackException {
         if (isEmpty()) {
-            throw new NullPointerException("Nothing to delete!");
+            throw new EmptyStackException("Nothing to delete!");
         }
         return array[--length];
     }
 
     /** Override a method that removes element from top of stack*/
     @Override
-    public void printStack() throws NullPointerException {
+    public void printStack() {
         if (isEmpty()) {
-            throw new NullPointerException("Nothing to delete!");
+            System.out.println("No elements in the stack!");
         }
         for (int i = 0; i < length; ++i) {
             System.out.print(array[i] + " ");
