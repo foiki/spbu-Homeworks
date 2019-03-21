@@ -1,5 +1,6 @@
 package group144.kireev;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,9 @@ public class OperatorNode implements Node {
     private Node right;
 
     OperatorNode(Scanner in) throws WrongExpressionException {
+        if (!in.hasNext()) {
+            throw new WrongExpressionException("Wrong expression!");
+        }
         String bracketAndOperation = in.next();
         operator = bracketAndOperation.charAt(bracketAndOperation.length() - 1);
         if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
@@ -28,7 +32,7 @@ public class OperatorNode implements Node {
     }
 
     @Override
-    public int calculate() throws WrongExpressionException {
+    public int calculate() {
         switch (operator) {
             case '+':
                 return left.calculate() + right.calculate();
@@ -39,7 +43,7 @@ public class OperatorNode implements Node {
             case '/':
                 return left.calculate() / right.calculate();
             default:
-                throw new WrongExpressionException("Wrong expression!");
+                return 0;
         }
     }
 

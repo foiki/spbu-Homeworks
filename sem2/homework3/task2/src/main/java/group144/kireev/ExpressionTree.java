@@ -13,7 +13,7 @@ public class ExpressionTree {
         }
     }
 
-    public int calculate() throws WrongExpressionException {
+    public int calculate() {
         return root.calculate();
     }
 

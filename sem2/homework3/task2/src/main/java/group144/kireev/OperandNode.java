@@ -5,7 +5,10 @@ import java.util.Scanner;
 public class OperandNode implements Node {
     private int value;
 
-    OperandNode(Scanner in) {
+    OperandNode(Scanner in) throws WrongExpressionException {
+        if (!in.hasNext()) {
+            throw new WrongExpressionException("Wrong expression!");
+        }
         String operandAndBracket = in.next();
         int bracketIndex = operandAndBracket.length() - 1;
         if (operandAndBracket.charAt(bracketIndex) == ')') {
