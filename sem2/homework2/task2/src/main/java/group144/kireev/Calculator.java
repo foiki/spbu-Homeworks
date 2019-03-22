@@ -12,7 +12,7 @@ public class Calculator {
                 try {
                     int secondOperand = stack.pop();
                     int firstOperand = stack.pop();
-                    stack.push(operation(firstOperand, secondOperand, element));
+                    stack.push(performOperation(firstOperand, secondOperand, element));
                 } catch (EmptyStackException | WrongExpressionException e) {
                     throw new WrongExpressionException();
                 }
@@ -39,7 +39,7 @@ public class Calculator {
     /** Method that reads two numbers and a sign
       * of the operation and returns the result
       * of this operation on the read numbers*/
-    public static int operation(int firstOperand, int secondOperand, String operation) throws WrongExpressionException {
+    public static int performOperation(int firstOperand, int secondOperand, String operation) throws WrongExpressionException {
         switch (operation) {
             case "+":
                 return firstOperand + secondOperand;
