@@ -7,28 +7,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void normalExpressionTest() {
+    void normalExpressionTest() throws WrongExpressionException {
         String expression = "3 2 5 6 - * + 4 *";
-        try {
-            assertEquals(4, calculate(expression));
-        } catch (WrongExpressionException e) {}
+        assertEquals(4, calculate(expression));
     }
 
     @Test
     void wrongExpressionTest() {
         String expression = "3 2 - * + 4 *";
-        try {
-            assertEquals(4, calculate(expression));
-        } catch (WrongExpressionException e) {
-            assertEquals(null, e.getMessage());
-        }
+        assertThrows(WrongExpressionException.class, () -> calculate(expression));
     }
 
     @Test
-    void bigNumbersTest() {
+    void bigNumbersTest() throws WrongExpressionException {
         String expression = "100 30 * 15 6 - 12 * 3 / + -100 * 5 /";
-        try {
-            assertEquals(-60720, calculate(expression));
-        } catch (WrongExpressionException e) {}
+        assertEquals(-60720, calculate(expression));
     }
 }

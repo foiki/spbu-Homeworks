@@ -7,25 +7,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArrayStackTest {
 
     @Test
-    void pushAndPopTest() {
+    void pushAndPopTest() throws EmptyStackException {
         Stack stack = new ArrayStack();
         stack.push(10);
         stack.push(20);
-        try {
-            assertEquals(stack.pop(), 20);
-            assertEquals(stack.pop(), 10);
-            stack.pop();
-        } catch (EmptyStackException e) {
-            assertEquals("Nothing to delete!", e.getMessage());
-        }
+        assertEquals(stack.pop(), 20);
+        assertEquals(stack.pop(), 10);
+        assertThrows(EmptyStackException.class, stack::pop);
     }
 
     @Test
     void isEmptyTest() {
         Stack stack = new ArrayStack();
-        assertEquals(true, stack.isEmpty());
+        assertTrue(stack.isEmpty());
         stack.push(1);
-        assertEquals(false, stack.isEmpty());
+        assertFalse(stack.isEmpty());
     }
 
     @Test
