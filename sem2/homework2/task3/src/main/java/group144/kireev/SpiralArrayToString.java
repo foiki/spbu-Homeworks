@@ -2,10 +2,10 @@ package group144.kireev;
 
 /** Class to translate of the array by a spiral into a string */
 public class SpiralArrayToString {
-    public static String arrayToString(int[][] array) throws Exception {
+    public static String arrayToString(int[][] array) throws WrongArrayException {
         /** The method implements the translation of the array by a spiral into a string */
         if (array == null || array.length % 2 == 0) {
-            throw new Exception("Wrong array length!");
+            throw new WrongArrayException("Wrong array length!");
         }
         String result = "";
         int currentLine = array.length / 2;
