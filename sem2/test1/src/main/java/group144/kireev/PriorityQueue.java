@@ -6,7 +6,6 @@ package group144.kireev;
  */
 public class PriorityQueue<T> {
     private QueueElement<T> head = null;
-    private int size;
 
     /** Returns if queue is empty */
     public boolean isEmpty() {
@@ -14,12 +13,11 @@ public class PriorityQueue<T> {
     }
 
     /**
-     * Adding value with given priority to the queue
+     * Adding element with given priority to the queue
      * @param value element to put
      * @param priority priority of the element
      */
     public void enqueue(T value, int priority) {
-        ++size;
         if (isEmpty() || head.priority < priority) {
             head = new QueueElement<>(value, priority, head);
             return;
@@ -40,7 +38,6 @@ public class PriorityQueue<T> {
         if (isEmpty()) {
             throw new EmptyQueueException();
         }
-        --size;
         T toReturn = head.value;
         head = head.next;
         return toReturn;
