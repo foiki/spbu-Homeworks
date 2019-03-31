@@ -33,7 +33,6 @@ public class HashTable {
 
     /**
      * @param element to add to table
-     * @throws ElementAlreadyExist if elements already added
      */
     public void add(String element) {
         int hash = hashFunction.hash(element);
@@ -78,18 +77,20 @@ public class HashTable {
         System.out.println("Unique words added: " + uniqueWordsAdded);
     }
 
-    private int getNumberOfCells() {
+    public int getNumberOfAddedWords() { return uniqueWordsAdded; }
+
+    public int getNumberOfCells() {
         return hashFunction.getMod();
     }
 
-    private double getLoadFactor() {
+    public double getLoadFactor() {
         return (double) cellsUsed / getNumberOfCells();
     }
 
     /**
      * @return max length of list in conflict cells
      */
-    private int getMaxLengthOfConflictCells() {
+    public int getMaxLengthOfConflictCells() {
         int result = 0;
         for (LinkedList list : bucket) {
             result = Integer.max(result, list.size());

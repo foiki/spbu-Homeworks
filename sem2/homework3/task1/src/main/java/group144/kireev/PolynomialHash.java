@@ -1,6 +1,6 @@
 package group144.kireev;
 
-public class PolynominalHash implements HashFunction {
+public class PolynomialHash implements HashFunction {
     private int mod = 512;
 
     @Override

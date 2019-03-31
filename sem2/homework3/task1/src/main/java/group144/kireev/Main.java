@@ -55,12 +55,12 @@ public class Main {
 
     private static HashFunction chooseHashFunction(Scanner in) {
         System.out.println("Choose the hash function: ");
-        System.out.println("Enter '1' to choose polynominal HashFunction");
+        System.out.println("Enter '1' to choose polynomial HashFunction");
         System.out.println("Enter '2' to choose sum HashFunction" );
         while (true) {
             switch (in.nextInt()) {
                 case 1:
-                    return new PolynominalHash();
+                    return new PolynomialHash();
                 case 2:
                     return new SumHash();
             }
