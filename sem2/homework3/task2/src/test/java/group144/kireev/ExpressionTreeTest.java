@@ -1,21 +1,21 @@
 package group144.kireev;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ExpressionTreeTest {
+class ExpressionTreeTest {
     @Test
-    public void normalExpressionTest() throws WrongExpressionException {
+    void normalExpressionTest() throws WrongExpressionException {
         ExpressionTree tree = new ExpressionTree();
         tree.add(new Scanner("* + 5 7 - 6 3"));
         assertEquals(36, tree.calculate());
     }
 
     @Test
-    public void incorrectExpressionTest() {
+    void incorrectExpressionTest() {
         ExpressionTree tree = new ExpressionTree();
         try {
             tree.add(new Scanner("* + 5 7"));
@@ -26,14 +26,14 @@ public class ExpressionTreeTest {
     }
 
     @Test
-    public void expressionOnlyWithNumbersTest() throws WrongExpressionException {
+    void expressionOnlyWithNumbersTest() throws WrongExpressionException {
         ExpressionTree tree = new ExpressionTree();
         tree.add(new Scanner("15"));
         assertEquals(15, tree.calculate());
     }
 
     @Test
-    public void incorrectExpressionWithLessSignsTest() {
+    void incorrectExpressionWithLessSignsTest() {
         ExpressionTree tree = new ExpressionTree();
         try {
             tree.add(new Scanner("* + 5 7 9 10"));
