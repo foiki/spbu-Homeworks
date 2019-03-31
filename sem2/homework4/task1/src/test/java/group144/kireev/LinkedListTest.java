@@ -1,22 +1,22 @@
 package group144.kireev;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LinkedListTest {
+class LinkedListTest {
     @Test
-    public void pushAndPopTest() throws NoSuchElementInListException {
+    void pushAndPopTest() throws NoSuchElementInListException {
         LinkedList<Integer> list = new LinkedList<>();
         list.push(10);
         list.push(20);
-        assertEquals(10, list.pop(10));
-        assertEquals(20, list.pop(20));
+        assertEquals(Integer.valueOf(10), list.pop(10));
+        assertEquals(Integer.valueOf(20), list.pop(20));
         assertThrows(NoSuchElementInListException.class, () -> list.pop(10));
     }
 
     @Test
-    public void isEmptyTest() {
+    void isEmptyTest() {
         LinkedList<String> list = new LinkedList<>();
         assertTrue(list.isEmpty());
         list.push("element");
@@ -24,7 +24,7 @@ public class LinkedListTest {
     }
 
     @Test
-    public void getSizeTest() {
+    void getSizeTest() {
         LinkedList<String> list = new LinkedList<>();
         assertEquals(0, list.getSize());
         list.push("element");
