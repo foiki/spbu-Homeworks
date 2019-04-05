@@ -14,3 +14,4 @@ uiDesigner.xml
 build/
 /settings.gradle
 *.MF
+out/
