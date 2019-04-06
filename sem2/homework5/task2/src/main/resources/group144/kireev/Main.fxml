@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="367.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group144.kireev.Controller">
+   <children>
+      <Label layoutX="351.0" layoutY="165.0" prefHeight="36.0" prefWidth="31.0" text="=">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Spinner fx:id="firstValue" layoutX="65.0" layoutY="156.0" prefHeight="62.0" prefWidth="80.0" />
+      <Spinner fx:id="secondValue" layoutX="251.0" layoutY="156.0" prefHeight="62.0" prefWidth="80.0" />
+      <TextField fx:id="result" layoutX="392.0" layoutY="156.0" prefHeight="62.0" prefWidth="167.0" editable="false"/>
+      <Label layoutX="118.0" layoutY="58.0" text="Simple Calculator">
+         <font>
+            <Font size="44.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="operator" layoutX="168.0" layoutY="156.0" prefHeight="62.0" prefWidth="61.0" />
+   </children>
+</AnchorPane>
