@@ -14,6 +14,9 @@ public class OperatorNode implements Node {
             throw new WrongExpressionException("Wrong expression!");
         }
         String bracketAndOperation = in.next();
+        if (bracketAndOperation.equals("(")) {
+            bracketAndOperation = "(*";
+        }
         operator = bracketAndOperation.charAt(bracketAndOperation.length() - 1);
         if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
             throw new WrongExpressionException("Wrong expression!");
