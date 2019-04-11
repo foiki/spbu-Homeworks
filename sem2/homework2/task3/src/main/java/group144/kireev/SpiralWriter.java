@@ -1,6 +1,7 @@
 package group144.kireev;
 
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 /** Interface of SpiralWriter with single method*/
 public interface SpiralWriter {
