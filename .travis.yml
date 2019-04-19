@@ -5,5 +5,4 @@ script:
   - cd sem2
 os:
   - linux
-  - windows
 
