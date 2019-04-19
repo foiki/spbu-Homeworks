@@ -30,6 +30,7 @@ public class Trie implements Serializable {
         }
         Vertex current = root;
         int position = 0;
+        ++current.startWith;
         while (position < element.length()) {
             if (!current.children.containsKey(element.charAt(position))) {
                current.children.put(element.charAt(position), new Vertex(current.text + element.charAt(position)));
@@ -100,7 +101,7 @@ public class Trie implements Serializable {
         }
         Vertex current = root;
         for (int i = 0; i < prefix.length(); ++i) {
-            if (current.children.containsKey(prefix.charAt(i))) {
+            if (!current.children.containsKey(prefix.charAt(i))) {
                 return 0;
             } else {
                 current = current.children.get(prefix.charAt(i));
@@ -137,7 +138,7 @@ public class Trie implements Serializable {
      * isWord - true when values of all previous edges form a word, false otherwise.
      * startWith - amount of the words, which starts with text as prefix.
      */
-    private class Vertex {
+    private class Vertex implements Serializable {
         private String text;
         private HashMap<Character, Vertex> children;
         boolean isWord;
