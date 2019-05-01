@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedStackTest {
+    private Stack stack = new LinkedStack();
 
     @Test
     void pushAndPopTest() throws EmptyStackException {
-        Stack stack = new LinkedStack();
         stack.push(10);
         stack.push(20);
         assertEquals(stack.pop(), 20);
@@ -18,7 +18,6 @@ class LinkedStackTest {
 
     @Test
     void isEmptyTest() {
-        Stack stack = new LinkedStack();
         assertTrue(stack.isEmpty());
         stack.push(1);
         assertFalse(stack.isEmpty());
@@ -26,7 +25,6 @@ class LinkedStackTest {
 
     @Test
     void getSize() {
-        Stack stack = new LinkedStack();
         assertEquals(0, stack.getSize());
         stack.push(1);
         assertEquals(1, stack.getSize());

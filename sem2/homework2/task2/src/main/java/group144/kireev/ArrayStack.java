@@ -11,6 +11,17 @@ public class ArrayStack implements Stack {
     public void push(int value) {
         array[length] = value;
         ++length;
+        if (maxLength == length) {
+            increaseStackSize();
+        }
+    }
+
+    /** Increasing size of Stack */
+    private void increaseStackSize() {
+        int[] newArray = new int[maxLength * 2];
+        System.arraycopy(array, 0, newArray, 0, length);
+        maxLength *= 2;
+        array = newArray;
     }
 
     /** Override a method that removes element from top of stack*/
@@ -19,7 +30,18 @@ public class ArrayStack implements Stack {
         if (isEmpty()) {
             throw new EmptyStackException("Nothing to delete!");
         }
+        if (length < maxLength / 2) {
+            decreaseStackSize();
+        }
         return array[--length];
+    }
+
+    /** Decreasing size of Stack */
+    private void decreaseStackSize() {
+        maxLength = length + 5;
+        int[] newArray = new int[maxLength];
+        System.arraycopy(array, 0, newArray, 0, length);
+        array = newArray;
     }
 
     /** Override a method that removes element from top of stack*/
