@@ -49,7 +49,7 @@ public class HashTable {
     }
 
     /**
-     * @param string to remove from table
+     * @param element to remove from table
      * @throws ElementDoesNotExist if the element does not belong to the table
      */
     public void remove(String element) throws ElementDoesNotExist {
@@ -66,7 +66,7 @@ public class HashTable {
     }
 
     /**
-     * print statistic of HashTable: number of cells, load factor, number of conflicts,
+     * Print statistic of HashTable: number of cells, load factor, number of conflicts,
      * maximum length of list in conflict cells and number of unique words in table
      */
     public void printStat() {
@@ -96,5 +96,24 @@ public class HashTable {
             result = Integer.max(result, list.size());
         }
         return result;
+    }
+
+    /**
+     * Method changing HashFunction of HashTable
+     * @param table to change HashFunction
+     * @param newHash on which to change
+     * @return HashTable with changed HashFunction
+     */
+    public static HashTable changeHashFunction(HashTable table, HashFunction newHash) {
+        if (newHash.getClass().equals(table.hashFunction.getClass())) {
+            return table;
+        }
+        HashTable newHashTable = new HashTable(newHash);
+        for (int i = 0; i < table.hashFunction.getMod(); ++i) {
+            for (String element : table.bucket.get(i)) {
+                newHashTable.add(element);
+            }
+        }
+        return newHashTable;
     }
 }

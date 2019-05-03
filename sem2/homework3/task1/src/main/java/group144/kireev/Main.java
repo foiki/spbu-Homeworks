@@ -3,21 +3,21 @@ package group144.kireev;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import static group144.kireev.HashTable.changeHashFunction;
 
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         HashTable table = new HashTable(chooseHashFunction(in));
         System.out.println("Enter the command if you now how it works or type '6' to see help menu");
-        int newRequest = -1;
-        String element;
-        while (newRequest != 0) {
+        boolean isExit = false;
+        while (!isExit) {
             System.out.print("Enter new request: ");
-            newRequest = in.nextInt();
+            int newRequest = in.nextInt();
             switch (newRequest) {
                 case 0:
-                    System.out.println("Bye!");
-                    return;
+                    isExit = true;
+                    break;
                 case 1:
                     System.out.print("Enter new element to add: ");
                     table.add(in.next());
@@ -32,6 +32,7 @@ public class Main {
                     }
                     break;
                 case 3:
+                    String element;
                     System.out.print("Enter the element to find it in the HashTable: ");
                     element = in.next();
                     if (table.exist(element)) {
@@ -49,10 +50,17 @@ public class Main {
                 case 6:
                     printHelpMenu();
                     break;
+                case 7:
+                    table = changeHashFunction(table, chooseHashFunction(in));
             }
         }
+        System.out.println("Bye!");
     }
 
+    /**
+     * @param in where to read
+     * @return read Hash Function
+     */
     private static HashFunction chooseHashFunction(Scanner in) {
         System.out.println("Choose the hash function: ");
         System.out.println("Enter '1' to choose polynomial HashFunction");
@@ -67,6 +75,7 @@ public class Main {
         }
     }
 
+    /** Prints help menu */
     private static void printHelpMenu() {
         System.out.println("Enter '0' to exit");
         System.out.println("Enter '1' to add new element to HashTable");
@@ -74,9 +83,14 @@ public class Main {
         System.out.println("Enter '3' to find element in the HashTable");
         System.out.println("Enter '4' to get HashTable statistic");
         System.out.println("Enter '5' to fill the table from file");
-        System.out.println("Enter '5' to see help menu");
+        System.out.println("Enter '6' to see help menu");
+        System.out.println("Enter '7' to change Hash Function");
     }
 
+    /**
+     * Fill table from the file
+     * @param table to fill
+     */
     private static void fillTableFromFile(HashTable table) {
         Scanner in;
         try {
