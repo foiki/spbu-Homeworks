@@ -24,7 +24,7 @@ public class ArrayStack implements Stack {
         array = newArray;
     }
 
-    /** Override a method that removes element from top of stack*/
+    /** Override method removes element from top of stack*/
     @Override
     public int pop() throws EmptyStackException {
         if (isEmpty()) {
@@ -44,7 +44,7 @@ public class ArrayStack implements Stack {
         array = newArray;
     }
 
-    /** Override a method that removes element from top of stack*/
+    /** Override method removes element from top of stack*/
     @Override
     public void printStack() {
         if (isEmpty()) {
@@ -56,13 +56,13 @@ public class ArrayStack implements Stack {
         System.out.println();
     }
 
-    /** Override a method that checks for stack emptiness*/
+    /** Override method checks for stack emptiness*/
     @Override
     public boolean isEmpty() {
         return length == 0;
     }
 
-    /** Override a method that returns stack size*/
+    /** Override method returns stack size*/
     @Override
     public int getSize() {
         return length;
