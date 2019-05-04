@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:controller="group144.kireev.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <ProgressBar fx:id="progressBar" layoutX="200.0" layoutY="104.0" prefWidth="200.0" progress="0.0" />
+        <Slider fx:id="slider" layoutX="230.0" layoutY="169.0" max="1.0" showTickLabels="true" />
+    </children>
+</AnchorPane>
