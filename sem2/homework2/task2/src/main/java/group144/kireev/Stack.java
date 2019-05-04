@@ -1,6 +1,6 @@
 package group144.kireev;
 
-/** Interface realizing Stack */
+/** Interface describes Stack */
 public interface Stack {
 
     /** Method adds element to stack*/
