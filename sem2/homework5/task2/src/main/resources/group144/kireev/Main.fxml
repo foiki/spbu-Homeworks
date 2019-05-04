@@ -4,24 +4,33 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
-<AnchorPane prefHeight="367.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group144.kireev.Controller">
-   <children>
-      <Label layoutX="351.0" layoutY="165.0" prefHeight="36.0" prefWidth="31.0" text="=">
+<?import javafx.scene.layout.RowConstraints?>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="367.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group144.kireev.Controller">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES"  maxWidth="40.0" minWidth="10.0" prefWidth="20.0" />
+      <ColumnConstraints hgrow="SOMETIMES"  maxWidth="169.0" minWidth="60.0" prefWidth="62.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="60.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="60.0" prefWidth="62.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="10.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="10.0" prefWidth="167.0" />
+      <ColumnConstraints hgrow="SOMETIMES"  maxWidth="40.0" minWidth="10.0" prefWidth="20.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="232.0" minHeight="10.0" prefHeight="129.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="254.0" minHeight="10.0" prefHeight="118.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="153.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+      <Label layoutX="351.0" layoutY="165.0" prefHeight="36.0" prefWidth="31.0" text="=" GridPane.columnIndex="4" GridPane.rowIndex="1">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Spinner fx:id="firstValue" layoutX="65.0" layoutY="156.0" prefHeight="62.0" prefWidth="80.0" />
-      <Spinner fx:id="secondValue" layoutX="251.0" layoutY="156.0" prefHeight="62.0" prefWidth="80.0" />
-      <TextField fx:id="result" layoutX="392.0" layoutY="156.0" prefHeight="62.0" prefWidth="167.0" editable="false"/>
-      <Label layoutX="118.0" layoutY="58.0" text="Simple Calculator">
-         <font>
-            <Font size="44.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="operator" layoutX="168.0" layoutY="156.0" prefHeight="62.0" prefWidth="61.0" />
-   </children>
-</AnchorPane>
+      <Spinner fx:id="firstValue" prefHeight="62.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+      <Spinner fx:id="secondValue" prefHeight="62.0" prefWidth="80.0" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+      <TextField fx:id="result" prefHeight="62.0" prefWidth="167.0" editable="false" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+      <ChoiceBox fx:id="operator" prefHeight="62.0" prefWidth="61.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+</GridPane>
