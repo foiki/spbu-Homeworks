@@ -27,7 +27,7 @@ public class Main {
         }
     }
 
-    /** the method reads an array from the console */
+    /** Method reads an array from the console */
     public static int[][] readArray(Scanner in) {
         System.out.println("Enter the size of array: ");
         int number = in.nextInt();

@@ -2,7 +2,6 @@ package group144.kireev;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 
 import static group144.kireev.SpiralArrayToString.arrayToString;
 

@@ -2,7 +2,7 @@ package group144.kireev;
 
 import java.io.PrintStream;
 
-/** Class to translate of the array by a spiral into a string */
+/** Class to translate the array by a spiral into a string */
 public class SpiralArrayToString {
     public static void arrayToString(int[][] array, PrintStream stream) throws WrongArrayException {
         /** The method implements the translation of the array by a spiral into a string */
