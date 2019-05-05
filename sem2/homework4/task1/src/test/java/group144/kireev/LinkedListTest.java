@@ -6,20 +6,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedListTest {
     @Test
-    void pushAndPopTest() throws NoSuchElementInListException {
+    void pushAndPopTest() throws ElementNotFoundException {
         LinkedList<Integer> list = new LinkedList<>();
-        list.push(10);
-        list.push(20);
+        list.add(10);
+        list.add(20);
         assertEquals(Integer.valueOf(10), list.pop(10));
         assertEquals(Integer.valueOf(20), list.pop(20));
-        assertThrows(NoSuchElementInListException.class, () -> list.pop(10));
+        assertThrows(ElementNotFoundException.class, () -> list.pop(10));
     }
 
     @Test
     void isEmptyTest() {
         LinkedList<String> list = new LinkedList<>();
         assertTrue(list.isEmpty());
-        list.push("element");
+        list.add("element");
         assertFalse(list.isEmpty());
     }
 
@@ -27,7 +27,7 @@ class LinkedListTest {
     void getSizeTest() {
         LinkedList<String> list = new LinkedList<>();
         assertEquals(0, list.getSize());
-        list.push("element");
+        list.add("element");
         assertEquals(1, list.getSize());
     }
 }

@@ -1,30 +1,30 @@
 package group144.kireev;
 
-import java.util.NoSuchElementException;
-
 /**
- * A class that realizes single-linked list
+ * Class realizes single-linked list
  * @param <T> Type parameter
  */
 public class LinkedList<T> {
     private ListElement<T> head;
     private int size;
 
+    /**
+     * @return if the list is empty
+     */
     public boolean isEmpty() {
-
         return head == null;
     }
 
     /**
-     * A method adding a new element to the list
+     * Method adding a new element to the list
      * @param value to add
      */
-    public void push(T value) {
+    public void add(T value) {
         head = new ListElement<>(value, head);
         ++size;
     }
 
-    /** A method printing the list*/
+    /** Method prints the list*/
     public void printList() {
         ListElement<T> current = head;
         while (current != null) {
@@ -37,25 +37,19 @@ public class LinkedList<T> {
      * A method deleting element from the list
      * @param value to remove
      */
-    public T pop(T value) throws NoSuchElementInListException {
-        if (head == null) {
-            throw new NoSuchElementInListException("No such element in the list!");
-        }
-        if (head.value == value) {
-            head = head.next;
-            --size;
-            return value;
-        }
+    public T pop(T value) throws ElementNotFoundException {
         ListElement<T> current = head;
-        while (current.next != null && !current.next.value.equals(value)) {
+        ListElement<T> previous = head;
+        while (current != null && !current.value.equals(value)) {
+            previous = current;
             current = current.next;
         }
-        if (current.next != null) {
-            current.setNext(current.next.next);
+        if (current != null) {
+            previous.next = current.next;
             --size;
             return value;
         }
-        throw new NoSuchElementInListException("No such element in the list!");
+        throw new ElementNotFoundException("No such element in the list!");
     }
 
     /**
@@ -87,15 +81,6 @@ public class LinkedList<T> {
 
         private ListElement(T value, ListElement<T> next) {
             this.value = value;
-            this.next = next;
-        }
-
-        private ListElement(T value) {
-            this.value = value;
-            this.next = null;
-        }
-
-        private void setNext(ListElement<T> next) {
             this.next = next;
         }
     }
