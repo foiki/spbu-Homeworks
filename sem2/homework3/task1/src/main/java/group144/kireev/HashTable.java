@@ -7,9 +7,12 @@ import java.util.LinkedList;
 public class HashTable {
     private ArrayList<LinkedList<String>> bucket;
     private HashFunction hashFunction;
+    private int mod = 512;
     private int cellsUsed = 0;
     private int uniqueWordsAdded = 0;
     private int numberOfConflicts = 0;
+    private double higherLoadFactor = 0.15;
+    private double lowerLoadFactor = 0.01;
 
     /**
      * HashTable.
@@ -18,24 +21,33 @@ public class HashTable {
      */
     HashTable(HashFunction hashFunction) {
         this.hashFunction = hashFunction;
-        this.bucket = new ArrayList<>(hashFunction.getMod());
-        for (int i = 0; i < hashFunction.getMod(); ++i) {
+        this.bucket = new ArrayList<>(mod);
+        for (int i = 0; i < mod; ++i) {
             this.bucket.add(new LinkedList<>());
         }
+    }
+
+    /**
+     * Method calculating hash with current mod
+     * @param element to calculate hash
+     * @return hash of element
+     */
+    private int hash(String element) {
+        return hashFunction.hash(element) % mod;
     }
 
     /**
      * @return does the element belong to the table
      */
     public boolean exist(String element) {
-        return bucket.get(hashFunction.hash(element)).contains(element);
+        return bucket.get(hash(element)).contains(element);
     }
 
     /**
      * @param element to add to table
      */
     public void add(String element) {
-        int hash = hashFunction.hash(element);
+        int hash = hash(element);
         if (!exist(element)) {
             if (bucket.get(hash).size() > 0) {
                 ++numberOfConflicts;
@@ -44,8 +56,40 @@ public class HashTable {
             }
             ++uniqueWordsAdded;
             bucket.get(hash).add(element);
+            if (loadFactor() > higherLoadFactor) {
+                updateMod();
+            }
         }
+    }
 
+    /**
+     * @return list with all elements of table
+     */
+    private LinkedList<String> getAllElements() {
+        LinkedList<String> elements = new LinkedList<>();
+        for (int i = 0; i < mod; ++i) {
+            elements.addAll(bucket.get(i));
+            bucket.remove(i);
+            bucket.add(i, new LinkedList<>());
+        }
+        return elements;
+    }
+
+    /**
+     * Method updates Mod of HashTable
+     * increases it in two times if the LoadFactor reached upper threshold
+     * decreases it int two times if the LoadFactor reached lower threshold
+     */
+    private void updateMod() {
+        LinkedList<String> elements = getAllElements();
+        if (loadFactor() > higherLoadFactor) {
+            mod *= 2;
+        } else {
+            mod /= 2;
+        }
+        for (String element : elements) {
+            add(element);
+        }
     }
 
     /**
@@ -56,41 +100,41 @@ public class HashTable {
         if (!exist(element)) {
             throw new ElementDoesNotExist("Element " + element + " not found!");
         }
-        if (bucket.get(hashFunction.hash(element)).size() > 1) {
+        if (bucket.get(hash(element)).size() > 1) {
             --numberOfConflicts;
         } else {
             --cellsUsed;
         }
         --uniqueWordsAdded;
-        bucket.get(hashFunction.hash(element)).remove(element);
+        bucket.get(hash(element)).remove(element);
+        if (loadFactor() < lowerLoadFactor) {
+            updateMod();
+        }
     }
 
     /**
-     * Print statistic of HashTable: number of cells, load factor, number of conflicts,
+     * Prints statistic of HashTable: number of cells, load factor, number of conflicts,
      * maximum length of list in conflict cells and number of unique words in table
      */
     public void printStat() {
-        System.out.println("Number of cells: " + getNumberOfCells());
-        System.out.println("Load factor: " + getLoadFactor());
+        System.out.println("Number of cells: " + mod);
+        System.out.println("Load factor: " + loadFactor());
         System.out.println("Number of conflicts: " + numberOfConflicts);
-        System.out.println("Maximum length of list in conflict cells: " + getMaxLengthOfConflictCells());
+        System.out.println("Maximum length of list in conflict cells: " + maxLengthOfConflictCells());
         System.out.println("Unique words added: " + uniqueWordsAdded);
     }
 
-    public int getNumberOfAddedWords() { return uniqueWordsAdded; }
-
-    public int getNumberOfCells() {
-        return hashFunction.getMod();
-    }
-
-    public double getLoadFactor() {
-        return (double) cellsUsed / getNumberOfCells();
+    /**
+     * @return loadFactor of HashTable
+     */
+    public double loadFactor() {
+        return (double) cellsUsed / mod;
     }
 
     /**
      * @return max length of list in conflict cells
      */
-    public int getMaxLengthOfConflictCells() {
+    public int maxLengthOfConflictCells() {
         int result = 0;
         for (LinkedList list : bucket) {
             result = Integer.max(result, list.size());
@@ -100,20 +144,14 @@ public class HashTable {
 
     /**
      * Method changing HashFunction of HashTable
-     * @param table to change HashFunction
      * @param newHash on which to change
-     * @return HashTable with changed HashFunction
      */
-    public static HashTable changeHashFunction(HashTable table, HashFunction newHash) {
-        if (newHash.getClass().equals(table.hashFunction.getClass())) {
-            return table;
+    public void changeHashFunction(HashFunction newHash) {
+        LinkedList<String> elements = getAllElements();
+        hashFunction = newHash;
+        for (String element : elements) {
+            add(element);
         }
-        HashTable newHashTable = new HashTable(newHash);
-        for (int i = 0; i < table.hashFunction.getMod(); ++i) {
-            for (String element : table.bucket.get(i)) {
-                newHashTable.add(element);
-            }
-        }
-        return newHashTable;
+        updateMod();
     }
 }

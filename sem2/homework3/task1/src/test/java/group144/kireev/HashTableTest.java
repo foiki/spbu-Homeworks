@@ -2,18 +2,8 @@ package group144.kireev;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static group144.kireev.HashTable.changeHashFunction;
 
 class HashTableTest {
-
-    @Test
-    void addTest() {
-        HashTable table = new HashTable(new PolynomialHash());
-        table.add("abc");
-        table.add("bca");
-        table.add("acb");
-        assertEquals(3, table.getNumberOfAddedWords());
-    }
 
     @Test
     void existTest() {
@@ -24,13 +14,25 @@ class HashTableTest {
     }
 
     @Test
+    void addTest() {
+        HashTable table = new HashTable(new PolynomialHash());
+        table.add("abc");
+        table.add("bca");
+        table.add("acb");
+        assertTrue(table.exist("bca"));
+        assertTrue(table.exist("abc"));
+        assertFalse(table.exist("bba"));
+    }
+
+    @Test
     void removeTest() throws ElementDoesNotExist {
         HashTable table = new HashTable(new PolynomialHash());
         table.add("abc");
         table.add("bca");
         table.add("acb");
         table.remove("abc");
-        assertEquals(2, table.getNumberOfAddedWords());
+        assertTrue(table.exist("bca"));
+        assertFalse(table.exist("abc"));
     }
 
     @Test
@@ -47,7 +49,7 @@ class HashTableTest {
         table.add("abc");
         table.add("bca");
         table.add("acb");
-        changeHashFunction(table, new SumHash());
+        table.changeHashFunction(new SumHash());
         assertTrue(table.exist("abc"));
         assertTrue(table.exist("bca"));
         assertTrue(table.exist("acb"));

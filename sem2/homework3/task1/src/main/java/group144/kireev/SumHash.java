@@ -2,7 +2,6 @@ package group144.kireev;
 
 /** Class realizes Sum HashFunction */
 public class SumHash implements HashFunction {
-    private int mod = 480;
 
     /**
      * @param string to calculate hash
@@ -13,13 +12,8 @@ public class SumHash implements HashFunction {
         int result = 0;
         for (int i = 0; i < string.length(); i++) {
             result += string.charAt(i);
-            result = result % mod;
+            result = result % Integer.MAX_VALUE;
         }
         return result;
-    }
-
-    @Override
-    public int getMod() {
-        return mod;
     }
 }

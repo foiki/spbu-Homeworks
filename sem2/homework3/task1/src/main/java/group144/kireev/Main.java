@@ -3,7 +3,6 @@ package group144.kireev;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import static group144.kireev.HashTable.changeHashFunction;
 
 public class Main {
     public static void main(String[] args) {
@@ -51,7 +50,7 @@ public class Main {
                     printHelpMenu();
                     break;
                 case 7:
-                    table = changeHashFunction(table, chooseHashFunction(in));
+                    table.changeHashFunction(chooseHashFunction(in));
             }
         }
         System.out.println("Bye!");

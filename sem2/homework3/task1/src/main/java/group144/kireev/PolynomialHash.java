@@ -2,7 +2,6 @@ package group144.kireev;
 
 /** Class realizes Polynomial HashFunction */
 public class PolynomialHash implements HashFunction {
-    private int mod = 512;
 
     /**
      * @param string to calculate hash
@@ -13,13 +12,8 @@ public class PolynomialHash implements HashFunction {
         int prime = 13;
         int result = 0;
         for (int i = 0; i < string.length(); ++i) {
-            result = (result + prime * string.charAt(i)) % mod;
+            result = (result + prime * string.charAt(i)) * prime % Integer.MAX_VALUE;
         }
         return result;
-    }
-
-    @Override
-    public int getMod() {
-        return mod;
     }
 }
