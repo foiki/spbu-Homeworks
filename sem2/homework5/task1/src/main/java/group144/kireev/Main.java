@@ -16,11 +16,10 @@ public class Main extends Application {
             primaryStage.setTitle("Slider and Progress Bar");
             Scene scene = new Scene(root, 600, 600);
             primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-    }
+        }
     }
 
     public static void main(String[] args) {
