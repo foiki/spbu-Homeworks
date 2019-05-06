@@ -76,6 +76,16 @@ class AVLTreeTest {
     }
 
     @Test
+    public void iteratorEmptyTreeTest() {
+        AVLTree<Integer> tree = new AVLTree<>();
+        Iterator<Integer> iterator = tree.iterator();
+        assertFalse(iterator.hasNext());
+        for (int i = 0; i < 10; i++) {
+            assertNull(iterator.next());
+        }
+    }
+
+    @Test
     void toArrayTest() {
         AVLTree<Integer> tree = new AVLTree<>();
         tree.add(1);

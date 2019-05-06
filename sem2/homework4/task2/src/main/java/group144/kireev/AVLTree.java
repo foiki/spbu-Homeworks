@@ -54,9 +54,9 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
     public Object[] toArray() {
         ArrayList<T> result = new ArrayList<>();
         if (root == null) {
-            return null;
+            return new Object[] {};
         } else {
-            root.takeAll(result);
+            root.getAllToList(result);
             return result.toArray();
         }
     }
@@ -197,23 +197,27 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
     private class AVLTreeIterator implements Iterator<T> {
         private ArrayList<T> elements;
 
-        AVLTreeIterator() {
+        public AVLTreeIterator() {
             elements = new ArrayList<>();
             if (root == null) {
                 elements = null;
             } else {
-                root.takeAll(elements);
+                root.getAllToList(elements);
             }
         }
 
         @Override
         public boolean hasNext() {
-            return !elements.isEmpty();
+            try {
+                return !elements.isEmpty();
+            } catch (NullPointerException e) {
+                return false;
+            }
         }
 
         @Override
         public T next() {
-            if (elements.size() == 0) {
+            if (isEmpty()) {
                 return null;
             }
             return elements.remove(0);
@@ -228,7 +232,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
         private Node left = null;
         private Node right = null;
 
-        Node(T value, Node parent) {
+        private Node(T value, Node parent) {
             this.value = value;
             this.parent = parent;
         }
@@ -250,13 +254,13 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
          * Method adding elements from tree to list
          * @param list in which to add elements of tree
          */
-        private void takeAll(ArrayList<T> list) {
+        private void getAllToList(ArrayList<T> list) {
             if (left != null) {
-                left.takeAll(list);
+                left.getAllToList(list);
             }
             list.add(this.value);
             if (right != null) {
-                right.takeAll(list);
+                right.getAllToList(list);
             }
         }
 
