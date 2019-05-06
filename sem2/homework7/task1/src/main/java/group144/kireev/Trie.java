@@ -2,15 +2,12 @@ package group144.kireev;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /** Trie that stores strings */
 public class Trie implements Serializable {
-    private Vertex root;
-
-    /** Empty constructor for Trie */
-    public Trie() {
-        root = new Vertex();
-    }
+    private Vertex root = new Vertex();
+    private LinkedList<String> elements = new LinkedList<>();
 
     /**
      * @return number of elements in Trie
@@ -28,6 +25,7 @@ public class Trie implements Serializable {
         if (element == null || contains(element)) {
             return false;
         }
+        elements.add(element);
         Vertex current = root;
         int position = 0;
         ++current.startWith;
@@ -76,6 +74,7 @@ public class Trie implements Serializable {
         if (!contains(element)) {
             return false;
         }
+        elements.remove(element);
         Vertex current = root;
         --root.startWith;
         for (int i = 0; i < element.length(); ++i) {
@@ -115,9 +114,13 @@ public class Trie implements Serializable {
      * @throws IOException when we can't write there
      */
     public void serialize(OutputStream out) throws IOException {
-        ObjectOutputStream outputStream = new ObjectOutputStream(out);
-        outputStream.writeObject(this);
-        outputStream.close();
+        BufferedWriter outputFile = new BufferedWriter(new OutputStreamWriter(out));
+        for (String word: elements) {
+            outputFile.write(word);
+            outputFile.write("\n");
+        }
+        outputFile.close();
+        out.close();
     }
 
     /**
@@ -126,9 +129,14 @@ public class Trie implements Serializable {
      * @throws ClassNotFoundException when we cant find class which serialized in this stream
      */
     public void deserialize(InputStream in) throws IOException, ClassNotFoundException {
-        ObjectInputStream inputStream = new ObjectInputStream(in);
-        Trie newTrie = (Trie) inputStream.readObject();
-        this.root = newTrie.root;
+        BufferedReader inputFile = new BufferedReader(new InputStreamReader(in));
+        Trie trie = new Trie();
+        while (inputFile.ready()) {
+            trie.add(inputFile.readLine());
+        }
+        root = trie.root;
+        inputFile.close();
+        in.close();
     }
 
     /**
