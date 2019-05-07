@@ -12,21 +12,23 @@ public class ReflectionTask {
      * @return String representation of someClass
      */
     public static String printStructure(Class<?> someClass) {
-        return "package group144.kireev;\n\n" + getClassStructure(someClass);
+        if (someClass.getPackageName().length() != 0) {
+            return "package " + someClass.getPackageName() + ";\n\n" + getStructure(someClass);
+        }
+        return getStructure(someClass);
     }
 
     /**
-     * Return string representation of class without package
      * @param someClass class that declaration should be built
      * @return String representation of someClass without package
      */
-    private static String getClassStructure(Class<?> someClass) {
-        return  getClassDeclaration(someClass) + " { \n \n"
+    public static String getStructure(Class<?> someClass) {
+        return  getClassDeclaration(someClass) + "{\n\n"
                 + getClassFields(someClass)
                 + getConstructors(someClass)
                 + getMethods(someClass)
                 + getInnerClasses(someClass)
-                + "\n}";
+                + "}\n";
     }
 
     /**
@@ -98,9 +100,9 @@ public class ReflectionTask {
      * @return String representation of fields of someClass
      */
     private static String getClassFields(Class<?> someClass) {
-        if (someClass.getFields().length != 0) {
+        if (someClass.getDeclaredFields().length != 0) {
             return Arrays
-                    .stream(someClass.getFields())
+                    .stream(someClass.getDeclaredFields())
                     .map(ReflectionTask::fieldToString)
                     .collect(Collectors.joining(";\n", "", ";\n\n"));
         }
@@ -123,20 +125,20 @@ public class ReflectionTask {
         if (someClass.getConstructors().length != 0) {
             return Arrays
                     .stream(someClass.getDeclaredConstructors())
-                    .map(constructor -> constructorToString(someClass, constructor))
+                    .map(constructor -> constructorToString(someClass.getSimpleName(), constructor))
                     .collect(Collectors.joining("\n", "", ""));
         }
         return "";
     }
 
     /**
-     * @param someClass to get SimpleName for constructor
+     * @param className to get SimpleName for constructor
      * @param constructor that declaration should be built
      * @return String representation of constructor
      */
-    private static String constructorToString(Class<?> someClass, Constructor constructor) {
+    private static String constructorToString(String className, Constructor constructor) {
         int[] counter = new int[] {0};
-        return Modifier.toString(constructor.getModifiers()) + " " + someClass.getSimpleName()
+        return Modifier.toString(constructor.getModifiers()) + " " + className
                 + Arrays.stream(constructor.getParameterTypes())
                 .map(ReflectionTask::simpleNameWithParameters)
                 .map(s ->  {counter[0] += 1; return s + " arg" + counter[0];})
@@ -149,7 +151,7 @@ public class ReflectionTask {
      */
     private static String getMethods(Class<?> someClass) {
         if (someClass.getMethods().length != 0) {
-            return Arrays.stream(someClass.getMethods())
+            return Arrays.stream(someClass.getDeclaredMethods())
                     .map(ReflectionTask::methodToString)
                     .collect(Collectors.joining("\n\n", "\n", "\n"));
         }
@@ -168,7 +170,55 @@ public class ReflectionTask {
                 + Arrays.stream(method.getParameterTypes())
                 .map(ReflectionTask::simpleNameWithParameters)
                 .map(s ->  {counter[0]+=1; return s + " arg" + counter[0];})
-                .collect(Collectors.joining(", ", "(", ") {\n}"));
+                .collect(Collectors.joining(", ", "(", ") {\n"))
+                + "return" + getReturnValue(method.getReturnType().getSimpleName()) + ";\n}";
+    }
+
+    /**
+     * @param returnType to find return value for it
+     * @return String with possible return value for this return type
+     */
+    private static String getReturnValue(String returnType) {
+        switch (returnType) {
+            case "void":
+                return "";
+            case "Integer":
+                return " 41";
+            case "Boolean":
+                return  " true";
+            case "String":
+                return " a";
+            case "Double":
+                return " 0.0";
+            case "Character":
+                return " b";
+            case "Byte":
+                return " 42";
+            case "Long":
+                return " 43";
+            case "Short":
+                return " 44";
+            case "Float":
+                return " 45";
+            case "int":
+                return " 49";
+            case "boolean":
+                return  " false";
+            case "double":
+                return " 1.0";
+            case "char":
+                return " c";
+            case "byte":
+                return " 2";
+            case "long":
+                return " 3";
+            case "short":
+                return " 4";
+            case "float":
+                return " 5.0";
+            default:
+                return " null";
+        }
     }
 
     /**
@@ -179,7 +229,7 @@ public class ReflectionTask {
         if (someClass.getDeclaredClasses().length != 0) {
             StringBuilder result = new StringBuilder();
             for (Class<?> innerClass : someClass.getDeclaredClasses()) {
-                result.append(getClassStructure(innerClass));
+                result.append(getStructure(innerClass));
             }
             return "\n" + result.toString();
         }
@@ -187,8 +237,7 @@ public class ReflectionTask {
     }
 
     public boolean diffClasses(Class firstClass, Class secondClass) {
-        StringBuilder differences = new StringBuilder();
-        findDifferences(differences, firstClass, secondClass);
+        String differences = findDifferences(firstClass, secondClass);;
         if (differences.length() == 0) {
             System.out.println("Classes are equal!");
             return true;
@@ -198,13 +247,35 @@ public class ReflectionTask {
         return false;
     }
 
-    private void findDifferences(StringBuilder differences, Class firstClass, Class secondClass) {
-        findDifferencesInFields(differences, firstClass, secondClass);
+    private String findDifferences(Class firstClass, Class secondClass) {
+        return findDifferencesInFields(firstClass, secondClass);
     }
 
-    private void findDifferencesInFields(StringBuilder differences, Class firstClass, Class secondClass) {
+    private String findDifferencesInFields(Class firstClass, Class secondClass) {
         Field[] fieldsFirst = firstClass.getDeclaredFields();
         Field[] fieldsSecond = secondClass.getDeclaredFields();
+        StringBuilder result = new StringBuilder();
+        for (Field field : fieldsFirst) {
+            if (!containsField(fieldsSecond, field)) {
+                result.append(fieldToString(field));
+                result.append("\n");
+            }
+        }
+        for (Field field : fieldsSecond) {
+            if (!containsField(fieldsFirst, field)) {
+                result.append(fieldToString(field));
+                result.append("\n");
+            }
+        }
+        return result.toString();
+    }
 
+    private boolean containsField(Field[] fields, Field field) {
+        for (Field current : fields) {
+            if (current.getName().equals(field.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
