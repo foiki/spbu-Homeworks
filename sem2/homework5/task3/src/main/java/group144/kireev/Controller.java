@@ -79,6 +79,9 @@ public class Controller {
         resultOutputted = false;
     }
 
+    /**
+     * Changes sign of current number in the result field
+     */
     public void changeSign() {
         double currentNumber = Double.parseDouble(result.getText());
         if (currentNumber != 0) {
@@ -86,6 +89,7 @@ public class Controller {
         }
     }
 
+    /** Initialization method */
     public void initialize() {
         result.textProperty().setValue("0.0");
     }
