@@ -18,6 +18,7 @@ public class SortedSet implements ListsComparator {
     public void add(LinkedList<String> element) {
         if (isEmpty()) {
             elements.add(0, element);
+            return;
         }
         LinkedList<String> current = elements.get(0);
         int currentIndex = 0;

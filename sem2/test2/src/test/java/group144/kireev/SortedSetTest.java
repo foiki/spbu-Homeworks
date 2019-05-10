@@ -45,17 +45,15 @@ class SortedSetTest {
         secondList.add("6");
         secondList.add("7");
         set.add(secondList);
-        System.out.println(set.elements.size());
         set.add(firstList);
         LinkedList<String> thirdList = new LinkedList<>();
         thirdList.add("2");
         thirdList.add("3");
         set.add(thirdList);
-        System.out.println(set.elements.size());
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(arrayOutputStream));
         set.printSet();
-        assertEquals("1 2 3 4 5 6 7", arrayOutputStream.toString());
+        assertEquals("1 2 3 4 5 6 7 ", arrayOutputStream.toString());
     }
 
 
