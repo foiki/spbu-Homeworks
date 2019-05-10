@@ -2,6 +2,7 @@ package group144.kireev;
 
 import java.util.LinkedList;
 
+/** Class realizes SortedSet collects LinkedLists of Strings */
 public class SortedSet implements ListsComparator {
     public LinkedList<LinkedList<String>> elements = new LinkedList<>();
 
@@ -46,12 +47,14 @@ public class SortedSet implements ListsComparator {
         return 0;
     }
 
+    /** Method prints SortedSet to the console */
     public void printSet() {
         for (LinkedList<String> currentList : elements) {
             printList(currentList);
         }
     }
 
+    /** Method prints LinkedList to the console */
     private void printList(LinkedList<String> list) {
         for (String string : list) {
             System.out.print(string + " ");
