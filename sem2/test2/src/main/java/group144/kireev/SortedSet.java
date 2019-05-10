@@ -4,30 +4,32 @@ import java.util.LinkedList;
 
 /** Class realizes SortedSet collects LinkedLists of Strings */
 public class SortedSet implements ListsComparator {
-    private LinkedList<LinkedList<String>> elements = new LinkedList<>();
+    private Node head;
 
     /**
      * @return if SortedSet is empty
      */
     public boolean isEmpty() {
-        return elements.size() == 0;
+        return head != null;
     }
 
     /**
      * @param element to add to SortedSet in increasing order
      */
     public void add(LinkedList<String> element) {
-        if (isEmpty()) {
-            elements.add(0, element);
+        if (!isEmpty()) {
+            head = new Node(element);
             return;
         }
-        int currentIndex = 0;
-        LinkedList<String> current = elements.get(currentIndex);
-        while (currentIndex < elements.size() && compare(element, current) > 0) {
-            ++currentIndex;
-            current = elements.get(currentIndex);
+        if (compare(head.value, element) == 1) {
+            head = new Node(element, head);
+            return;
         }
-        elements.add(currentIndex, element);
+        Node current = head;
+        while (current.next != null && compare(current.next.value, element) < 0) {
+            current = current.next;
+        }
+        current.next = new Node(element, current.next);
     }
 
     /**
@@ -47,17 +49,35 @@ public class SortedSet implements ListsComparator {
         return 0;
     }
 
-    /** Method prints SortedSet to the console */
+    /** Method prints SortedSet to console */
     public void printSet() {
-        for (LinkedList<String> currentList : elements) {
-            printList(currentList);
+        Node current = head;
+        while (current != null) {
+            current.print();
+            current = current.next;
         }
     }
 
-    /** Method prints LinkedList to the console */
-    private void printList(LinkedList<String> list) {
-        for (String string : list) {
-            System.out.print(string + " ");
+    /** Class realizes Node of SortedSet */
+    private class Node {
+        private LinkedList<String> value;
+        private Node next;
+
+        private Node(LinkedList<String> value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+
+        private Node(LinkedList<String> value) {
+            this.value = value;
+            this.next = null;
+        }
+
+        /** Method prints Node to console */
+        private void print() {
+            for (String string : value) {
+                System.out.print(string + " ");
+            }
         }
     }
 }
