@@ -10,18 +10,18 @@ public class SortedSet implements ListsComparator {
      * @return if SortedSet is empty
      */
     public boolean isEmpty() {
-        return head != null;
+        return head == null;
     }
 
     /**
      * @param element to add to SortedSet in increasing order
      */
     public void add(LinkedList<String> element) {
-        if (!isEmpty()) {
+        if (isEmpty()) {
             head = new Node(element);
             return;
         }
-        if (compare(head.value, element) == 1) {
+        if (compare(head.value, element) > 0) {
             head = new Node(element, head);
             return;
         }
@@ -36,17 +36,11 @@ public class SortedSet implements ListsComparator {
      * Method comparing two elements
      * @param first element to compare
      * @param second element to compare
-     * @return -1, zero, or 1 as the first argument is less than, equal to, or greater than the second
+     * @return negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater than the second
      */
     @Override
     public int compare(LinkedList<String> first, LinkedList<String> second) {
-        if (first.size() > second.size()) {
-            return 1;
-        }
-        if (first.size() < second.size()) {
-            return -1;
-        }
-        return 0;
+        return first.size() - second.size();
     }
 
     /** Method prints SortedSet to console */

@@ -29,7 +29,7 @@ class SortedSetTest {
         secondList.add("5");
         secondList.add("6");
         secondList.add("7");
-        assertEquals(1, set.compare(secondList, firstList));
+        assertEquals(3, set.compare(secondList, firstList));
         LinkedList<String> emptyList = new LinkedList<>();
         assertEquals(-1, set.compare(emptyList, firstList));
     }
