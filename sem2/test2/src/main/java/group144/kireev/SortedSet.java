@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 /** Class realizes SortedSet collects LinkedLists of Strings */
 public class SortedSet implements ListsComparator {
-    public LinkedList<LinkedList<String>> elements = new LinkedList<>();
+    private LinkedList<LinkedList<String>> elements = new LinkedList<>();
 
     /**
      * @return if SortedSet is empty
@@ -21,9 +21,9 @@ public class SortedSet implements ListsComparator {
             elements.add(0, element);
             return;
         }
-        LinkedList<String> current = elements.get(0);
         int currentIndex = 0;
-        while (current != null && compare(element, current) > 0) {
+        LinkedList<String> current = elements.get(currentIndex);
+        while (currentIndex < elements.size() && compare(element, current) > 0) {
             ++currentIndex;
             current = elements.get(currentIndex);
         }
