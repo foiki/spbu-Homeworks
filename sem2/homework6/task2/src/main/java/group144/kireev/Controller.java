@@ -7,58 +7,50 @@ import javafx.scene.control.Label;
 
 /** Controller class for Main FXML file */
 public class Controller {
-
-    private int buttonPressed = 0;
-
-    private boolean wasGameOver = false;
-
+    private TicTacToe game = new TicTacToe();
     private Button[][] field;
-
-    private boolean isXTurn = true;
 
     /**
      * Method for action when user clicks field buttons
      * @param event action event
      */
     public void processButton(ActionEvent event) {
-        if (!wasGameOver && ((Button)event.getSource()).getText().equals("")) {
-            ++buttonPressed;
-            if (isXTurn) {
+        if (!game.wasGameOver() && ((Button)event.getSource()).getText().equals("")) {
+            game.increaseNumberOfButtonPressed();
+            if (game.isXTurn()) {
                 ((Button)event.getSource()).setText("X");
                 text.setText("Now is 'O' turn");
-                isXTurn = false;
             } else {
                 ((Button)event.getSource()).setText("0");
                 text.setText("Now is 'X' turn");
-                isXTurn = true;
             }
+            game.updateNextPlayerTurn();
         }
-        if (TicTacToe.hasWinner(field)) {
-            if (isXTurn) {
-                text.setText("The winner is : 0");
-                wasGameOver = true;
-            } else {
-                text.setText("The winner is : X");
-                wasGameOver = true;
-            }
+        String currentResult = game.getResultOfGame(getTextOnButtons(field));
+        if (!currentResult.equals("")) {
+            text.setText(currentResult);
         }
-        if (buttonPressed == 9) {
-            text.setText("Draw!");
-            wasGameOver = true;
-        }
+    }
+
+    /**
+     * @param field of buttons to get information
+     * @return array of strings with text of buttons
+     */
+    private static String[][] getTextOnButtons(Button[][] field) {
+        return new String[][]{{field[2][0].getText(), field[2][1].getText(), field[2][2].getText()},
+                                {field[1][0].getText(), field[1][1].getText(), field[1][2].getText()},
+                                {field[0][0].getText(), field[0][1].getText(), field[0][2].getText()}};
     }
 
     /** Method for action when user clicks New Game Button */
     public void startNewGame() {
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                field[i][j].setText("");
+        for (Button[] buttons : field) {
+            for (int j = 0; j < field.length; ++j) {
+                buttons[j].setText("");
             }
         }
         text.setText("Now is 'X' turn");
-        isXTurn = true;
-        buttonPressed = 0;
-        wasGameOver = false;
+        game = new TicTacToe();
     }
 
     /** Initialization method */
