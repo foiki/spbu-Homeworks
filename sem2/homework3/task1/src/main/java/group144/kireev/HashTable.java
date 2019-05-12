@@ -21,58 +21,47 @@ public class HashTable {
      */
     HashTable(HashFunction hashFunction) {
         this.hashFunction = hashFunction;
-        this.bucket = new ArrayList<>(mod);
+        bucket = new ArrayList<>(mod);
         for (int i = 0; i < mod; ++i) {
-            this.bucket.add(new LinkedList<>());
+            bucket.add(new LinkedList<>());
         }
-    }
-
-    /**
-     * Method calculating hash with current mod
-     * @param element to calculate hash
-     * @return hash of element
-     */
-    private int hash(String element) {
-        return hashFunction.hash(element) % mod;
     }
 
     /**
      * @return does the element belong to the table
      */
     public boolean exist(String element) {
-        return bucket.get(hash(element)).contains(element);
+        return bucket.get(hashFunction.hash(element, mod)).contains(element);
     }
 
     /**
-     * @param element to add to table
+     * @param element to add unique element to the table
      */
     public void add(String element) {
-        int hash = hash(element);
-        if (!exist(element)) {
-            if (bucket.get(hash).size() > 0) {
+        int hash = hashFunction.hash(element, mod);
+        if (exist(element)) {
+            return;
+        }
+        if (bucket.get(hash).size() > 0) {
                 ++numberOfConflicts;
-            } else {
-                ++cellsUsed;
-            }
-            ++uniqueWordsAdded;
-            bucket.get(hash).add(element);
-            if (loadFactor() > higherLoadFactor) {
-                updateMod();
-            }
+        } else {
+            ++cellsUsed;
+        }
+        ++uniqueWordsAdded;
+        bucket.get(hash).add(element);
+        if (loadFactor() > higherLoadFactor) {
+            updateMod();
         }
     }
 
-    /**
-     * @return list with all elements of table
+    /** Adding all elements from list to the table
      */
-    private LinkedList<String> getAllElements() {
-        LinkedList<String> elements = new LinkedList<>();
-        for (int i = 0; i < mod; ++i) {
-            elements.addAll(bucket.get(i));
-            bucket.remove(i);
-            bucket.add(i, new LinkedList<>());
+    private void addAll(ArrayList<LinkedList<String>> oldBucket) {
+        for (LinkedList<String> list : oldBucket) {
+            for (String element : list) {
+                add(element);
+            }
         }
-        return elements;
     }
 
     /**
@@ -81,15 +70,17 @@ public class HashTable {
      * decreases it int two times if the LoadFactor reached lower threshold
      */
     private void updateMod() {
-        LinkedList<String> elements = getAllElements();
+        ArrayList<LinkedList<String>> oldBucket = bucket;
         if (loadFactor() > higherLoadFactor) {
             mod *= 2;
         } else {
             mod /= 2;
         }
-        for (String element : elements) {
-            add(element);
+        this.bucket = new ArrayList<>(mod);
+        for (int i = 0; i < mod; ++i) {
+            bucket.add(new LinkedList<>());
         }
+        addAll(oldBucket);
     }
 
     /**
@@ -100,13 +91,13 @@ public class HashTable {
         if (!exist(element)) {
             throw new ElementDoesNotExist("Element " + element + " not found!");
         }
-        if (bucket.get(hash(element)).size() > 1) {
+        if (bucket.get(hashFunction.hash(element, mod)).size() > 1) {
             --numberOfConflicts;
         } else {
             --cellsUsed;
         }
         --uniqueWordsAdded;
-        bucket.get(hash(element)).remove(element);
+        bucket.get(hashFunction.hash(element, mod)).remove(element);
         if (loadFactor() < lowerLoadFactor) {
             updateMod();
         }
@@ -147,11 +138,13 @@ public class HashTable {
      * @param newHash on which to change
      */
     public void changeHashFunction(HashFunction newHash) {
-        LinkedList<String> elements = getAllElements();
+        ArrayList<LinkedList<String>> oldBucket = bucket;
         hashFunction = newHash;
-        for (String element : elements) {
-            add(element);
+        bucket = new ArrayList<>(mod);
+        for (int i = 0; i < mod; ++i) {
+            this.bucket.add(new LinkedList<>());
         }
+        addAll(oldBucket);
         updateMod();
     }
 }

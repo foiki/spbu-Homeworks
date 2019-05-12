@@ -8,11 +8,11 @@ public class PolynomialHash implements HashFunction {
      * @return Polynomial Hash of string
      */
     @Override
-    public int hash(String string) {
+    public int hash(String string, int mod) {
         int prime = 13;
         int result = 0;
         for (int i = 0; i < string.length(); ++i) {
-            result = (result + prime * string.charAt(i)) * prime % Integer.MAX_VALUE;
+            result = (result + prime * string.charAt(i)) * prime % mod;
         }
         return result;
     }

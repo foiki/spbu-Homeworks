@@ -8,5 +8,5 @@ public interface HashFunction {
      * @param number element whose hash will be computed
      * @return hash of the element
      */
-    int hash(String string);
+    int hash(String string, int mod);
 }

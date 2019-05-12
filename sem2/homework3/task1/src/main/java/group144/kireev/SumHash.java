@@ -8,11 +8,11 @@ public class SumHash implements HashFunction {
      * @return Polynomial Hash of string
      */
     @Override
-    public int hash(String string) {
+    public int hash(String string, int mod) {
         int result = 0;
         for (int i = 0; i < string.length(); i++) {
             result += string.charAt(i);
-            result = result % Integer.MAX_VALUE;
+            result = result % mod;
         }
         return result;
     }
