@@ -13,7 +13,7 @@ public class ReflectionTask {
      * @param someClass class that declaration should be built
      */
     public static void printStructureToFile(Class<?> someClass) throws IOException {
-        FileWriter fileWriter = new FileWriter("src\\main\\java\\group144\\kireev\\test\\" + someClass.getSimpleName() + ".java");
+        FileWriter fileWriter = new FileWriter(someClass.getSimpleName() + ".java");
         fileWriter.write(printStructure(someClass));
         fileWriter.close();
     }

@@ -11,7 +11,7 @@ class ReflectionTaskTest {
     @Test
     void printStructureTest() throws ClassNotFoundException, IOException {
         ClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file://")});
-        Class<?> sample = classLoader.loadClass("group144.kireev.test.SomeClass");
+        Class<?> sample = classLoader.loadClass("group144.kireev.SomeClass");
         String result = ReflectionTask.printStructure(sample);
         String expected = "package group144.kireev.test;\n\n"
                 + "public class SomeClass<E> extends Object {\n\n"
@@ -32,7 +32,7 @@ class ReflectionTaskTest {
         ReflectionTask.printStructureToFile(sample);
 
         ClassLoader result = new URLClassLoader(new URL[]{new URL("file://")});
-        Class<?> resultClass = result.loadClass("group144.kireev.test.List");
+        Class<?> resultClass = result.loadClass("group144.kireev.List");
         assertTrue(ReflectionTask.diffClasses(resultClass, sample));
     }
 
@@ -43,7 +43,7 @@ class ReflectionTaskTest {
         ReflectionTask.printStructureToFile(sample);
 
         ClassLoader result = new URLClassLoader(new URL[]{new URL("file://")});
-        Class<?> resultClass = result.loadClass("group144.kireev.test.List");
+        Class<?> resultClass = result.loadClass("group144.kireev.List");
         assertFalse(ReflectionTask.diffClasses(resultClass, sample));
     }
 
@@ -54,7 +54,7 @@ class ReflectionTaskTest {
         ReflectionTask.printStructureToFile(sample);
 
         ClassLoader result = new URLClassLoader(new URL[]{new URL("file://")});
-        Class<?> resultClass = result.loadClass("group144.kireev.test.List");
+        Class<?> resultClass = result.loadClass("group144.kireev.List");
         assertFalse(ReflectionTask.diffClasses(resultClass, sample));
     }
 }

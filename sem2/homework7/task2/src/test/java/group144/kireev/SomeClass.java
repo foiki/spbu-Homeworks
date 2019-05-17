@@ -1,4 +1,4 @@
-package group144.kireev.test;
+package group144.kireev;
 
 public class SomeClass<E> extends Object {
 
