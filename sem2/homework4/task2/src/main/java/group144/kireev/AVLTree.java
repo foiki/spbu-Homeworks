@@ -52,13 +52,7 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
      */
     @Override
     public Object[] toArray() {
-        ArrayList<T> result = new ArrayList<>();
-        if (root == null) {
-            return new Object[] {};
-        } else {
-            root.getAllToList(result);
-            return result.toArray();
-        }
+        return toArray(new Object[size]);
     }
 
     /**
@@ -195,24 +189,17 @@ public class AVLTree<T extends Comparable<T>> implements Collection<T> {
 
     /** Class realizing the AVL Tree Iterator */
     private class AVLTreeIterator implements Iterator<T> {
-        private ArrayList<T> elements;
+        private ArrayList<T> elements = new ArrayList<>();
 
         public AVLTreeIterator() {
-            elements = new ArrayList<>();
-            if (root == null) {
-                elements = null;
-            } else {
+            if (root != null) {
                 root.getAllToList(elements);
             }
         }
 
         @Override
         public boolean hasNext() {
-            try {
-                return !elements.isEmpty();
-            } catch (NullPointerException e) {
-                return false;
-            }
+            return !elements.isEmpty();
         }
 
         @Override
