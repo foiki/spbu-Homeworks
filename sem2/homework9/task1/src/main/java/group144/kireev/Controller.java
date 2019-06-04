@@ -8,7 +8,29 @@ import javafx.scene.control.Label;
 /** Controller class for Main FXML file */
 public class Controller {
     protected Button[][] field;
+    protected TicTacToe game;
 
+    /**
+     * Method for action when user clicks field buttons
+     * @param event action event
+     */
+    public void processButton(ActionEvent event) {
+        if (!game.wasGameOver() && ((Button)event.getSource()).getText().equals("")) {
+            game.increaseNumberOfButtonPressed();
+            if (game.isXTurn()) {
+                ((Button)event.getSource()).setText("X");
+                text.setText("Now is 'O' turn");
+            } else {
+                ((Button)event.getSource()).setText("0");
+                text.setText("Now is 'X' turn");
+            }
+            game.updateNextPlayerTurn();
+        }
+        String currentResult = game.getResultOfGame(getTextOnButtons(field));
+        if (!currentResult.equals("")) {
+            text.setText(currentResult);
+        }
+    }
 
     /**
      * @param field of buttons to get information

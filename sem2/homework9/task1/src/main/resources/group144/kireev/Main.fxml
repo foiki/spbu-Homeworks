@@ -80,6 +80,6 @@
             <Font size="40.0"/>
         </font>
     </Label>
-    <Button mnemonicParsing="false" onAction="#newGameAction" prefHeight="32.0" prefWidth="100.0" text="New game"
+    <Button mnemonicParsing="false" fx:id="newGameButton" onAction="#newGameAction" prefHeight="32.0" prefWidth="100.0" text="New game"
             GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP"/>
 </GridPane>
