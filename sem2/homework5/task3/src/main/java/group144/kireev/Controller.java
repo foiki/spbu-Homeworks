@@ -10,10 +10,7 @@ public class Controller {
 
     @FXML
     private TextField result;
-
-    private double firstNumber = 0;
-    private String operator = "";
-    private boolean resultOutputted = false;
+    private boolean isOperatorEnteredLast = false;
 
     /**
      * Action when number button is pressed
@@ -21,16 +18,12 @@ public class Controller {
      */
     public void processNumbers(ActionEvent event) {
         String value = ((Button)event.getSource()).getText();
-        if (result.getText().equals("0.0") && !resultOutputted) {
-            if (!value.equals("0")) {
-                result.setText(value);
-            }
-        } else if (result.getText().equals("Error!") || resultOutputted){
+        if (result.getText().equals("0")) {
             result.setText(value);
-            resultOutputted = false;
-        } else {
-            result.setText(result.getText() + value);
+            return;
         }
+        result.setText(result.getText() + value);
+        isOperatorEnteredLast = false;
     }
 
     /**
@@ -38,34 +31,40 @@ public class Controller {
      * @param event event with information about source
      */
     public void processOperators(ActionEvent event) {
-        String value = ((Button)event.getSource()).getText();
-        if (!value.equals("=")) {
-            if (!operator.isEmpty()) {
-                return;
+        if (!isOperatorEnteredLast) {
+            String value = ((Button)event.getSource()).getText();
+            if (value.equals("=")) {
+                String expression = result.getText();
+                int calculatedExpression = Calculator.calculate(expression);
+                result.setText(Integer.toString(calculatedExpression));
+            } else {
+                isOperatorEnteredLast = true;
+                String operator = ((Button)event.getSource()).getText();
+                result.setText(result.getText() + " " + operator + " ");
             }
-            operator = value;
-            firstNumber = Double.parseDouble(result.getText());
-            result.setText("0.0");
-        } else {
-            if (operator.isEmpty()) {
-                return;
-            }
-            double secondNumber = Double.parseDouble(result.getText());
-            result.setText(Calculator.calculate(firstNumber, secondNumber, operator));
-            operator = "";
-            firstNumber = 0;
-            resultOutputted = true;
         }
     }
 
     /**
      * Press Clear(CE) button.
-     * To write a new current value
-     * Sets textField ass "0"
+     * Removes last entered element
      */
     public void pressClear() {
-        result.setText("0.0");
-        resultOutputted = false;
+        String currentExpression = result.getText();
+        if (currentExpression.length() == 1) {
+            result.setText("0");
+            isOperatorEnteredLast = false;
+            return;
+        }
+        String newExpression = currentExpression.substring(0, currentExpression.length() - 1);
+        String lastElement = currentExpression.substring(newExpression.length() - 1, newExpression.length());
+        if (Calculator.isNumber(lastElement)) {
+            isOperatorEnteredLast = false;
+        } else {
+            newExpression = newExpression.substring(0, currentExpression.length() - 3);
+            isOperatorEnteredLast = true;
+        }
+        result.setText(newExpression);
     }
 
     /**
@@ -73,24 +72,22 @@ public class Controller {
      * To start calculations from the beginning
      */
     public void pressClearAll() {
-        result.setText("0.0");
-        operator = "";
-        firstNumber = 0;
-        resultOutputted = false;
+        result.setText("0");
+        isOperatorEnteredLast = false;
     }
 
     /**
      * Changes sign of current number in the result field
      */
     public void changeSign() {
-        double currentNumber = Double.parseDouble(result.getText());
+        int currentNumber = Integer.parseInt(result.getText());
         if (currentNumber != 0) {
-            result.setText(Double.toString(-1 * currentNumber));
+            result.setText(Integer.toString(-1 * currentNumber));
         }
     }
 
     /** Initialization method */
     public void initialize() {
-        result.textProperty().setValue("0.0");
+        result.textProperty().setValue("0");
     }
 }

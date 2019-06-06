@@ -7,16 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void calculateErrorTest() {
-        assertEquals("Error!", Calculator.calculate(1, 0, "/"));
-    }
-
-    @Test
-    void calculateSimpleTest() {
-        assertEquals("10.0", Calculator.calculate(2, 5, "*"));
-        assertEquals("7.0", Calculator.calculate(3, 4, "+"));
-        assertEquals("-5.0", Calculator.calculate(0, 5, "-"));
-        assertEquals("-9.0", Calculator.calculate(-6, -3, "+"));
-        assertEquals("1.0", Calculator.calculate(-1, -1, "/"));
+    void calculateTest() {
+        assertEquals(765, Calculator.calculate("190 * 4 + 5"));
+        assertEquals(21, Calculator.calculate("5 + 3 * 6 - 2 / 1"));
+        assertEquals(70, Calculator.calculate("90 / 3 + 10 + 5 * 6"));
+        assertEquals(115, Calculator.calculate("5 * 3 + 10 * 500 / 50"));
+        assertEquals(50987, Calculator.calculate("7283 * 7 - 2 + 4 * 2"));
     }
 }
