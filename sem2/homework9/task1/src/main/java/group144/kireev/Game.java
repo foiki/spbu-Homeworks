@@ -19,6 +19,8 @@ public class Game extends Application {
         controller = fxmlLoader.getController();
         controller.updateController(player, socket);
         primaryStage.setTitle("Tic Tac Toe. Player " + player.name());
+        primaryStage.setMinWidth(400);
+        primaryStage.setMinHeight(500);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
