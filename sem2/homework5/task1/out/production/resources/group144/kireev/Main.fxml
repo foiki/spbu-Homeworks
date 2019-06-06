@@ -1,10 +1,21 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:controller="group144.kireev.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
-    <children>
-        <ProgressBar fx:id="progressBar" layoutX="200.0" layoutY="104.0" prefWidth="200.0" progress="0.0" />
-        <Slider fx:id="slider" layoutX="230.0" layoutY="169.0" max="1.0" showTickLabels="true" />
-    </children>
-</AnchorPane>
+<?import javafx.scene.layout.GridPane?>
+<GridPane hgap="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="group144.kireev.Controller">
+<columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="25.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="25.0" />
+</columnConstraints>
+<rowConstraints>
+    <RowConstraints maxHeight="300.0" minHeight="20.0" prefHeight="200.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+</rowConstraints>
+
+<ProgressBar fx:id="progressBar" prefHeight="30.0" prefWidth="400.0" GridPane.columnIndex="1" progress="0.0" />
+<Slider fx:id="slider" max="1.0" prefHeight="30.0" prefWidth="400.0" GridPane.rowIndex="1" GridPane.columnIndex="1" showTickLabels="true" />
+
+</GridPane>

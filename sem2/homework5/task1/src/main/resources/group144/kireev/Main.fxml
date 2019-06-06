@@ -5,17 +5,17 @@
 
 <?import javafx.scene.layout.GridPane?>
 <GridPane hgap="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="group144.kireev.Controller">
-<columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="25.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="200.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="25.0" />
-</columnConstraints>
-<rowConstraints>
-    <RowConstraints maxHeight="300.0" minHeight="20.0" prefHeight="200.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-</rowConstraints>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="25.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="200.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="25.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="300.0" minHeight="20.0" prefHeight="200.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+    </rowConstraints>
 
-<ProgressBar fx:id="progressBar" prefHeight="30.0" prefWidth="400.0" GridPane.columnIndex="1" progress="0.0" />
-<Slider fx:id="slider" max="1.0" prefHeight="30.0" prefWidth="400.0" GridPane.rowIndex="1" GridPane.columnIndex="1" showTickLabels="true" />
+    <ProgressBar fx:id="progressBar" prefHeight="30.0" prefWidth="400.0" GridPane.columnIndex="1" progress="0.0" />
+    <Slider fx:id="slider" max="1.0" prefHeight="30.0" prefWidth="400.0" GridPane.rowIndex="1" GridPane.columnIndex="1" showTickLabels="true" />
 
 </GridPane>
