@@ -12,6 +12,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.setTitle("Tic Tac Toe");
+        primaryStage.setMinWidth(400);
+        primaryStage.setMinHeight(500);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
