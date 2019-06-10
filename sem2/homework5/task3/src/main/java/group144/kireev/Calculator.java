@@ -9,7 +9,7 @@ public class Calculator {
      * @param expression to calculate
      * @return result of expression
      */
-    public static int calculate(String expression) {
+    public static int calculate(String expression) throws IncorrectException {
         String[] postfixForm = fromInfixToPostfix(expression);
         Stack<Integer> result = new Stack<>();
         for (String element : postfixForm) {
@@ -18,7 +18,11 @@ public class Calculator {
             } else {
                 int operandSecond = result.pop();
                 int operandFirst = result.pop();
-                result.push(arithmeticOperation(operandFirst, operandSecond, element));
+                try {
+                    result.push(arithmeticOperation(operandFirst, operandSecond, element));
+                } catch (IncorrectException e) {
+                    throw e;
+                }
             }
         }
         return result.pop();
@@ -93,7 +97,7 @@ public class Calculator {
      * @param operator operation
      * @return result of the operation
      */
-    private static int arithmeticOperation(int operandFirst, int operandSecond, String operator) {
+    private static int arithmeticOperation(int operandFirst, int operandSecond, String operator) throws IncorrectException {
         switch (operator) {
             case "+":
                 return operandFirst + operandSecond;
@@ -102,6 +106,9 @@ public class Calculator {
             case "*":
                 return operandFirst * operandSecond;
             default:
+                if (operandSecond == 0) {
+                    throw new IncorrectException();
+                }
                 return operandFirst / operandSecond;
             }
         }

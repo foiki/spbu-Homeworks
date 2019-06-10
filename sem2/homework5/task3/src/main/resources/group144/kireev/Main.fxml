@@ -37,7 +37,6 @@
    <Button maxHeight="Infinity" maxWidth="Infinity" mnemonicParsing="false" onAction="#processOperators" prefHeight="80.0" prefWidth="80.0" text="/" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="1" />
    <Button maxHeight="Infinity" maxWidth="Infinity" mnemonicParsing="false" onAction="#processOperators" prefHeight="80.0" prefWidth="80.0" text="=" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="5" />
    <Button maxHeight="Infinity" maxWidth="Infinity" mnemonicParsing="false" onAction="#pressClear" prefHeight="80.0" prefWidth="80.0" text="С" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-   <Button maxHeight="Infinity" maxWidth="Infinity" mnemonicParsing="false" onAction="#pressClearAll" prefHeight="80.0" prefWidth="80.0" text="AC" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-   <Button maxHeight="Infinity" maxWidth="Infinity" mnemonicParsing="false" onAction="#changeSign" prefHeight="80.0" prefWidth="80.0" text="+/-" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+   <Button maxHeight="Infinity" maxWidth="Infinity" mnemonicParsing="false" onAction="#pressClearAll" prefHeight="80.0" prefWidth="80.0" text="AC" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2"/>
    <TextField maxHeight="Infinity" maxWidth="Infinity" fx:id="result" editable="false" prefHeight="80.0" prefWidth="320.0" GridPane.columnSpan="4" />
 </GridPane>

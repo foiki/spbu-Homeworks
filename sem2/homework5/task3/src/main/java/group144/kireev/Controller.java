@@ -18,8 +18,9 @@ public class Controller {
      */
     public void processNumbers(ActionEvent event) {
         String value = ((Button)event.getSource()).getText();
-        if (result.getText().equals("0")) {
+        if (result.getText().equals("0") || result.getText().equals("Error!")) {
             result.setText(value);
+            isOperatorEnteredLast = false;
             return;
         }
         result.setText(result.getText() + value);
@@ -35,8 +36,13 @@ public class Controller {
             String value = ((Button)event.getSource()).getText();
             if (value.equals("=")) {
                 String expression = result.getText();
-                int calculatedExpression = Calculator.calculate(expression);
-                result.setText(Integer.toString(calculatedExpression));
+                try {
+                    int calculatedExpression = Calculator.calculate(expression);
+                    result.setText(Integer.toString(calculatedExpression));
+                } catch (IncorrectException e) {
+                    result.setText("Error!");
+                    isOperatorEnteredLast = true;
+                }
             } else {
                 isOperatorEnteredLast = true;
                 String operator = ((Button)event.getSource()).getText();
@@ -51,7 +57,7 @@ public class Controller {
      */
     public void pressClear() {
         String currentExpression = result.getText();
-        if (currentExpression.length() == 1) {
+        if (currentExpression.length() == 1 || currentExpression.equals("Error!")) {
             result.setText("0");
             isOperatorEnteredLast = false;
             return;
@@ -74,16 +80,6 @@ public class Controller {
     public void pressClearAll() {
         result.setText("0");
         isOperatorEnteredLast = false;
-    }
-
-    /**
-     * Changes sign of current number in the result field
-     */
-    public void changeSign() {
-        int currentNumber = Integer.parseInt(result.getText());
-        if (currentNumber != 0) {
-            result.setText(Integer.toString(-1 * currentNumber));
-        }
     }
 
     /** Initialization method */
