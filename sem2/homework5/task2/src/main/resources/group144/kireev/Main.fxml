@@ -24,7 +24,7 @@
       <RowConstraints maxHeight="254.0" minHeight="10.0" prefHeight="118.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="153.0" vgrow="SOMETIMES" />
    </rowConstraints>
-      <Label layoutX="351.0" layoutY="165.0" prefHeight="36.0" prefWidth="31.0" text="=" GridPane.columnIndex="4" GridPane.rowIndex="1">
+      <Label prefHeight="36.0" prefWidth="31.0" text="=" GridPane.columnIndex="4" GridPane.rowIndex="1">
          <font>
             <Font size="31.0" />
          </font>
