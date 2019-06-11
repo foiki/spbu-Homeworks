@@ -1,6 +1,7 @@
 package group144.kireev;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -10,7 +11,8 @@ public class ClientMain {
         System.out.println("Welcome to TicTacToe");
         System.out.println("Enter the port: ");
         try {
-            Socket socket = new Socket("localhost", (new Scanner(System.in).nextInt()));
+            String ipAddress = (new Scanner(System.in).next());
+            Socket socket = new Socket(InetAddress.getByName(ipAddress), ServerMain.PORT);
             Game.main(TicTacToe.Player.O, socket, null);
         } catch (IOException e) {
             System.out.println("Current port is unavailable");
