@@ -36,8 +36,8 @@ public class LazyFactory {
      */
     public static <T> Lazy<T> createMultiTreadLazy(Supplier<T> supplier) {
         return new Lazy<>() {
-            private T value;
-            private boolean wasCalculated = false;
+            private volatile T value = null;
+            private volatile boolean wasCalculated = false;
 
             @Override
             public T get() {
