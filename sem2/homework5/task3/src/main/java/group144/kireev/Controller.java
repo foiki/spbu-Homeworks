@@ -39,6 +39,9 @@ public class Controller {
      */
     public void processOperators(ActionEvent event) {
         String value = ((Button)event.getSource()).getText();
+        if (result.getText().equals("Error!")) {
+            return;
+        }
         if (value.equals("=") || !operator.equals("")) {
             if (operator.isEmpty()) {
                 return;
@@ -49,6 +52,9 @@ public class Controller {
                 calculatedExpression = Calculator.calculate(firstNumber, secondNumber, operator);
             } catch (IncorrectExpression e) {
                 result.setText("Error!");
+                operator = "";
+                firstNumber = 0;
+                return;
             }
             if (value.equals("=")) {
                 result.setText(Long.toString(calculatedExpression));
