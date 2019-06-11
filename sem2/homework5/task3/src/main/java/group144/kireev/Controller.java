@@ -13,6 +13,7 @@ public class Controller {
 
     private long firstNumber = 0;
     private String operator = "";
+    private boolean waitingForSecondNumber = false;
 
     /**
      * Action when number button is pressed
@@ -20,9 +21,10 @@ public class Controller {
      */
     public void processNumbers(ActionEvent event) {
         String value = ((Button)event.getSource()).getText();
-        if (result.getText().equals("0")) {
-            if (!value.equals("0")) {
+        if (result.getText().equals("0") || waitingForSecondNumber) {
+            if (!value.equals("0") || waitingForSecondNumber) {
                 result.setText(value);
+                waitingForSecondNumber = false;
             }
         } else if (result.getText().equals("Error!")){
             result.setText(value);
@@ -56,16 +58,13 @@ public class Controller {
             }
             operator = value;
             firstNumber = calculatedExpression;
-            result.setText("0");
+            result.setText(Long.toString(calculatedExpression));
+            waitingForSecondNumber = true;
         } else {
-            prepareForAddingSecondNumber(value);
+            operator = value;
+            firstNumber = Long.parseLong(result.getText());
+            waitingForSecondNumber = true;
         }
-    }
-
-    private void prepareForAddingSecondNumber(String operator) {
-        this.operator = operator;
-        firstNumber = Long.parseLong(result.getText());
-        result.setText("0");
     }
 
     /**
@@ -85,15 +84,16 @@ public class Controller {
         result.setText("0");
         operator = "";
         firstNumber = 0;
+        waitingForSecondNumber = false;
     }
 
     /**
      * Changes sign of current number in the result field
      */
     public void changeSign() {
-        double currentNumber = Double.parseDouble(result.getText());
+        long currentNumber = Long.parseLong(result.getText());
         if (currentNumber != 0) {
-            result.setText(Double.toString(-1 * currentNumber));
+            result.setText(Long.toString(-1 * currentNumber));
         }
     }
 
