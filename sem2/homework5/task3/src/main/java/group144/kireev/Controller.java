@@ -10,7 +10,9 @@ public class Controller {
 
     @FXML
     private TextField result;
-    private boolean isOperatorEnteredLast = false;
+
+    private long firstNumber = 0;
+    private String operator = "";
 
     /**
      * Action when number button is pressed
@@ -18,13 +20,15 @@ public class Controller {
      */
     public void processNumbers(ActionEvent event) {
         String value = ((Button)event.getSource()).getText();
-        if (result.getText().equals("0") || result.getText().equals("Error!")) {
+        if (result.getText().equals("0")) {
+            if (!value.equals("0")) {
+                result.setText(value);
+            }
+        } else if (result.getText().equals("Error!")){
             result.setText(value);
-            isOperatorEnteredLast = false;
-            return;
+        } else {
+            result.setText(result.getText() + value);
         }
-        result.setText(result.getText() + value);
-        isOperatorEnteredLast = false;
     }
 
     /**
@@ -32,45 +36,45 @@ public class Controller {
      * @param event event with information about source
      */
     public void processOperators(ActionEvent event) {
-        if (!isOperatorEnteredLast) {
-            String value = ((Button)event.getSource()).getText();
-            if (value.equals("=")) {
-                String expression = result.getText();
-                try {
-                    int calculatedExpression = Calculator.calculate(expression);
-                    result.setText(Integer.toString(calculatedExpression));
-                } catch (IncorrectException e) {
-                    result.setText("Error!");
-                    isOperatorEnteredLast = true;
-                }
-            } else {
-                isOperatorEnteredLast = true;
-                String operator = ((Button)event.getSource()).getText();
-                result.setText(result.getText() + " " + operator + " ");
+        String value = ((Button)event.getSource()).getText();
+        if (value.equals("=") || !operator.equals("")) {
+            if (operator.isEmpty()) {
+                return;
             }
+            long secondNumber = Long.parseLong(result.getText());
+            long calculatedExpression = 0;
+            try {
+                calculatedExpression = Calculator.calculate(firstNumber, secondNumber, operator);
+            } catch (IncorrectExpression e) {
+                result.setText("Error!");
+            }
+            if (value.equals("=")) {
+                result.setText(Long.toString(calculatedExpression));
+                operator = "";
+                firstNumber = 0;
+                return;
+            }
+            operator = value;
+            firstNumber = calculatedExpression;
+            result.setText("0");
+        } else {
+            prepareForAddingSecondNumber(value);
         }
+    }
+
+    private void prepareForAddingSecondNumber(String operator) {
+        this.operator = operator;
+        firstNumber = Long.parseLong(result.getText());
+        result.setText("0");
     }
 
     /**
      * Press Clear(CE) button.
-     * Removes last entered element
+     * To write a new current value
+     * Sets textField ass "0"
      */
     public void pressClear() {
-        String currentExpression = result.getText();
-        if (currentExpression.length() == 1 || currentExpression.equals("Error!")) {
-            result.setText("0");
-            isOperatorEnteredLast = false;
-            return;
-        }
-        String newExpression = currentExpression.substring(0, currentExpression.length() - 1);
-        String lastElement = currentExpression.substring(newExpression.length() - 1, newExpression.length());
-        if (Calculator.isNumber(lastElement)) {
-            isOperatorEnteredLast = false;
-        } else {
-            newExpression = newExpression.substring(0, currentExpression.length() - 3);
-            isOperatorEnteredLast = true;
-        }
-        result.setText(newExpression);
+        result.setText("0");
     }
 
     /**
@@ -79,7 +83,18 @@ public class Controller {
      */
     public void pressClearAll() {
         result.setText("0");
-        isOperatorEnteredLast = false;
+        operator = "";
+        firstNumber = 0;
+    }
+
+    /**
+     * Changes sign of current number in the result field
+     */
+    public void changeSign() {
+        double currentNumber = Double.parseDouble(result.getText());
+        if (currentNumber != 0) {
+            result.setText(Double.toString(-1 * currentNumber));
+        }
     }
 
     /** Initialization method */

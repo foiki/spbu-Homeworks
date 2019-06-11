@@ -7,12 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void calculateTest() throws IncorrectException {
-        assertEquals(765, Calculator.calculate("190 * 4 + 5"));
-        assertEquals(21, Calculator.calculate("5 + 3 * 6 - 2 / 1"));
-        assertEquals(70, Calculator.calculate("90 / 3 + 10 + 5 * 6"));
-        assertEquals(115, Calculator.calculate("5 * 3 + 10 * 500 / 50"));
-        assertEquals(50987, Calculator.calculate("7283 * 7 - 2 + 4 * 2"));
-        assertThrows(IncorrectException.class, () -> Calculator.calculate("89 / 0 + 2 - 3 * 4"));
+    void calculateErrorTest() {
+        assertThrows(IncorrectExpression.class, () -> Calculator.calculate(1, 0, "/"));
+    }
+
+    @Test
+    void calculateSimpleTest() throws IncorrectExpression {
+        assertEquals(10, Calculator.calculate(2, 5, "*"));
+        assertEquals(7, Calculator.calculate(3, 4, "+"));
+        assertEquals(-5, Calculator.calculate(0, 5, "-"));
+        assertEquals(-9, Calculator.calculate(-6, -3, "+"));
+        assertEquals(1, Calculator.calculate(-1, -1, "/"));
     }
 }
