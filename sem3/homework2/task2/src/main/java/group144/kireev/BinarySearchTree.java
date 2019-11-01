@@ -73,16 +73,12 @@ public class BinarySearchTree<T extends Comparable<T>> implements Collection<T>,
      */
     @Override
     public boolean add(T value) {
-        if (contains(value)) {
-            return false;
-        }
-        ++size;
         if (root == null) {
             root = new Node(value);
+            ++size;
             return true;
         }
-        root.add(value);
-        return true;
+        return root.add(value);
     }
 
     /**
@@ -93,16 +89,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Collection<T>,
     @Override
     @SuppressWarnings("unchecked")
     public boolean remove(Object value) {
-        if (!contains(value)) {
-            return false;
-        }
-        --size;
-        if (size == 0) {
-            root = null;
-            return true;
-        }
-        root.remove((T) value);
-        return true;
+        return !isEmpty() && root.remove((T) value);
     }
 
     /**
@@ -267,34 +254,40 @@ public class BinarySearchTree<T extends Comparable<T>> implements Collection<T>,
          * Method adds an element with a specified value
          * @param value of new element
          */
-        private void add(T value) {
+        private boolean add(T value) {
             if (value.compareTo(this.value) < 0) {
                 if (left == null) {
                     left = new Node(value, this);
-                } else {
-                    left.add(value);
+                    ++size;
+                    return true;
                 }
-            } else {
+                left.add(value);
+            } else  if (value.compareTo(this.value) > 0) {
                 if (right == null) {
                     right = new Node(value, this);
-                } else {
-                    right.add(value);
+                    ++size;
+                    return true;
                 }
+                right.add(value);
             }
+            return false;
         }
 
         /**
          * Method removes an element with a specified value
          * @param value of element to remove
          */
-        private void remove(T value) {
+        private boolean remove(T value) {
+            boolean result = false;
             if (value.compareTo(this.value) < 0) {
-                left.remove(value);
+                result = left != null && left.remove(value);
             } else if (value.compareTo(this.value) > 0) {
-                right.remove(value);
+                result = right != null && right.remove(value);
             } else {
+                --size;
                 this.remove();
             }
+            return result;
         }
 
         /**
@@ -304,21 +297,13 @@ public class BinarySearchTree<T extends Comparable<T>> implements Collection<T>,
             if (left != null && right != null) {
                 Node newNode = this.findMinimalInRightSubtree();
                 value = newNode.value;
-                newNode.remove();
+                changeNode(newNode);
             } else if (left != null) {
-                value = left.value;
-                left = left.left;
-                right = left.right;
+                changeNode(left);
             } else if (right != null) {
-                value = right.value;
-                left = right.left;
-                right = right.right;
+                changeNode(right);
             } else {
-                if (parent.left.equals(this)) {
-                    parent.left = null;
-                } else {
-                    parent.right = null;
-                }
+                changeNode(null);
             }
         }
 
@@ -331,6 +316,27 @@ public class BinarySearchTree<T extends Comparable<T>> implements Collection<T>,
                 current = current.left;
             }
             return current;
+        }
+
+        private void changeNode(Node newNode) {
+            if (newNode == null) {
+                if (parent == null) {
+                    root = null;
+                } else {
+                    if (equals(parent.left)) {
+                        parent.left = null;
+                    } else {
+                        parent.right = null;
+                    }
+                }
+                return;
+            }
+            value = newNode.value;
+            if (newNode.equals(newNode.parent.left)) {
+                newNode.parent.left = newNode.left;
+            } else {
+                newNode.parent.right = newNode.right;
+            }
         }
 
         /**
