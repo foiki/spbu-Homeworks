@@ -3,6 +3,9 @@ package group144.kireev;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class describes a computer
+ */
 public class Computer {
     private OS os;
     private List<Computer> connectedComputers;
@@ -18,6 +21,10 @@ public class Computer {
         return isInfected;
     }
 
+    /**
+     * @param virus Virus tries to infect the computer
+     * @return if the try was successful
+     */
     public boolean tryToInfect(Virus virus) {
         if (isInfected) {
             return true;
@@ -33,6 +40,10 @@ public class Computer {
         isInfected = true;
     }
 
+    /**
+     * Add new computer to the list with connected computers
+     * @param computer to add
+     */
     public void addConnected(Computer computer) {
         connectedComputers.add(computer);
     }
@@ -47,5 +58,9 @@ public class Computer {
 
     public boolean hasInfectedConnectedComputer() {
         return hasInfectedConnectedComputer;
+    }
+
+    public OS getOs() {
+        return os;
     }
 }

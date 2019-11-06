@@ -13,7 +13,13 @@ public class Main {
         System.out.println("LocalNetwork model with virus");
         in = new Scanner(System.in);
         Network network = getNetwork();
-
+        String result = "N";
+        while ("N".equals(result)) {
+            network.modelStep();
+            System.out.println(network);
+            System.out.print("Enter N to model next step");
+            result = in.next();
+        }
     }
 
     public static Network getNetwork() {
@@ -108,7 +114,7 @@ public class Main {
     }
 
     public static void infectFirstComputer(Network network) {
-        System.out.println("Enter the number of first computer to infect");
+        System.out.println("Enter the number of first computer to infect(Starting with 0)");
         int computerNumber = in.nextInt();
         while (isNotCorrectComputerNumber(computerNumber)) {
             System.out.println("Unknown number of computer, try again");
