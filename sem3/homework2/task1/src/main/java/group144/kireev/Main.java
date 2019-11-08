@@ -13,17 +13,23 @@ public class Main {
         System.out.println("LocalNetwork model with virus");
         in = new Scanner(System.in);
         Network network = getNetwork();
-        String result = "N";
+        System.out.println(network.getStatus());
+        String result = "Wait";
+        System.out.println("Enter N to model next step");
+        result = in.next();
         while ("N".equals(result)) {
             network.modelStep();
-            System.out.println(network);
-            System.out.print("Enter N to model next step");
+            System.out.println(network.getStatus());
+            System.out.println("Enter N to model next step");
             result = in.next();
         }
     }
 
+    /**
+     * Reads network information from the console
+     * @return Network created from user data
+     */
     public static Network getNetwork() {
-        System.out.println("Enter number of computers in network:");
         List<Computer> computers = getComputers();
         getConnections(computers);
         Network network = new Network(computers, new Virus());
@@ -31,6 +37,10 @@ public class Main {
         return network;
     }
 
+    /**
+     * Reads computers information from the console
+     * @return List of the computers
+     */
     private static List<Computer> getComputers() {
         System.out.println("Enter the number of computers:");
         List<Computer> computers = new ArrayList<>();
@@ -45,6 +55,9 @@ public class Main {
         return computers;
     }
 
+    /**
+     * Reads matrix of connections from the console and updates connected computers
+     */
     private static void getConnections(List<Computer> computers) {
         boolean[][] connections = new boolean[computerNumber][computerNumber];
         System.out.println("Enter the connections between computers by the pairs");
@@ -64,32 +77,34 @@ public class Main {
                 numberOfSecondComputer = in.nextInt();
             }
             if (!userWantToContinue(numberOfFirstComputer, numberOfSecondComputer)) {
-                addComputers(computers, connections);
+                Network.addConnections(computers, connections);
                 return;
             }
             connections[numberOfFirstComputer][numberOfSecondComputer] = true;
         }
     }
 
+    /**
+     * @param numberOfFirstComputer number of the first read computer
+     * @param numberOfSecondComputer number of the second read computer
+     * @return if the user wants to continue entering connections between computers
+     */
     private static boolean userWantToContinue(int numberOfFirstComputer, int numberOfSecondComputer) {
         return numberOfFirstComputer != -1 && numberOfSecondComputer != -1;
     }
 
+    /**
+     * @param numberOfComputer number of the read computer
+     * @return if the number is incorrect
+     */
     private static boolean isNotCorrectComputerNumber(int numberOfComputer) {
         return numberOfComputer < -1 || numberOfComputer > computerNumber;
     }
 
-    private static void addComputers(List<Computer> computers, boolean[][] connections) {
-        for (int i = 0; i < computerNumber; ++i) {
-            for (int j = i; j < computerNumber; ++j) {
-                if (connections[i][j]) {
-                    computers.get(i).addConnected(computers.get(j));
-                    computers.get(j).addConnected(computers.get(i));
-                }
-            }
-        }
-    }
-
+    /**
+     * @param number of OS
+     * @return OS appropriated to this number
+     */
     private static OS getOS(int number) {
         while (true) {
             switch (number) {
@@ -107,13 +122,20 @@ public class Main {
         }
     }
 
+    /**
+     * Prints list with available OSs
+     */
     private static void printOSList() {
         System.out.println("1 - Windows");
         System.out.println("2 - Linux");
         System.out.println("3 - Mac OS");
     }
 
-    public static void infectFirstComputer(Network network) {
+    /**
+     * Infects first computer in passed network
+     * @param network where to infect firsts computer
+     */
+    private static void infectFirstComputer(Network network) {
         System.out.println("Enter the number of first computer to infect(Starting with 0)");
         int computerNumber = in.nextInt();
         while (isNotCorrectComputerNumber(computerNumber)) {
