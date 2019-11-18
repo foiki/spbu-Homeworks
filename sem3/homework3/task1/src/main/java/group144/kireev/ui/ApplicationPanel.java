@@ -10,9 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/** Panel for cannon application. */
 class ApplicationPanel extends JPanel implements ActionListener, Config {
     private Background background;
     private Cannon cannon;
+    private boolean isGameStartsNow = true;
 
     ApplicationPanel() {
         background = new Background();
@@ -23,18 +25,21 @@ class ApplicationPanel extends JPanel implements ActionListener, Config {
         setFocusable(true);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void paintComponent(Graphics graphics) {
         background.paintComponent(graphics);
         cannon.paintComponent(graphics);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
 
     private class KeyListener extends KeyAdapter {
+        /** {@inheritDoc} */
         @Override
         public void keyPressed(KeyEvent e) {
             int event = e.getKeyCode();
@@ -42,14 +47,12 @@ class ApplicationPanel extends JPanel implements ActionListener, Config {
                 cannon.shoot();
             } else if (event == KeyEvent.VK_LEFT) {
                 cannon.moveLeft(background);
-                repaint();
             } else if (event == KeyEvent.VK_RIGHT) {
                 cannon.moveRight(background);
-                repaint();
             } else if (event == KeyEvent.VK_UP) {
-                cannon.moveGunUp();
-            } else if (event == KeyEvent.VK_DOWN) {
                 cannon.moveGunDown();
+            } else if (event == KeyEvent.VK_DOWN) {
+                cannon.moveGunUp();
             }
         }
     }

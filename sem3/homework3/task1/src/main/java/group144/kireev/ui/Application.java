@@ -2,6 +2,7 @@ package group144.kireev.ui;
 
 import javax.swing.*;
 
+/** Represents Cannon Application. */
 public class Application implements Config {
 
     public static void main(String[] args) {
