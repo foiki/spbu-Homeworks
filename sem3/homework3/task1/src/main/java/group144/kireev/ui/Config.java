@@ -1,7 +1,7 @@
 package group144.kireev.ui;
 
 /** Describes settings for cannon application. */
-public interface Config {
+public final class Config {
     public static final int GAME_WINDOW_WIDTH = 1600;
     public static final int GAME_WINDOW_HEIGHT = 900;
     public static final int START_POINT_X = 600;

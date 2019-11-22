@@ -1,9 +1,10 @@
 package group144.kireev.ui;
 
 import javax.swing.*;
+import static group144.kireev.ui.Config.*;
 
 /** Represents Cannon Application. */
-public class Application implements Config {
+public class Application {
 
     public static void main(String[] args) {
         JFrame gameFrame = new JFrame("Cannon Game");

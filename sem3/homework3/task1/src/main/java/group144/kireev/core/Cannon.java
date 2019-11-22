@@ -1,7 +1,5 @@
 package group144.kireev.core;
 
-import group144.kireev.ui.Config;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -10,11 +8,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static group144.kireev.ui.Config.*;
 import static java.lang.Math.abs;
 import static java.lang.Math.ceil;
 
 /** Implements entity cannon. */
-public class Cannon implements Config {
+public class Cannon {
     private Image cannon = null;
     private int coordinateX = START_POINT_X;
     private int coordinateY = START_POINT_Y;

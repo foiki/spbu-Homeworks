@@ -2,6 +2,7 @@ package group144.kireev.ui;
 
 import group144.kireev.core.Background;
 import group144.kireev.core.Cannon;
+import static group144.kireev.ui.Config.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /** Panel for cannon application. */
-class ApplicationPanel extends JPanel implements ActionListener, Config {
+class ApplicationPanel extends JPanel implements ActionListener {
     private Background background;
     private Cannon cannon;
     private boolean isGameStartsNow = true;

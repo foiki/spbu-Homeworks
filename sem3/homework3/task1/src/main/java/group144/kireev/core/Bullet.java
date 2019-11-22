@@ -1,6 +1,6 @@
 package group144.kireev.core;
 
-import group144.kireev.ui.Config;
+import static group144.kireev.ui.Config.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 /** Implements entity cannon bullet. */
-public class Bullet implements Config {
+public class Bullet {
     private Image bullet = null;
     private boolean isBulletInFly = false;
     private int startPointX = 0;
@@ -24,7 +24,7 @@ public class Bullet implements Config {
         this.startPointX = startPointX + 140;
         this.startPointY = startPointY + 20;
         isBulletInFly = true;
-        currentAngle = -angle + Config.CANNON_START_ANGLE;
+        currentAngle = -angle + CANNON_START_ANGLE;
     }
 
     /** Load image of bullet. */
