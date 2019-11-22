@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,7 +51,7 @@ class NetworkTest {
         initializeComputers();
         assertFalse(fifthComputer.isInfected());
         assertFalse(secondComputer.isInfected());
-        Network network = new Network(computers, new Virus());
+        Network network = new Network(computers, new Virus(new Random()));
         network.infectFirstComputer(1); //Numbers starting with 0
         assertFalse(computers.get(0).isInfected());
         assertTrue(computers.get(1).isInfected());
@@ -61,7 +63,7 @@ class NetworkTest {
         firstComputer.addConnected(secondComputer);
         firstComputer.addConnected(fourthComputer);
         firstComputer.addConnected(fifthComputer);
-        Network network = new Network(computers, new Virus());
+        Network network = new Network(computers, new Virus(new Random()));
         network.infectFirstComputer(2);
         assertTrue(network.getCouldBeInfectedComputers().isEmpty());
         network.infectFirstComputer(0);
@@ -81,7 +83,7 @@ class NetworkTest {
     public void getStatusCorrectnessTest() throws IOException {
         initializeComputers();
         getConnections();
-        Network network = new Network(computers, new Virus());
+        Network network = new Network(computers, new Virus(new Random()));
         network.infectFirstComputer(0);
         assertEquals(network.getStatus(), "0 computer(WINDOWS) is infected\n" +
                                                 "1 computer(MACOS) is not infected\n" +
@@ -94,7 +96,7 @@ class NetworkTest {
     public void infectCorrectnessTest() throws IOException {
         initializeComputers();
         getConnections();
-        Virus virus = new Virus();
+        Virus virus = new Virus(new Random());
         virus.setMacosInfectionProbability(1.0);
         virus.setWindowsInfectionProbability(0.0);
         virus.setLinuxInfectionProbability(1.0);
@@ -112,5 +114,50 @@ class NetworkTest {
                                                 "2 computer(LINUX) is infected\n" +
                                                 "3 computer(WINDOWS) is not infected\n" +
                                                 "4 computer(MACOS) is infected\n");
+    }
+
+    @Test
+    public void uniqueRandomizerTest() throws IOException {
+        computers.add(firstComputer);
+        computers.add(secondComputer);
+        computers.add(thirdComputer);
+        computers.add(fourthComputer);
+        boolean[][] connections = new boolean[][] {{false, true, true, true},
+                                                    {true, false, true, true},
+                                                    {true, true, false, true},
+                                                    {true, true, true, false}};
+        Network.addConnections(computers, connections);
+        Virus virus = new Virus(new Randomizer(Arrays.asList(0.11, 0.52, 0.32, 0.51, 0.31, 0.51, 0.29, 0.49)));
+        Network network = new Network(computers, virus);
+        network.infectFirstComputer(3);
+        assertEquals(network.getStatus(), "0 computer(WINDOWS) is not infected\n" +
+                                                "1 computer(MACOS) is not infected\n" +
+                                                "2 computer(LINUX) is not infected\n" +
+                                                "3 computer(WINDOWS) is infected\n");
+        network.modelStep();
+        assertEquals(network.getStatus(), "0 computer(WINDOWS) is infected\n" +
+                                                "1 computer(MACOS) is not infected\n" +
+                                                "2 computer(LINUX) is not infected\n" +
+                                                "3 computer(WINDOWS) is infected\n");
+        network.modelStep();
+        assertEquals(network.getStatus(), "0 computer(WINDOWS) is infected\n" +
+                                                "1 computer(MACOS) is not infected\n" +
+                                                "2 computer(LINUX) is not infected\n" +
+                                                "3 computer(WINDOWS) is infected\n");
+        network.modelStep();
+        assertEquals(network.getStatus(), "0 computer(WINDOWS) is infected\n" +
+                                                "1 computer(MACOS) is not infected\n" +
+                                                "2 computer(LINUX) is infected\n" +
+                                                "3 computer(WINDOWS) is infected\n");
+        network.modelStep();
+        assertEquals(network.getStatus(), "0 computer(WINDOWS) is infected\n" +
+                                                "1 computer(MACOS) is not infected\n" +
+                                                "2 computer(LINUX) is infected\n" +
+                                                "3 computer(WINDOWS) is infected\n");
+        network.modelStep();
+        assertEquals(network.getStatus(), "0 computer(WINDOWS) is infected\n" +
+                                                "1 computer(MACOS) is infected\n" +
+                                                "2 computer(LINUX) is infected\n" +
+                                                "3 computer(WINDOWS) is infected\n");
     }
 }

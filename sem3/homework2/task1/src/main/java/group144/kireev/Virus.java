@@ -2,15 +2,20 @@ package group144.kireev;
 
 import java.util.Random;
 
+/** Implements computer virus. */
 public class Virus {
     private double windowsInfectionProbability = 0.5;
     private double linuxInfectionProbability = 0.3;
     private double macosInfectionProbability = 0.12;
-    private Random random = new Random();
+    private Random random = null;
+
+    public Virus (Random randomizer) {
+        random = randomizer;
+    }
 
     /**
-     * @param os System that the virus should try to infect
-     * @return if the try was successful
+     * @param os System that the virus should try to infect.
+     * @return if the try was successful.
      */
     public boolean tryToInfect(OS os) {
         switch (os) {
@@ -39,21 +44,21 @@ public class Virus {
     }
 
     /**
-     * @return if random try to infect Windows was successful
+     * @return if random try to infect Windows was successful.
      */
     private boolean tryToInfectWindows() {
         return random.nextDouble() < windowsInfectionProbability;
     }
 
     /**
-     * @return if random try to infect Linux was successful
+     * @return if random try to infect Linux was successful.
      */
     private boolean tryToInfectLinux() {
         return random.nextDouble() < linuxInfectionProbability;
     }
 
     /**
-     * @return if random try to infect MacOs was successful
+     * @return if random try to infect MacOs was successful.
      */
     private boolean tryToInfectMacOs() {
         return random.nextDouble() < macosInfectionProbability;
