@@ -183,13 +183,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Collection<T>,
 
     /** Class realizing the Binary Search Tree Iterator */
     private class BSTIterator implements Iterator<T> {
-        private Node current = null;
-        private ArrayList<Node> uncheckedElements = new ArrayList<>();
+        private ArrayList<Node> elements = new ArrayList<>();
 
         private BSTIterator() {
-            if (BinarySearchTree.this.size != 0) {
-                BinarySearchTree.this.getAll(root, uncheckedElements);
-                current = uncheckedElements.get(0);
+            if (!isEmpty()) {
+                BinarySearchTree.this.getAll(root, elements);
             }
         }
 
@@ -198,14 +196,14 @@ public class BinarySearchTree<T extends Comparable<T>> implements Collection<T>,
          */
         @Override
         public boolean hasNext() {
-            return !uncheckedElements.isEmpty() && treeContainsAtLeastOneElement();
+            return !elements.isEmpty() && treeContainsAtLeastOneElement();
         }
 
         /**
          * @return if the List contains at least one element from the tree
          */
         private boolean treeContainsAtLeastOneElement() {
-            for (Node tmp : uncheckedElements) {
+            for (Node tmp : elements) {
                 if (BinarySearchTree.this.contains(tmp.value)) {
                     return true;
                 }
@@ -218,16 +216,14 @@ public class BinarySearchTree<T extends Comparable<T>> implements Collection<T>,
          */
         @Override
         public T next() {
-            if (uncheckedElements.size() == 0) {
+            if (elements.isEmpty()) {
                 return null;
             }
-            for (Node tmp : uncheckedElements) {
-                if (BinarySearchTree.this.contains(tmp.value)) {
-                    uncheckedElements.remove(tmp);
-                    return tmp.value;
-                }
+            if (!root.contains(elements.get(0).value)) {
+                elements.remove(0);
+                return next();
             }
-            return null;
+            return elements.remove(0).value;
         }
     }
 
