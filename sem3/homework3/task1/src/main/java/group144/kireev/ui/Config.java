@@ -4,8 +4,8 @@ package group144.kireev.ui;
 public final class Config {
     public static final int GAME_WINDOW_WIDTH = 1600;
     public static final int GAME_WINDOW_HEIGHT = 900;
-    public static final int START_POINT_X = 600;
-    public static final int START_POINT_Y = 710;
+    public static final int SERVER_CANNON_START_POINT_X = 600;
+    public static final int SERVER_CANNON_START_POINT_Y = 710;
     public static final int TIME_DELAY = 10;
     public static final double CANNON_WIDTH = 250;
     public static final double CANNON_HEIGHT = 184;

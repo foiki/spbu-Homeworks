@@ -15,8 +15,8 @@ import static java.lang.Math.ceil;
 /** Implements entity cannon. */
 public class Cannon {
     private Image cannon = null;
-    private int coordinateX = START_POINT_X;
-    private int coordinateY = START_POINT_Y;
+    private int coordinateX = SERVER_CANNON_START_POINT_X;
+    private int coordinateY = SERVER_CANNON_START_POINT_Y;
     private double currentTangent = 0;
     private int currentAngle = CANNON_START_ANGLE;
     private Bullet bullet = null;
