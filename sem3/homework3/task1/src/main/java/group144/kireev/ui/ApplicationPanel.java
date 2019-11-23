@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
 class ApplicationPanel extends JPanel implements ActionListener {
     private Background background;
     private Cannon cannon;
-    private boolean isGameStartsNow = true;
 
     ApplicationPanel() {
         background = new Background();

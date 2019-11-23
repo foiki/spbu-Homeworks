@@ -21,7 +21,7 @@ public class Bullet {
 
     protected Bullet(int startPointX, int startPointY, int angle) {
         loadImage();
-        this.startPointX = startPointX + 140;
+        this.startPointX = startPointX + 80;
         this.startPointY = startPointY + 20;
         isBulletInFly = true;
         currentAngle = -angle + CANNON_START_ANGLE;
