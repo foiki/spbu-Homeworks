@@ -14,5 +14,5 @@ public final class Config {
     public static final int CANNON_MIN_ANGLE = -30;
     public static final int CANNON_START_ANGLE = 0;
     public static final int START_BULLET_SPEED = 9;
-    public static final double ACCELERAION_OF_FREE_FALL = 0.05;
+    public static final double ACCELERATION_OF_FREE_FALL = 0.05;
 }

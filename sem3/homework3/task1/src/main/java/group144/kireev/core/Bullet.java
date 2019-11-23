@@ -52,7 +52,7 @@ public class Bullet {
     /** Calculate the coordinates of a bullet that files at an angle to the horizon. */
     private void calculateCoordinatesOfBullet() {
         currentPointX = (int) (START_BULLET_SPEED * time * Math.cos(Math.toRadians(currentAngle))); // x = V0*t*cos(a)
-        currentPointY = (int) (-START_BULLET_SPEED * time * Math.sin(Math.toRadians(currentAngle)) + ACCELERAION_OF_FREE_FALL * time * time); // y = V0*t*sin(a) - g*t^2/2
+        currentPointY = (int) (-START_BULLET_SPEED * time * Math.sin(Math.toRadians(currentAngle)) + ACCELERATION_OF_FREE_FALL * time * time); // y = V0*t*sin(a) - g*t^2/2
         ++time;
     }
 
