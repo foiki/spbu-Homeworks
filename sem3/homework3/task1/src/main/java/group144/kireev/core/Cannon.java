@@ -30,7 +30,7 @@ public class Cannon {
         try {
             cannon = ImageIO.read(new File("src/main/resources/cannon"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Cannot load cannon image!");
         }
     }
 

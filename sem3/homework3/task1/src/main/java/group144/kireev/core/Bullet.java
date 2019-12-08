@@ -21,8 +21,8 @@ public class Bullet {
 
     protected Bullet(int startPointX, int startPointY, int angle) {
         loadImage();
-        this.startPointX = startPointX + 80;
-        this.startPointY = startPointY + 20;
+        this.startPointX = startPointX + 150;
+        this.startPointY = startPointY + 35;
         isBulletInFly = true;
         currentAngle = -angle + CANNON_START_ANGLE;
     }
@@ -30,9 +30,9 @@ public class Bullet {
     /** Load image of bullet. */
     private void loadImage() {
         try {
-            bullet = ImageIO.read(new File("src/main/resources/bullet"));
+            bullet = ImageIO.read(new File("src/main/resources/bullet.png"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Cannot load bullet image!");
         }
     }
 
@@ -46,7 +46,7 @@ public class Bullet {
             isBulletInFly = false;
             return;
         }
-        graphics.drawImage(bullet, currentPointX + startPointX, currentPointY + startPointY, null);
+        graphics.drawImage(bullet, currentPointX + startPointX, currentPointY + startPointY + (int)(-(startPointX) * Math.tan(Math.toRadians(currentAngle)) / 10), null);
     }
 
     /** Calculate the coordinates of a bullet that files at an angle to the horizon. */

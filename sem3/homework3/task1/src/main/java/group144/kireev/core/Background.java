@@ -20,7 +20,7 @@ public class Background {
         try {
             background = ImageIO.read(new File("src/main/resources/background.jpg"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Cannot load background image!");
         }
     }
 
