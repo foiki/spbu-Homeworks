@@ -8,8 +8,8 @@ import java.io.IOException;
 /** Describes game terrain with mountains on it. */
 public class Background {
     private Image background = null;
-    private static final int[] changePointsCoordinateX = new int[] {0, 130, 420, 628, 1044, 1406, 1552};
-    private static final int[] changePointsCoordinateY = new int[] {630, 375, 710, 710, 255, 710, 710};
+    private static final int[] changePointsCoordinateX = new int[] {0, 118, 410, 610, 1022, 1394, 1600};
+    private static final int[] changePointsCoordinateY = new int[] {560, 412, 705, 705, 294, 705, 705};
 
     public Background() {
         loadImage();
@@ -68,5 +68,22 @@ public class Background {
         double deltaY = changePointsCoordinateY[currentPosition] - changePointsCoordinateY[currentPosition - 1];
         double deltaX = changePointsCoordinateX[currentPosition] - changePointsCoordinateX[currentPosition - 1];
         return deltaY / deltaX;
+    }
+
+    public static boolean isPointInMountain(int coordinateX, int coordinateY) {
+        int leftXChangePointX = 0;
+        int rightChangePointX = 0;
+        for (int i = 0; i < changePointsCoordinateX.length - 1; ++i) {
+            if (changePointsCoordinateX[i] >= coordinateX) {
+                leftXChangePointX = changePointsCoordinateX[i];
+                rightChangePointX = changePointsCoordinateX[i + 1];
+                System.out.println(leftXChangePointX + " " + rightChangePointX);
+                if (((coordinateX - leftXChangePointX)/(rightChangePointX - leftXChangePointX)) * (changePointsCoordinateY[i] - changePointsCoordinateY[i + 1]) + changePointsCoordinateY[i] >= coordinateY) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
     }
 }

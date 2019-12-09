@@ -21,8 +21,8 @@ public class Bullet {
 
     protected Bullet(int startPointX, int startPointY, int angle) {
         loadImage();
-        this.startPointX = startPointX + 150;
-        this.startPointY = startPointY + 35;
+        this.startPointX = startPointX;
+        this.startPointY = startPointY;
         isBulletInFly = true;
         currentAngle = -angle + CANNON_START_ANGLE;
     }
@@ -42,11 +42,15 @@ public class Bullet {
             return;
         }
         calculateCoordinatesOfBullet();
-        if (!isBulletOnTheScreen()) {
+        if (!isBulletOnTheScreen() || Background.isPointInMountain(currentPointX + startPointX + BULLET_WIDTH, currentPointY + startPointY + BULLET_HEIGHT)) {
             isBulletInFly = false;
             return;
         }
-        graphics.drawImage(bullet, currentPointX + startPointX, currentPointY + startPointY + (int)(-(startPointX) * Math.tan(Math.toRadians(currentAngle)) / 10), null);
+        if (currentAngle > 130) {
+            graphics.drawImage(bullet, currentPointX + startPointX, currentPointY + startPointY - 40, null);
+        } else {
+            graphics.drawImage(bullet, currentPointX + startPointX, currentPointY + startPointY, null);
+        }
     }
 
     /** Calculate the coordinates of a bullet that files at an angle to the horizon. */
@@ -59,6 +63,6 @@ public class Bullet {
     /**
      * @return if the bullet visible on the screen. */
     private boolean isBulletOnTheScreen() {
-        return currentPointX + startPointX > 0 && currentPointX + startPointX < GAME_WINDOW_WIDTH && currentPointY + startPointY > 0;
+        return currentPointX + startPointX > 0 && currentPointX + startPointX < GAME_WINDOW_WIDTH && currentPointY + startPointY < 810;
     }
 }
