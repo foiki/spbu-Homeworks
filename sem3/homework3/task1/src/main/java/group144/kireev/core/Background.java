@@ -8,8 +8,8 @@ import java.io.IOException;
 /** Describes game terrain with mountains on it. */
 public class Background {
     private Image background = null;
-    private static final int[] changePointsCoordinateX = new int[] {0, 118, 410, 610, 1022, 1394, 1600};
-    private static final int[] changePointsCoordinateY = new int[] {560, 412, 705, 705, 294, 705, 705};
+    private static final int[] changePointsCoordinateX = new int[] {0, 230, 518, 750, 1158, 1532, 1600};
+    private static final int[] changePointsCoordinateY = new int[] {806, 560, 850, 850, 430, 890, 850};
 
     public Background() {
         loadImage();
@@ -71,17 +71,14 @@ public class Background {
     }
 
     public static boolean isPointInMountain(int coordinateX, int coordinateY) {
-        int leftXChangePointX = 0;
-        int rightChangePointX = 0;
-        for (int i = 0; i < changePointsCoordinateX.length - 1; ++i) {
+        for (int i = 1; i < changePointsCoordinateX.length; ++i) {
             if (changePointsCoordinateX[i] >= coordinateX) {
-                leftXChangePointX = changePointsCoordinateX[i];
-                rightChangePointX = changePointsCoordinateX[i + 1];
-                System.out.println(leftXChangePointX + " " + rightChangePointX);
-                if (((coordinateX - leftXChangePointX)/(rightChangePointX - leftXChangePointX)) * (changePointsCoordinateY[i] - changePointsCoordinateY[i + 1]) + changePointsCoordinateY[i] >= coordinateY) {
-                    return true;
+                if (coordinateX > changePointsCoordinateX[i-1] && coordinateX < changePointsCoordinateX[i]) {
+                    double currentLineValue = (double) (changePointsCoordinateY[i] - changePointsCoordinateY[i - 1]) * (coordinateX - changePointsCoordinateX[i - 1]) / (changePointsCoordinateX[i] - changePointsCoordinateX[i - 1]) + changePointsCoordinateY[i-1];
+                    if (coordinateY > currentLineValue) {
+                        return true;
+                    }
                 }
-                return false;
             }
         }
         return false;

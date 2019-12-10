@@ -17,7 +17,7 @@ public class Cannon {
     private Image cannon = null;
     private Image cannonWheel = null;
     private int coordinateX = SERVER_CANNON_START_POINT_X;
-    private double coordinateY = SERVER_CANNON_START_POINT_Y;
+    private int coordinateY = SERVER_CANNON_START_POINT_Y;
     private double currentTangent = 0;
     private int currentAngle = CANNON_START_ANGLE;
     private Bullet bullet = null;
@@ -43,16 +43,16 @@ public class Cannon {
         }
         AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(currentAngle), CENTER_OF_WHEEL_ON_IMAGE_X, CENTER_OF_WHEEL_ON_IMAGE_Y);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-        graphics.drawImage(op.filter((BufferedImage) cannon, null), coordinateX, (int)Math.round(coordinateY), null);
-        graphics.drawImage(cannonWheel, coordinateX + 100, (int)Math.round(coordinateY + 95), null);
+        graphics.drawImage(op.filter((BufferedImage) cannon, null), coordinateX - 120, coordinateY - 145, null);
+        graphics.drawImage(cannonWheel, coordinateX - 20, coordinateY - 50, null);
     }
 
     /**
-     * Perform left move for the cannon on the given background.
+     * Perform a left move for the cannon on the given background.
      * @param background on which cannon moves.
      */
     public void moveLeft(Background background) {
-        if (coordinateX - CANNON_WIDTH / 7 <= 0) {
+        if (coordinateX <= CANNON_WIDTH / 3) {
             return;
         }
         if (background.isChangePoint(coordinateX)) {
@@ -67,11 +67,11 @@ public class Cannon {
     }
 
     /**
-     * Perform right move for the cannon on the given background.
+     * Perform a right move for the cannon on the given background.
      * @param background on which cannon moves.
      */
     public void moveRight(Background background) {
-        if (coordinateX >= GAME_WINDOW_WIDTH - CANNON_WIDTH) {
+        if (coordinateX >= GAME_WINDOW_WIDTH - CANNON_WIDTH / 2) {
             return;
         }
         if (background.isChangePoint(coordinateX)) {
@@ -87,12 +87,12 @@ public class Cannon {
 
     /** Updates Y coordinate when cannon move up on the mountain. */
     private void moveUpOnMountain() {
-        coordinateY -= abs(currentTangent);
+        coordinateY -= (int) ceil(abs(currentTangent));
     }
 
     /** Updates Y coordinate when cannon move down on the mountain. */
     private void moveDownOnMountain() {
-        coordinateY += abs(currentTangent);
+        coordinateY += (int) ceil(abs(currentTangent));
     }
 
     /** Updates angle on cannon gun lifting up. */
@@ -111,9 +111,6 @@ public class Cannon {
 
     /** Perform a shoot from the gun. */
     public void shoot() {
-        AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(currentAngle), CENTER_OF_WHEEL_ON_IMAGE_X, CENTER_OF_WHEEL_ON_IMAGE_X);
-        double[] currentPoint = {214, 100};
-        tx.transform(currentPoint, 0, currentPoint, 0, 1);
-        bullet = new Bullet((int)currentPoint[0] + coordinateX, (int)currentPoint[1] + (int)Math.round(coordinateY), currentAngle);
+        bullet = new Bullet(coordinateX - 120, coordinateY - 145, currentAngle);
     }
 }

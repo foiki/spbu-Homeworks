@@ -4,6 +4,9 @@ import static group144.kireev.ui.Config.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -42,15 +45,13 @@ public class Bullet {
             return;
         }
         calculateCoordinatesOfBullet();
-        if (!isBulletOnTheScreen() || Background.isPointInMountain(currentPointX + startPointX + BULLET_WIDTH, currentPointY + startPointY + BULLET_HEIGHT)) {
+        if (!isBulletOnTheScreen() || Background.isPointInMountain(currentPointX + startPointX + BULLET_WIDTH_DIFFERENCE, currentPointY + startPointY + BULLET_HEIGHT_DIFFERENCE)) {
             isBulletInFly = false;
             return;
         }
-        if (currentAngle > 130) {
-            graphics.drawImage(bullet, currentPointX + startPointX, currentPointY + startPointY - 40, null);
-        } else {
-            graphics.drawImage(bullet, currentPointX + startPointX, currentPointY + startPointY, null);
-        }
+        AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(-currentAngle), CENTER_OF_WHEEL_ON_IMAGE_X, CENTER_OF_WHEEL_ON_IMAGE_Y);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+        graphics.drawImage(op.filter((BufferedImage) bullet, null), currentPointX + startPointX, currentPointY + startPointY, null);
     }
 
     /** Calculate the coordinates of a bullet that files at an angle to the horizon. */
@@ -63,6 +64,6 @@ public class Bullet {
     /**
      * @return if the bullet visible on the screen. */
     private boolean isBulletOnTheScreen() {
-        return currentPointX + startPointX > 0 && currentPointX + startPointX < GAME_WINDOW_WIDTH && currentPointY + startPointY < 810;
+        return currentPointX + startPointX + BULLET_WIDTH_DIFFERENCE > 0 && currentPointX + startPointX < GAME_WINDOW_WIDTH && currentPointY + startPointY < 800;
     }
 }
