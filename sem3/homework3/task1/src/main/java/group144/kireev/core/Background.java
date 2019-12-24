@@ -74,7 +74,9 @@ public class Background {
         for (int i = 1; i < changePointsCoordinateX.length; ++i) {
             if (changePointsCoordinateX[i] >= coordinateX) {
                 if (coordinateX > changePointsCoordinateX[i-1] && coordinateX < changePointsCoordinateX[i]) {
-                    double currentLineValue = (double) (changePointsCoordinateY[i] - changePointsCoordinateY[i - 1]) * (coordinateX - changePointsCoordinateX[i - 1]) / (changePointsCoordinateX[i] - changePointsCoordinateX[i - 1]) + changePointsCoordinateY[i-1];
+                    double currentLineValue = (double) (changePointsCoordinateY[i] - changePointsCoordinateY[i - 1])
+                            * (coordinateX - changePointsCoordinateX[i - 1]) / (changePointsCoordinateX[i]
+                            - changePointsCoordinateX[i - 1]) + changePointsCoordinateY[i-1];
                     if (coordinateY > currentLineValue) {
                         return true;
                     }

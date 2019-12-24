@@ -15,8 +15,8 @@ public final class Config {
     public static final int CANNON_MAX_ANGLE = 20;
     public static final int CANNON_MIN_ANGLE = -200;
     public static final int CANNON_START_ANGLE = 0;
-    public static final int START_BULLET_SPEED = 9;
+    public static final int START_BULLET_SPEED = 8;
     public static final double ACCELERATION_OF_FREE_FALL = 0.05;
-    public static final int BULLET_WIDTH_DIFFERENCE = 140;
-    public static final int BULLET_HEIGHT_DIFFERENCE = 110;
+    public static final int BULLET_CENTER_X = 222;
+    public static final int BULLET_CENTER_Y = 108;
 }

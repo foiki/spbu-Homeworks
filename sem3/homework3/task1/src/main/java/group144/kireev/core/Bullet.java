@@ -45,7 +45,7 @@ public class Bullet {
             return;
         }
         calculateCoordinatesOfBullet();
-        if (!isBulletOnTheScreen() || Background.isPointInMountain(currentPointX + startPointX + BULLET_WIDTH_DIFFERENCE, currentPointY + startPointY + BULLET_HEIGHT_DIFFERENCE)) {
+        if (!isBulletOnTheScreen() || isBulletInTheMountain()) {
             isBulletInFly = false;
             return;
         }
@@ -54,16 +54,29 @@ public class Bullet {
         graphics.drawImage(op.filter((BufferedImage) bullet, null), currentPointX + startPointX, currentPointY + startPointY, null);
     }
 
+    private boolean isBulletInTheMountain() {
+        AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(-currentAngle), CENTER_OF_WHEEL_ON_IMAGE_X, CENTER_OF_WHEEL_ON_IMAGE_Y);
+        double[] point = {BULLET_CENTER_X, BULLET_CENTER_Y};
+        tx.transform(point, 0, point, 0, 1);
+        int rotatedCoordinateX = (int) Math.round(point[0]);
+        int rotatedCoordinateY = (int) Math.round(point[1]);
+        return Background.isPointInMountain(currentPointX + startPointX + rotatedCoordinateX,
+                currentPointY + startPointY + rotatedCoordinateY);
+    }
+
     /** Calculate the coordinates of a bullet that files at an angle to the horizon. */
     private void calculateCoordinatesOfBullet() {
         currentPointX = (int) (START_BULLET_SPEED * time * Math.cos(Math.toRadians(currentAngle))); // x = V0*t*cos(a)
-        currentPointY = (int) (-START_BULLET_SPEED * time * Math.sin(Math.toRadians(currentAngle)) + ACCELERATION_OF_FREE_FALL * time * time); // y = V0*t*sin(a) - g*t^2/2
+        currentPointY = (int) (-START_BULLET_SPEED * time * Math.sin(Math.toRadians(currentAngle))
+                + ACCELERATION_OF_FREE_FALL * time * time); // y = V0*t*sin(a) - g*t^2/2
         ++time;
     }
 
     /**
      * @return if the bullet visible on the screen. */
     private boolean isBulletOnTheScreen() {
-        return currentPointX + startPointX + BULLET_WIDTH_DIFFERENCE > 0 && currentPointX + startPointX < GAME_WINDOW_WIDTH && currentPointY + startPointY < 800;
+        return currentPointX + startPointX > 0
+                && currentPointX + startPointX < GAME_WINDOW_WIDTH
+                && currentPointY + startPointY < 800;
     }
 }
