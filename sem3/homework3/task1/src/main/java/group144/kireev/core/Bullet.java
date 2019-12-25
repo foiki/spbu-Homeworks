@@ -61,7 +61,7 @@ public class Bullet {
         int rotatedCoordinateX = (int) Math.round(point[0]);
         int rotatedCoordinateY = (int) Math.round(point[1]);
         return Background.isPointInMountain(currentPointX + startPointX + rotatedCoordinateX,
-                currentPointY + startPointY + rotatedCoordinateY);
+                currentPointY + startPointY + rotatedCoordinateY + BULLET_HEIGHT / 2);
     }
 
     /** Calculate the coordinates of a bullet that files at an angle to the horizon. */
@@ -75,8 +75,8 @@ public class Bullet {
     /**
      * @return if the bullet visible on the screen. */
     private boolean isBulletOnTheScreen() {
-        return currentPointX + startPointX > 0
-                && currentPointX + startPointX < GAME_WINDOW_WIDTH
-                && currentPointY + startPointY < 800;
+        return currentPointX + startPointX + BULLET_WIDTH * 2 > 0
+                && currentPointX + startPointX + BULLET_WIDTH < GAME_WINDOW_WIDTH
+                && currentPointY + startPointY + BULLET_HEIGHT < 850;
     }
 }

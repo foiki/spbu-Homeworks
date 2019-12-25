@@ -19,4 +19,6 @@ public final class Config {
     public static final double ACCELERATION_OF_FREE_FALL = 0.05;
     public static final int BULLET_CENTER_X = 222;
     public static final int BULLET_CENTER_Y = 108;
+    public static final int BULLET_WIDTH = 40;
+    public static final int BULLET_HEIGHT = 40;
 }
