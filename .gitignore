@@ -11,6 +11,7 @@ uiDesigner.xml
 *.bin
 *.properties
 *.lock
+*.idea
 build/
 /settings.gradle
 *.MF
