@@ -1,6 +1,9 @@
 module Fibonacci where
 
 fibonacci :: Integer -> Integer
-fibonacci 0 = 0
-fibonacci 1 = 1
-fibonacci n = if n >= 2 then fibonacci (n - 1) + fibonacci (n - 2) else error "Incorrect index"
+fibonacci n | (==) n 0 = 0
+            | (==) n 1 = 1
+            | n >= 2 = helper 1 1 (n - 2)
+            | otherwise = error "Wrong index"
+helper first second 0 = second
+helper first second n = helper second (first + second) (n - 1)
