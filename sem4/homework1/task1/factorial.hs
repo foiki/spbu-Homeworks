@@ -1,5 +1,7 @@
 module Factorial where
 
 factorial :: Integer -> Integer
-factorial 0 = 1
-factorial x = if x >= 0 then factorial (x - 1) * x else error "argument must be >= 0"
+factorial x | x >=0 = helper 1 x
+            | otherwise = error "argument must be >= 0"
+helper result 0 = result
+helper result x = helper (result * x) (x - 1)
