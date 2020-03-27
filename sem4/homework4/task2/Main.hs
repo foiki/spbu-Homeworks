@@ -28,6 +28,9 @@ doLoop list = do
         '4':_ -> do
             putStrLn "0 - exit\n1 - add value to sorted list\n2 - remove value from list\n3 - print list "
             doLoop list
+        _ -> do
+            putStrLn "Incorrect command!"
+            doLoop list
         
         
 addElement:: [Integer] -> Integer -> [Integer]
