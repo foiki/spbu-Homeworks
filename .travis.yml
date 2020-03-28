@@ -1,6 +1,3 @@
 language: haskell
 ghc:
   - "8.6.5"
-env:
-  - PACKAGEDIR="sem4"
-before_install: cd ${PACKAGEDIR}
