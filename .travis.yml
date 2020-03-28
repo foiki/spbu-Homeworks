@@ -1,8 +1,6 @@
-language: java
-dist: trusty
-services: 
-  - docker
-jdk: oraclejdk11
-script: 
-  - cd sem3
-os: linux
+language: haskell
+ghc:
+  - "8.6.5"
+env:
+  - PACKAGEDIR="sem4"
+before_install: cd ${PACKAGEDIR}
