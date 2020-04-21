@@ -1,5 +1,6 @@
 import System.Random
-import Control.Monad
+import Control.Monad.State
+import Data.List
 
 data BST a = Empty | Leaf a | Branch (BST a) a (BST a) deriving (Eq, Show)
 
@@ -42,39 +43,23 @@ height Empty = 0
 height (Leaf _) = 1
 height (Branch l _ r) = 1 + max (height l) (height r)
 
-getAny :: (Random a) => State StdGen a
-getAny = do g <- get
-    (x,g') <- return $ random g
-    put g'
-    return x
+randomize:: BST a -> IO (BST Int)
+randomize Empty = return Empty
+randomize (Leaf a) = do
+    seed <- newStdGen
+    return $ Leaf $ getOne seed
+randomize (Branch l a r) = do
+    seed <- newStdGen
+    left <- randomize l
+    right <- randomize r
+    return $ Branch left (getOne seed) right
 
-
-
---getOne:: Integer
---getOne = do 
-    --g <- newStdGen
-    --take 1 $ randoms g
-
-randomize:: BST a -> BST a
-randomize Empty = Empty
-randomize (Leaf a) = do 
-    x <- randomIO :: IO Integer
-    return (Leaf x)
+getOne:: StdGen -> Int
+getOne = head . unfoldr (Just . random)
 
 removeTest1 = remove 1 (Branch (Leaf 1) 4 (Leaf 5)) == Branch Empty 4 (Leaf 5)
 
 removeTest2 = remove 4 (Branch (Leaf 1) 4 (Branch (Branch (Leaf 7) 8 (Leaf 9)) 10 (Branch (Leaf 11) 12 (Leaf 13))))
     == Branch (Leaf 1) 7 (Branch (Branch Empty 8 (Leaf 9)) 10 (Branch (Leaf 11) 12 (Leaf 13)))
 
-----getAny :: (Random a) => State StdGen a
---getAny = do g <- get
-           -- (x,g') <- return $ random g
-            --put g'
-            --return x
-
---main = do
-    --g <- newStdGen
-    --take 10 (randoms g)
-
---main = replicateM 10 (randomIO :: IO Integer)-- >>= print
     
