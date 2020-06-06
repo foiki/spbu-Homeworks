@@ -18,7 +18,7 @@ instance Show Expression where
     show (Pow a b) = "(" ++ show a ++ "^" ++ show b ++ ")"
 
 derivative:: Expression -> Expression
-derivative = simplify . simplify . derivative'
+derivative = simplify . simplify . derivative' . simplify
 
 derivative':: Expression -> Expression
 derivative' expr = case expr of
@@ -42,6 +42,7 @@ simplify expr = case expr of
     (Mult (Const 1) a) -> simplify a
     (Mult a (Const 0)) -> Const 0
     (Mult (Const 0) a) -> Const 0
+    (Div (Const 0) _) -> Const 0
     (Div a (Const 1)) -> simplify a
     (Pow a 0) -> Const 1
     (Pow a 1) -> simplify a
@@ -63,5 +64,7 @@ simplify expr = case expr of
     (Mult a b) -> Mult (simplify a) (simplify b)
     (Div a b) -> Div (simplify a) (simplify b)
     (SignMinus (SignMinus a)) -> simplify a
+
+    expr -> expr
 
 
