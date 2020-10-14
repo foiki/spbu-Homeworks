@@ -8,6 +8,7 @@ workspace.xml
 uiDesigner.xml
 *.kotlin_module
 *.class
+*.jar
 *.bin
 *.properties
 *.lock
