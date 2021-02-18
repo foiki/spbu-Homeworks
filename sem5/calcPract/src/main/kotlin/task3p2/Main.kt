@@ -89,7 +89,7 @@ fun main() {
     var userAnswer = "Y"
     while (userAnswer == "Y" || userAnswer == "y") {
         printStartInfo()
-        //readStartData()
+        readStartData()
         tableOfValues = getTableOfValues()
         printTableInfo(tableOfValues)
         getDerivativeTable()
