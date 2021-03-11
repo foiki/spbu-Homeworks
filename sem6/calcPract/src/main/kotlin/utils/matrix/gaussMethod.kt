@@ -1,4 +1,4 @@
-package homework1
+package utils.matrix
 
 fun swapRows(matrix: Array<Array<Double>>, b: Array<Double>, row1: Int, row2: Int) {
     var temp: Double

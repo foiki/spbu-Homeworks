@@ -1,5 +1,8 @@
 package homework1
 
+import utils.matrix.*
+import utils.*
+
 private val matrix: Array<Array<Double>> = arrayOf(arrayOf(-401.46, 200.18), arrayOf(1201.08, -601.64))
 private val b: Array<Double> = arrayOf(200.0, -600.0)
 private val b1: Array<Double> = arrayOf(199.0, -601.0)
@@ -33,12 +36,12 @@ fun task1() {
     printSystem(matrix, b)
     val x = getSolutionOfSquareMatrix(matrix, b)
     println("\n${GREEN}Solution of initial system:")
-    printSolution(x)
+    printVector(x)
     println("\n${GREEN}System with changed right side:")
     printSystem(matrix, b1)
     val x1 = getSolutionOfSquareMatrix(matrix, b1)
     println("\n${GREEN}Solution of system with changed right side:")
-    printSolution(x1)
+    printVector(x1)
     val inverseMatrix = getInverseMatrix(copyOf(matrix))
     println("\n${GREEN}Inverse matrix (A^-1):")
     printMatrix(inverseMatrix)

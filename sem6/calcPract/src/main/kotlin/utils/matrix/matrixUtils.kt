@@ -1,6 +1,8 @@
-package homework1
+package utils.matrix
 
+import utils.*
 import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sign
 
@@ -52,7 +54,7 @@ fun printMatrix(matrix: Array<Array<Double>>) {
     }
 }
 
-fun printSolution(x: Array<Double>) {
+fun printVector(x: Array<Double>) {
     print(CYAN)
     x.forEachIndexed { i, it ->
         println("x$i = $it")
@@ -75,6 +77,18 @@ fun holderMatrixNorm(x: Array<Array<Double>>): Double {
         }
     }
     return sum.pow(1.0 / x.size)
+}
+
+fun infinityPMatrixNorm(matrix: Array<Array<Double>>): Double {
+    var max: Double = - 1.0
+    for (i in matrix.indices) {
+        var sum = 0.0
+        for (j in matrix[i].indices) {
+            sum += abs(matrix[i][j])
+        }
+        max = max(max, sum)
+    }
+    return max
 }
 
 fun getSolutionOfSquareMatrix(startMatrix: Array<Array<Double>>, startB: Array<Double>): Array<Double> {
@@ -136,6 +150,22 @@ fun getInverseMatrix(originMatrix: Array<Array<Double>>): Array<Array<Double>> {
     return reversedMatrix
 }
 
+fun getUnitMatrix(size: Int): Array<Array<Double>> {
+    var result = arrayOf<Array<Double>>()
+    for (i in 0 until size) {
+        var array = arrayOf<Double>()
+        for (j in 0 until size) {
+            array += if (i == j) {
+                1.0
+            } else {
+                0.0
+            }
+        }
+        result += array
+    }
+    return result
+}
+
 fun multiplyMatrix(matrix1: Array<Array<Double>>, matrix2: Array<Array<Double>>): Array<Array<Double>>? {
     if (matrix1.isEmpty() || matrix2.isEmpty() || matrix1[0].size != matrix2.size) {
         return null
@@ -155,12 +185,52 @@ fun multiplyMatrix(matrix1: Array<Array<Double>>, matrix2: Array<Array<Double>>)
     return result
 }
 
+fun multiplyMatrixByVector(matrix: Array<Array<Double>>, b: Array<Double>): Array<Double>? {
+    if (matrix.isEmpty() || matrix[0].size != b.size) {
+        return null
+    }
+    var result = arrayOf<Double>()
+    for (i in matrix.indices) {
+        var sum = 0.0
+        for (j in matrix.indices) {
+            sum += matrix[i][j] * b[j]
+        }
+        result += sum
+    }
+    return result
+}
+
+fun getZeroVector(dimension: Int): Array<Double> {
+    var result = arrayOf<Double>()
+    for (i in 0 until dimension) {
+        result += 0.0
+    }
+    return result
+}
+
 fun vectorDifference(x: Array<Double>, x1: Array<Double>): Array<Double> {
     var differenceVector = arrayOf<Double>()
     for (i in x.indices) {
-        differenceVector += x1[i] - x[i]
+        val value = x[i] - x1[i]
+        differenceVector += value
     }
     return differenceVector
+}
+
+fun vectorSum(x: Array<Double>, x1: Array<Double>): Array<Double> {
+    var differenceVector = arrayOf<Double>()
+    for (i in x.indices) {
+        differenceVector += x[i] + x1[i]
+    }
+    return differenceVector
+}
+
+fun multiplyVectorByConst(a: Double, x: Array<Double>): Array<Double> {
+    var result = arrayOf<Double>()
+    x.forEach {
+        result += it * a
+    }
+    return result
 }
 
 fun matrixDifference(matrix1: Array<Array<Double>>, matrix2: Array<Array<Double>>): Array<Array<Double>>? {
@@ -184,5 +254,39 @@ fun copyOf(matrix: Array<Array<Double>>): Array<Array<Double>> {
     for (i in matrix.indices) {
         result += matrix[i].copyOf()
     }
+    return result
+}
+
+fun getD(matrix: Array<Array<Double>>): Array<Array<Double>> {
+    var result = arrayOf<Array<Double>>()
+    for (i in matrix.indices) {
+        var array = arrayOf<Double>()
+        for (j in matrix[i].indices) {
+            array += if (i == j) {
+                matrix[i][j]
+            } else {
+                0.0
+            }
+        }
+        result += array
+    }
+    return result
+}
+
+fun getDoubleArray(matrix: Array<Array<Double>>): Array<DoubleArray> {
+    var result: Array<DoubleArray> = arrayOf()
+    for (i in matrix.indices) {
+        val array = DoubleArray(matrix[i].size)
+        for (j in matrix[i].indices) {
+            array[j] = matrix[i][j]
+        }
+        result += array
+    }
+    return result
+}
+
+fun doubleArrayToArray(array: DoubleArray): Array<Double> {
+    var result: Array<Double> = arrayOf()
+    array.forEach { result += it }
     return result
 }

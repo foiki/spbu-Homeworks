@@ -1,4 +1,4 @@
-package homework1
+package utils.matrix
 
 fun luDecomposition(matrix: Array<Array<Double>>): Double {
     val l = initMatrix(matrix.size, matrix[0].size)

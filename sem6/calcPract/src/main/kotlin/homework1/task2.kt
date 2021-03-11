@@ -1,5 +1,8 @@
 package homework1
 
+import utils.matrix.*
+import utils.*
+
 private val matrix: Array<Array<Double>> = arrayOf(
     arrayOf(8.673134, 1.041039, -2.677712),
     arrayOf(1.041039, 6.586211, 0.623016),
@@ -16,7 +19,7 @@ fun task2() {
     printSystem(matrix, b)
     val solution = gaussMethodSolutionByMainElement(copyOf(matrix), b.copyOf())
     println("\n${GREEN}Solution found using Gauss method with choosing main element (column):")
-    printSolution(solution)
+    printVector(solution)
     println("\n${GREEN}Inverse matrix: ")
     val inverseMatrix = getInverseMatrix(copyOf(matrix))
     printMatrix(inverseMatrix)
