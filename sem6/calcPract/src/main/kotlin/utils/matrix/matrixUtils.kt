@@ -1,10 +1,7 @@
 package utils.matrix
 
 import utils.*
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.pow
-import kotlin.math.sign
+import kotlin.math.*
 
 fun printSigned(value: Double) {
     var x = value
@@ -77,6 +74,38 @@ fun holderMatrixNorm(x: Array<Array<Double>>): Double {
         }
     }
     return sum.pow(1.0 / x.size)
+}
+
+fun secondNorm(x: Array<Double>): Double {
+    var sum = 0.0
+    x.forEach {
+        sum += abs(it).pow(2)
+    }
+    return sqrt(sum)
+}
+
+fun getVectorLength(x: Array<Double>): Double {
+    return secondNorm(x)
+}
+
+fun scalarProduct(x: Array<Double>, x1: Array<Double>): Double? {
+    var result = 0.0
+    if (x.size != x1.size) {
+        return null
+    }
+    for (i in x.indices) {
+        result += x[i] * x1[i]
+    }
+    return result
+}
+
+fun getNormVector(x: Array<Double>): Array<Double> {
+    val length = getVectorLength(x)
+    var result: Array<Double> = arrayOf()
+    x.forEach {
+        result += it / length
+    }
+    return result
 }
 
 fun infinityPMatrixNorm(matrix: Array<Array<Double>>): Double {
@@ -160,6 +189,18 @@ fun getUnitMatrix(size: Int): Array<Array<Double>> {
             } else {
                 0.0
             }
+        }
+        result += array
+    }
+    return result
+}
+
+fun getTransposedMatrix(matrix: Array<Array<Double>>): Array<Array<Double>> {
+    var result: Array<Array<Double>> = arrayOf()
+    for (i in matrix[0].indices) {
+        var array: Array<Double> = arrayOf()
+        for (j in matrix.indices) {
+            array += matrix[j][i]
         }
         result += array
     }
@@ -288,5 +329,13 @@ fun getDoubleArray(matrix: Array<Array<Double>>): Array<DoubleArray> {
 fun doubleArrayToArray(array: DoubleArray): Array<Double> {
     var result: Array<Double> = arrayOf()
     array.forEach { result += it }
+    return result
+}
+
+fun getUnitVector(size: Int): Array<Double> {
+    var result: Array<Double> = arrayOf()
+    for (i in 0 until size) {
+        result += 1.0
+    }
     return result
 }
