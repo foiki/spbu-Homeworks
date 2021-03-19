@@ -1,6 +1,9 @@
 package utils.matrix
 
+import lectureTask1.a
+import org.apache.commons.math3.linear.EigenDecomposition
 import utils.*
+import java.math.BigDecimal
 import kotlin.math.*
 
 fun printSigned(value: Double) {
@@ -274,6 +277,41 @@ fun multiplyVectorByConst(a: Double, x: Array<Double>): Array<Double> {
     return result
 }
 
+fun multiplyMatrixByConst(a: Double, x: Array<Array<Double>>): Array<Array<Double>> {
+    var result: Array<Array<Double>> = arrayOf()
+    for (i in x.indices) {
+        var array: Array<Double> = arrayOf()
+        for (j in x[i].indices) {
+            array += x[i][j] * a
+        }
+        result += array
+    }
+    return result
+}
+
+fun abs(matrix: Array<Array<Double>>): Array<Array<Double>> {
+    var result: Array<Array<Double>> = arrayOf()
+    for (i in matrix.indices) {
+        var array: Array<Double> = arrayOf()
+        for (j in matrix[i].indices) {
+            array += abs(matrix[i][j])
+        }
+        result += array
+    }
+    return result
+}
+
+fun getAverageValue(matrix: Array<Array<Double>>): Double {
+    var result: Double = 0.0
+    val size = matrix.size * matrix[0].size
+    for (i in matrix.indices) {
+        for (j in matrix[i].indices) {
+            result += matrix[i][j]
+        }
+    }
+    return result / size
+}
+
 fun matrixDifference(matrix1: Array<Array<Double>>, matrix2: Array<Array<Double>>): Array<Array<Double>>? {
     if (matrix1.isEmpty() || matrix2.isEmpty() || matrix1.size != matrix2.size ||
         matrix1[0].size != matrix2[0].size) {
@@ -284,6 +322,22 @@ fun matrixDifference(matrix1: Array<Array<Double>>, matrix2: Array<Array<Double>
         var array = arrayOf<Double>()
         for (j in matrix1[i].indices) {
             array+= matrix1[i][j] - matrix2[i][j]
+        }
+        result += array
+    }
+    return result
+}
+
+fun matrixSum(matrix1: Array<Array<Double>>, matrix2: Array<Array<Double>>): Array<Array<Double>>? {
+    if (matrix1.isEmpty() || matrix2.isEmpty() || matrix1.size != matrix2.size ||
+        matrix1[0].size != matrix2[0].size) {
+        return null
+    }
+    var result = arrayOf<Array<Double>>()
+    for (i in matrix1.indices) {
+        var array = arrayOf<Double>()
+        for (j in matrix1[i].indices) {
+            array+= matrix1[i][j] + matrix2[i][j]
         }
         result += array
     }
@@ -338,4 +392,44 @@ fun getUnitVector(size: Int): Array<Double> {
         result += 1.0
     }
     return result
+}
+
+fun getConditionNumber(matrix: Array<Array<Double>>): Double {
+    return holderMatrixNorm(matrix) * holderMatrixNorm(getInverseMatrix(matrix))
+}
+
+fun getDiagonalMatrixFromVector(vector: Array<Double>): Array<Array<Double>> {
+    var result: Array<Array<Double>> = arrayOf()
+    for (i in vector.indices) {
+        var array: Array<Double> = arrayOf()
+        for (j in vector.indices) {
+            array += if (i == j) {
+                vector[i]
+            } else {
+                0.0
+            }
+        }
+        result += array
+    }
+    return result
+}
+
+fun getSqrtVector(vector: Array<Double>): Array<Double> {
+    var result: Array<Double> = arrayOf()
+    vector.forEach {
+        result += sqrt(it)
+    }
+    return result
+}
+
+fun getEigenValues(matrixDecomposition: EigenDecomposition): Array<Double> {
+    return doubleArrayToArray(matrixDecomposition.realEigenvalues)
+}
+
+fun getEigenVectorsMatrix(matrixDecomposition: EigenDecomposition): Array<Array<Double>> {
+    var result: Array<Array<Double>> = arrayOf()
+    for (i in matrixDecomposition.realEigenvalues.indices) {
+        result += doubleArrayToArray(matrixDecomposition.getEigenvector(i).toArray())
+    }
+    return getTransposedMatrix(result)
 }
