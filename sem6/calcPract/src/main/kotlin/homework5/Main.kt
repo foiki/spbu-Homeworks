@@ -16,7 +16,7 @@ private val listN = listOf(10, 20, 40)
 private val listM = listOf(10, 20, 40)
 
 fun taskEquation(x: Double, t: Double, function: Function): Double {
-    return function.getDerivativeTValue(x, t) - function.getSecondDerivativeXValue(x, t) +
+    return function.getDerivativeTValue(x, t) - function.getSecondDerivativeXValue(x, t) -
             (x * x + 1) * function.getDerivativeXValue(x, t)
 }
 
@@ -38,13 +38,13 @@ fun chooseFunction(): Function {
     val scanner = Scanner(System.`in`)
     var userAnswer = -1
     while (userAnswer < 0 || userAnswer >= functionsArray.size) {
-        print("Choose the function: ")
+        println("Choose the function: ")
         userAnswer = scanner.nextInt()
         if (userAnswer < 0 || userAnswer >= functionsArray.size) {
             println("Wrong index! Choose from 0 to ${functionsArray.size - 1}")
         }
     }
-    return functionsArray[userAnswer];
+    return functionsArray[userAnswer]
 }
 
 fun getHeader(): Array<String> {
@@ -69,7 +69,7 @@ fun getAccurateTable(n: Int, m: Int, function: Function): Array<Array<Double>> {
     for (i in 0..m) {
         var array: Array<Double> = arrayOf()
         for (j in 0..n) {
-            array += taskEquation(j * 1.0 / n, i * T / m, function)
+            array += function.getValue(j * 1.0 / n, i * T / m, )
         }
         result += array
     }
@@ -114,7 +114,7 @@ fun printEstimationTable(function: Function, method: String) {
         val n = listN[i]
         val m = listM[i]
 
-        val h = 1.0 / m
+        val h = 1.0 / n
         val tau = T / m
 
         array += h
@@ -147,7 +147,7 @@ fun printEstimationTable(function: Function, method: String) {
 }
 
 fun performTask() {
-    val function = functionsArray[1]//chooseFunction()
+    val function = chooseFunction()
     printExplicitView(function)
     printImplicitView(function)
 

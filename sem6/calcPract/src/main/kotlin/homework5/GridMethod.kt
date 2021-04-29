@@ -39,11 +39,11 @@ open class GridMethod(private val N: Int, private val M: Int, T: Double, private
      */
     private fun initU() {
         for (k in 1..M) {
-            var x = k * hN
             val tKPrev = (k - 1) * hM
 
             val uIK: Array<Double> = Array(N + 1) {0.0}
             for (i in 1 until N) {
+                val x = i * hN
 
                 val prevUIPlusOne = u[k - 1][i + 1]
                 val prevUI = u[k - 1][i]
