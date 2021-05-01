@@ -1,0 +1,10 @@
+package lectures.lecturetask2
+
+import utils.functions.SimpleFunction
+
+class ConstantFunction: SimpleFunction {
+
+    override fun getValue(t: Double): Double {
+        return 1.0
+    }
+}
