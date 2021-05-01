@@ -1,6 +1,6 @@
 package utils.matrix
 
-import lectureTask1.a
+import lectures.lectureTask1.a
 import org.apache.commons.math3.linear.EigenDecomposition
 import utils.*
 import java.math.BigDecimal
