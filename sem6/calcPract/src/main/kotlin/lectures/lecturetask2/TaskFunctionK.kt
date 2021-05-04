@@ -23,4 +23,8 @@ class TaskFunctionK: Function {
     override fun getSecondDerivativeXValue(x: Double, t: Double): Double {
         return - t * t * cos(1 - x * t)
     }
+
+    override fun toString(): String {
+        return "cos(1 - xs)"
+    }
 }

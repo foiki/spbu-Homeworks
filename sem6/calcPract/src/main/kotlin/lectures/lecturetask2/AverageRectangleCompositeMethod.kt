@@ -1,10 +1,11 @@
 package lectures.lecturetask2
 
 import utils.functions.Function
+import utils.functions.SimpleFunction
 
 class AverageRectangleCompositeMethod(private val N: Int, private val a: Double,
                                       private val b: Double, private val x: Double,
-                                      private val function: Function) {
+                                      private val functionK: Function, private val functionZ: SimpleFunction) {
 
     private val h = (b - a) / N
     private var result: Array<Double> = arrayOf()
@@ -14,13 +15,15 @@ class AverageRectangleCompositeMethod(private val N: Int, private val a: Double,
     }
 
     private fun initResultArray() {
-        val t = a + h / 2
         for (i in 1..N) {
-            result += function.getValue(x, t + (i - 1) * h)
+            val prevT = a + (i - 1) * h
+            val newT = a + i * h
+            val t = (newT + prevT) / 2.0
+            result += functionK.getValue(x, t) * functionZ.getValue(t) * h
         }
     }
 
-    public fun getCoefficients(): Array<Double> {
+    fun getCoefficients(): Array<Double> {
         return result
     }
 }

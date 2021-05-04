@@ -8,17 +8,16 @@ import utils.matrix.vectorDifference
 import kotlin.math.pow
 
 private val functionK = TaskFunctionK()
-private val functionZ = ConstantFunction()
+private val functionZ = TestZFunction()
 private const val a: Double = 0.0
 private const val b: Double = 1.0
-private const val x = (a + b) / 2.0
 private const val nSteps = 10
-private const val alphaSteps = 8
+private const val alphaSteps = 9
 
 private fun printStartInfo() {
     println("${MAGENTA}Task 2. Variant 15")
     println("${MAGENTA}Equation: ${CYAN}integral(0, 1, K(x, s)z(s)ds) = u(x)")
-    println("K(x, s) = cos(1 - xs), z(s) = 1")
+    println("K(x, s) = $functionK, z(s) = $functionZ")
 }
 
 private fun getHeader(): Array<String> {
@@ -45,7 +44,7 @@ private fun findSolution() {
         var array: Array<Double> = arrayOf()
         for (k in 1..alphaSteps) {
             val alpha = 10.0.pow(-k)
-            val solver = MechanicalQuadraturesSolver(a, b, x, N, alpha)
+            val solver = MechanicalQuadraturesSolver(a, b, N, alpha, functionK, functionZ)
             val solution = solver.getSolution()
             val accurateSolution = accurateSolution(N)
             array += secondNorm(vectorDifference(solution, accurateSolution))

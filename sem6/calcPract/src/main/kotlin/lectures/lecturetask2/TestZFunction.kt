@@ -2,13 +2,13 @@ package lectures.lecturetask2
 
 import utils.functions.SimpleFunction
 
-class ConstantFunction: SimpleFunction {
+class TestZFunction: SimpleFunction {
 
     override fun getValue(t: Double): Double {
-        return 1.0
+        return 5 * t + 3
     }
 
     override fun toString(): String {
-        return "1"
+        return "5s + 3"
     }
 }
