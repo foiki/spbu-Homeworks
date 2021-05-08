@@ -3,16 +3,19 @@ package utils
 import java.text.DecimalFormat
 import kotlin.math.max
 
-class TablePrinter(table: Array<Array<Double>>) {
+class TablePrinter(table: Array<Array<Double>>, digitsAfterDot: Int) {
 
     private var resultTable: Array<Array<String>> = arrayOf()
     private var headers: Array<String>? = null
     private var columnHeaders: Array<String>? = null
     private var maxGapLengths: Array<Int> = Array(table[0].size) {0}
     private var columnHeadersMaxGapSize = 0
-    private val decimalFormat = DecimalFormat("#.##########")
+    private var decimalFormat = DecimalFormat("#.##########")
+
+    constructor(table: Array<Array<Double>>) : this(table, 10)
 
     init {
+        initFormat(digitsAfterDot)
         for (i in table.indices) {
             var array: Array<String> = arrayOf()
             for (j in table[i].indices) {
@@ -22,6 +25,14 @@ class TablePrinter(table: Array<Array<Double>>) {
             }
             resultTable += array
         }
+    }
+
+    fun initFormat(digitsAfterDot: Int) {
+        var format = "#."
+        for (i in 0 until digitsAfterDot) {
+            format += "#"
+        }
+        decimalFormat = DecimalFormat(format)
     }
     
     fun addLineHeader(headers: Array<String>) {

@@ -56,6 +56,8 @@ fun reverseMove(matrix: Array<Array<Double>>, b: Array<Double>): Array<Double> {
 }
 
 fun gaussMethodSolutionByMainElement(matrix: Array<Array<Double>>, b: Array<Double>): Array<Double> {
-    straightMove(matrix, b)
-    return reverseMove(matrix, b)
+    val matrixCopy = copyOf(matrix)
+    val bCopy = b.copyOf()
+    straightMove(matrixCopy, bCopy)
+    return reverseMove(matrixCopy, bCopy)
 }
