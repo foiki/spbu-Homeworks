@@ -1,5 +1,7 @@
 package utils.functions
 
+import kotlin.math.pow
+
 fun getLegendrePolynomials(N: Int, x: Double): Array<Double> {
     var result: Array<Double> = arrayOf()
     if (N >= 0) {
@@ -16,4 +18,23 @@ fun getLegendrePolynomials(N: Int, x: Double): Array<Double> {
         result += newValue
     }
     return result
+}
+
+fun getLegendrePolynomialsValue(x: Double, n: Int): Double {
+    var value = 0.0
+
+    for (k in 0..n) {
+        var combination = factorial(n) / (factorial(k) * factorial(n - k))
+        combination *= combination
+        val xComb = (x - 1).pow((n - k).toDouble()) * (x + 1).pow(k.toDouble())
+        value += combination * xComb
+    }
+
+    return value / 2.0.pow(n.toDouble())
+}
+
+private fun factorial(k: Int): Double {
+    return if (k <= 1) {
+        1.0
+    } else k * factorial(k - 1)
 }
