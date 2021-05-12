@@ -6,14 +6,14 @@ import kotlin.math.sin
 
 class RFunction: SimpleFunctionWithDerivative {
     override fun getValue(x: Double): Double {
-        return cos(x)
+        return 1 + sin(x)
     }
 
     override fun getDerivativeValue(x: Double): Double {
-        return - sin(x)
+        return cos(x)
     }
 
     override fun toString(): String {
-        return "cos(x)"
+        return "(1 + sin(x))"
     }
 }

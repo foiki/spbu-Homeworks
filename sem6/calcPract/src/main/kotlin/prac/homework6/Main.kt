@@ -11,14 +11,14 @@ private val pFunction = PFunction()
 private val rFunction = RFunction()
 private val fFunction = FFunction()
 
-const val alpha1 = 1.0
-const val alpha2 = 0.0
+const val alpha1 = 0.0
+const val alpha2 = -1.0
 const val beta1 = 1.0
-const val beta2 = 0.0
-const val leftType = 1
-const val rightType = 1
-private const val minN = 3
-private const val maxN = 7
+const val beta2 = 1.0
+const val leftType = 2
+const val rightType = 3
+private const val minN = 5
+private const val maxN = 13
 private const val x1 = - 0.5
 private const val x2 = 0.0
 private const val x3 = 0.5
@@ -27,9 +27,9 @@ private val ritzSolver = RitzSolver()
 private val collocationSolver = CollocationSolver()
 
 fun printStartInfo() {
-    println("${MAGENTA}Homework 6 (2.8). Variant 1")
+    println("${MAGENTA}Homework 6 (2.8). Variant 2")
     println("${MAGENTA}Equation: ${CYAN}- (${pFunction}u')' + ${rFunction}u = $fFunction")
-    println("u(-1) = u(1) = 0")
+    println("u'(-1) = u(-1) + u'(1) = 0")
 }
 
 private fun getTableLine(n: Int): Array<Double> {
@@ -57,9 +57,10 @@ private fun performTask() {
     for (i in minN..maxN) {
         resultTable += getTableLine(i)
     }
-    val tablePrinter = TablePrinter(resultTable, 16)
+    val tablePrinter = TablePrinter(resultTable, 15)
     tablePrinter.addLineHeader(arrayOf("n", "cond(A)", "y^n(- 0.5)", "y^n(0)", "y^n(0.5)",
         "y*(- 0.5) - y^n(- 0.5)", "y*(0) - y^n(0)", "y*(0.5) - y^n(0.5)"))
+    println("Ritz method table:")
     tablePrinter.print()
 }
 
